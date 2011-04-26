@@ -1,5 +1,6 @@
 makeSpec <-
-function(peak.list, x.range, plot = TRUE, curves = FALSE, type = "gauss", ...) {
+function(peak.list, x.range, plot = TRUE, curves = FALSE,
+	type = "gauss", noise = 0, ...) {
 
 # Function to generate sample spectra or chromatograms
 # Bryan Hanson, DePauw Univ, July 2010
@@ -54,13 +55,17 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE, type = "gauss", ...) {
 		}
 
 	dimnames(y.mat)[[1]] <- rn
+	
+	if (!noise == 0) { y.mat <- jitter(y.mat, factor = noise)}
+
 	y.sum <- colSums(y.mat)
+	all <- rbind(x, y.sum, y.mat)
 
 	if (plot) {
 		plot(x, y.sum, type = "l", lwd = 2, col = "black", xlim = x.range, ...)
 		if (curves) for (n in 1:ns) lines(x, y.mat[n,], lwd = 1.0, col = "blue")
 		}
 	
-	all <- rbind(x, y.sum, y.mat)
+	return(all)
 	}
 

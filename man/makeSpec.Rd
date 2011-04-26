@@ -10,7 +10,7 @@ This function creates a chromatogram or spectrum from a list of appropriate para
 
 \usage{
 makeSpec(peak.list, x.range, plot = TRUE, curves = FALSE,
-	type = "gauss", ...)
+	type = "gauss", noise = 0, ...)
 }
 
 \arguments{
@@ -31,6 +31,10 @@ Logical; if TRUE, the individual curves are plotted (provided \code{plot = TRUE}
   \item{type}{
 A character string.  Use "gauss" to generate Gaussian curves (for chromatograms, or UV-Vis spectra).  Use "lorentz" to generate Lorentzian curves as found in NMR spectra.
 }
+  \item{noise}{
+A number giving the amount of noise to be added to the individual curves (the net spectrum has the noise from the individual spectra, it has no additional noise added to it).  Value corresponds to the argument \code{factor} in function \code{jitter}.
+}
+
 \item{\dots}{
 Additional arguments to be passed downstream.
 }

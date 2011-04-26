@@ -3,7 +3,7 @@ function(df = NULL, y = NULL, x = NULL,
 	method = "lm", leg.loc = c(0, 0),
 	xlab = NULL, ylab = NULL, title = NULL, ...) {
 	
-	require(ggplot2)
+#	require(ggplot2)
 	require(MASS) # for rlm
 	
 # work out a linear model first

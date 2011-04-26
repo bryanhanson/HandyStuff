@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.2
+Date: 2011-4-19
+News:
+>> Added the option for noise to makeSpec (suggested by David Harvey).
+
 ##### Version: 0.1
 Date: 2011-3-24
 News: First Release!
