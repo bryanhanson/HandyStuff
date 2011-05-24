@@ -1,11 +1,11 @@
 Package: HandyStuff
 Type: Package
 Title: HandyStuff: Stuff that is, well, Handy
-Version: 0.2
+Version: 0.3
 Date: 2011-4-19
 Author: Bryan A. Hanson DePauw University, Greencastle Indiana USA
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Mostly unrelated functions for all sorts of things I want to do or I want my students to be able to do easily.  Also a few data sets I like to use in teaching.  And other fun stuff.  An incoherent collection of seemingly random functions.
 License: GPL-3
 LazyLoad: yes
-Depends: ggplot2, MASS, gsubfn
+Depends: ggplot2, MASS, gsubfn, ChemoSpec, plyr, ggExtra

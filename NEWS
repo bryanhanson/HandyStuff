@@ -3,6 +3,16 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.3
+Date: 2011-05-23
+News:
+>> Added compareCats function.
+>> Added rxnNorm function
+>> Added argument npoints to makeSpec and plotNMRspec.  For simulating NMR spectra, one has to use more data points to compute the Lorentzian curve as NMR peaks are so narrow.  With npoints = 1000, peaks are often distorted because too few points define them.  npoints = 2000 does a better job (and is slower) but still leaves some slight imbalances in triplets for example, which looks realistic.
+>> Added argument labels = FALSE to plotNMRspec which should be useful for 13C NMR spectra.
+>> Improved integral label positioning in plotNMRspec to try to avoid overlaps.
+>> Added a lab.pos argument for plotNMRspec which allows one to put the labels either left or right of each peak.
+
 ##### Version: 0.2
 Date: 2011-4-19
 News:

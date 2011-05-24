@@ -1,6 +1,6 @@
 makeSpec <-
 function(peak.list, x.range, plot = TRUE, curves = FALSE,
-	type = "gauss", noise = 0, ...) {
+	type = "gauss", noise = 0, npoints = 1000, ...) {
 
 # Function to generate sample spectra or chromatograms
 # Bryan Hanson, DePauw Univ, July 2010
@@ -23,8 +23,8 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 		# create x-data, initialize y-data
 		# y.mat will hold each spectrum separately
 	
-		x <- seq(from = x.range[1], to = x.range[2], length.out = 1000)
-		y.mat <- matrix(data = NA, nrow = ns, ncol = 1000)
+		x <- seq(from = x.range[1], to = x.range[2], length.out = npoints)
+		y.mat <- matrix(data = NA, nrow = ns, ncol = npoints)
 	
 		for (n in 1:ns) {
 			y.mat[n,] <- gaussCurve(x = x, area = pl$area[n], mu = pl$mu[n],
@@ -40,8 +40,8 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 	if (type == "lorentz") {		
 		pl <- peak.list
 		ns <- length(pl$x0) # ns = no. of spec
-		x <- seq(from = x.range[1], to = x.range[2], length.out = 1000)
-		y.mat <- matrix(data = NA, nrow = ns, ncol = 1000)
+		x <- seq(from = x.range[1], to = x.range[2], length.out = npoints)
+		y.mat <- matrix(data = NA, nrow = ns, ncol = npoints)
 	
 		for (n in 1:ns) {
 			y.mat[n,] <- lorentzCurve(x = x, area = pl$area[n],
