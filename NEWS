@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.4
+Date: 2011-06-05
+News:
+>> Added functions to process LoggerPro files into something more usable.  These are gatherSpecFiles, gatherCsv, avgLambda, txt2csv, cmbl2csv.
+
 ##### Version: 0.3
 Date: 2011-05-23
 News:
