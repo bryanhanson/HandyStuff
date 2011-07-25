@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5
+Date: 2011-7-26
+News:
+>> Modified gatherSpecFiles and gatherCsv so that a data frame is returned (This was claimed in the help file but not true).  So the data frame is written out as All Specs.csv and saved in the workspace.  Also, the LoggerPro export format .csv is now supported.
+
 ##### Version: 0.4
 Date: 2011-06-05
 News:

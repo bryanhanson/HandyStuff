@@ -1,8 +1,9 @@
 gatherSpecFiles <-
 function(type = "txt", intLambda = FALSE, ...) {
 
-# get the files, convert to clean csv
-
+	cat("Are you working on a copy?\n")
+	cat("Files are being overwritten...\n")
+	
 	if (type == "cmbl") {
 		files <- list.files(pattern = "\\.(cmbl|CMBL)")
 		files.noext <- substr(basename(files), 1, nchar(basename(files)) - 4)
@@ -22,10 +23,20 @@ function(type = "txt", intLambda = FALSE, ...) {
 			txt2csv(in.file = files[i], out.file = out.files[i])
 			}
 		}
+
+	if (type == "csv") { # read 'em and remove header
+		files <- list.files(pattern = "\\.(csv|CSV)")
+	
+		for (i in 1:length(files)) {
+			df <- read.csv(files[i])
+			write.table(df, file = files[i], row.names = FALSE,
+				col.names = FALSE, quote = FALSE, sep = ",")
+			}
+		}
 	
 	if (intLambda) avgLambda() # aggregate wavelengths into whole numbers and mean abs
 	
-	gatherCsv(...) # combine the many into one
+	df <- gatherCsv(...) # combine the many into one
 	
 	}
 

@@ -14,5 +14,6 @@ function() {
 
 	colnames(df) <- c("Wavelength", names)
 	write.csv(df, "All Specs.csv", row.names = FALSE)
+	df
 	}
 

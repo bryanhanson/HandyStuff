@@ -15,8 +15,8 @@ function(df = NULL, y = NULL, x = NULL,
 	if (method == "rlm") mod <- rlm(y1 ~ x1)
 	m <- mod$coef[2]
 	b <- mod$coef[1]
-	r2 <- round(cor(x1, y1)^2, 3)
-	lab <- paste("m =", round(m, 2), "b =", round(b, 2), "r^2 =", r2, sep = "  ")
+	r2 <- round(cor(x1, y1)^2, 4)
+	lab <- paste("m =", round(m, 3), "b =", round(b, 3), "r^2 =", r2, sep = "  ")
 	if (method == "lm") lab <- paste("linear model: ", lab)
 	if (method == "rlm") lab <- paste("robust linear model: ", lab)
 
