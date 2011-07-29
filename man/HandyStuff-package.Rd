@@ -12,8 +12,8 @@ Mostly unrelated functions for all sorts of things I want to do or I want my stu
 \tabular{ll}{
 Package: \tab HandyStuff\cr
 Type: \tab Package\cr
-Version: \tab 0.5\cr
-Date: \tab 2011-07-26\cr
+Version: \tab 0.5-1\cr
+Date: \tab 2011-07-29\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 }
