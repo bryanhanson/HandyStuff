@@ -9,7 +9,7 @@ Draws a reaction norm or interaction plot as typically used in ecology to demons
 }
 \usage{
 rxnNorm(data = NULL, res = NULL, fac1 = NULL, fac2 = NULL,
-	fac2cols = NULL, freckles = FALSE, type = c("connect", "fitLine"),
+	fac2cols = NULL, freckles = FALSE, type = "connect",
 	method = c("sem", "iqr", "mad", "box", "sem95"), table = NULL,
 	xlab = NULL, ylab = NULL, title = NULL, ...)
 }
@@ -40,7 +40,7 @@ Either "connect", "fitLine" or "anova".  In the first case, a line is drawn whic
 One of c("sem", "iqr", "mad", "box", "sem95").  Each produces a dot at the measure of central tendency and error bars corresponding to the requested method  ("box" currently does not work quite right).  Full details are in \code{\link[ChemoSpec]{seXy}}.
 }
   \item{table}{
-If NULL, the default, no action.  If a vector of 2 numbers \code{c(x, y)}, a summary table is placed at the given coordinates.  The table contains either a summary of counts (if \code{type = "connect"}) or a report of the linear fit (if \code{type = "fitLine"}).  The coordinates are in the units of the measurements (\code{res} and \code{fac1}.
+If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in the units of the measurements \code{res} and \code{fac1}; \code{fac1} is internally handled as a number so if \code{fac1} has three levels then the setting \code{x = 2} would center the table over the middle level.
 }
   \item{xlab}{
 Character; a label for the x axis.

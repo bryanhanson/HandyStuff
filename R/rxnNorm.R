@@ -1,7 +1,7 @@
 rxnNorm <-
 function(data = NULL, res = NULL,
 	fac1 = NULL, fac2 = NULL, fac2cols = NULL,
-	freckles = FALSE, type = c("connect", "fitLine"),
+	freckles = FALSE, type = "connect",
 	method = c("sem", "iqr", "mad", "box", "sem95"),
 	table = NULL, xlab = NULL, ylab = NULL, title = NULL, ...) {
 
@@ -50,28 +50,28 @@ function(data = NULL, res = NULL,
 		
 	if (method == "sem") {
 		p <- p + stat_summary(fun.data = "seXy")
-		if (type == "connect") {
+		if ((type == "connect") | (type == "anova")) {
 			p <- p + stat_summary(fun.y = "mean", geom = "line")
 				}
 		}
 		
 	if (method == "sem95") {
 		p <- p + stat_summary(fun.data = "seXy95")
-		if (type == "connect") {
+		if ((type == "connect") | (type == "anova")) {
 			p <- p + stat_summary(fun.y = "mean", geom = "line")
 				}
 		}
 		
 	if (method == "mad") {
 		p <- p + stat_summary(fun.data = "seXyMad")
-		if (type == "connect") {
+		if ((type == "connect") | (type == "anova")) {
 			p <- p + stat_summary(fun.y = "median", geom = "line")
 				}
 		}
 		
 	if (method == "iqr") {
 		p <- p + stat_summary(fun.data = "seXyIqr")
-		if (type == "connect") {
+		if ((type == "connect") | (type == "anova")) {
 			p <- p + stat_summary(fun.y = "median", geom = "line")
 				}
 		}
@@ -87,6 +87,7 @@ function(data = NULL, res = NULL,
 		opts(axis.text.x = theme_text(colour = "black"),
 		axis.text.y = theme_text(colour = "black"),
 		axis.ticks = theme_blank()) + opts(...)		
+
 	# now add labels and fix limits (modified from qplot)
 	
     if (!is.null(title)) p <- p + opts(title = title)
@@ -109,6 +110,21 @@ function(data = NULL, res = NULL,
 				gp = gpar(cex = table[3]),
                	show.csep = TRUE, show.rsep = TRUE, show.colnames = TRUE,
                	show.rownames = FALSE))
+			}
+
+		if (type == "anova") {
+			if (!is.null(fac2)) form <- as.formula(paste(res, "~", paste(fac1, fac2, sep = "*")))
+			if (is.null(fac2)) form <- as.formula(paste(res, "~", fac1, sep = ""))
+			mod <- aov(formula = form, data = data)
+			mod <- summary(mod)[[1]]
+			mod[,2:4] <- round(mod[,2:4], 2)
+			mod[,5] <- signif(mod[,5], 4)
+			p <- p + annotate("table", table[1], table[2], table = mod,
+				theme = theme.list(show.box = TRUE, separator = "black",
+				gp = gpar(cex = table[3]),
+               	show.csep = TRUE, show.rsep = TRUE, show.colnames = TRUE,
+               	show.rownames = TRUE,
+               	gpar.rowtext = gpar(col = "black", cex = 1.0, fontface = "bold")))
 			}
 
 		if (type == "fitLine") {

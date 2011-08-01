@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5-2
+Date: 2011-08-01
+News:
+>> OK, this time I really added the ability to draw an ANOVA summary table to rxnNorm!
+
 ##### Version: 0.5-1
 Date: 2011-7-29
 News:
