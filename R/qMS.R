@@ -9,8 +9,6 @@ qMS <- function(f = NULL, xlab = "m/z",
 	# ion for a given formula
 	# Bryan Hanson, DePauw Univ. Dec. 2010
 	
-	require(gsubfn)
-	
 	if (is.null(f)) stop("No formula provided")
 		
 	# Process formula

@@ -63,19 +63,19 @@ A \code{ggplot2} object.
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 }
 \examples{
-df <- data.frame(
+mydf <- data.frame(
 	resp = rnorm(40),
 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
 	cat2 = sample(letters[1:2], 40, replace = TRUE))
 #	
-p <- compareCats(data = df, res = "resp", fac1 = "cat1",
+p <- compareCats(data = mydf, res = "resp", fac1 = "cat1",
 	fac2 = "cat2", method = "iqr", freckles = TRUE,
 	fac1cols = c("red", "green", "blue"))
 print(p)
 #
 # Interchange the roles of the factors (and hence colors):
 #
-p <- compareCats(data = df, res = "resp", fac1 = "cat2",
+p <- compareCats(data = mydf, res = "resp", fac1 = "cat2",
 	fac2 = "cat1", method = "iqr", freckles = TRUE,
 	fac1cols = c("red", "green"))
 print(p)

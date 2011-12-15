@@ -1,6 +1,6 @@
 makeSpec <-
 function(peak.list, x.range, plot = TRUE, curves = FALSE,
-	type = "gauss", noise = 0, npoints = 1000, ...) {
+	type = "gauss", noise = 0, dd = 1, ...) {
 
 # Function to generate sample spectra or chromatograms
 # Bryan Hanson, DePauw Univ, July 2010
@@ -15,6 +15,13 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 	# tailing is not relevant
 	# Conceptually, x0 ~ mu, gamma ~ sd
 
+	# dd = data density per x.range unit
+	# ndp = no. data points (total)
+	# Note that plotNMRspec actually passes x.range in Hz not ppm
+
+	ndp <- dd*abs(diff(x.range))
+#	cat("makeSpec says: ndp = ", ndp, "\n")
+
 	if (type == "gauss") {		
 		pl <- peak.list
 		ns <- length(pl$mu) # ns = no. of spec
@@ -22,9 +29,9 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 	
 		# create x-data, initialize y-data
 		# y.mat will hold each spectrum separately
-	
-		x <- seq(from = x.range[1], to = x.range[2], length.out = npoints)
-		y.mat <- matrix(data = NA, nrow = ns, ncol = npoints)
+
+		x <- seq(from = x.range[1], to = x.range[2], length.out = ndp)
+		y.mat <- matrix(data = NA, nrow = ns, ncol = ndp)
 	
 		for (n in 1:ns) {
 			y.mat[n,] <- gaussCurve(x = x, area = pl$area[n], mu = pl$mu[n],
@@ -40,8 +47,8 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 	if (type == "lorentz") {		
 		pl <- peak.list
 		ns <- length(pl$x0) # ns = no. of spec
-		x <- seq(from = x.range[1], to = x.range[2], length.out = npoints)
-		y.mat <- matrix(data = NA, nrow = ns, ncol = npoints)
+		x <- seq(from = x.range[1], to = x.range[2], length.out = ndp)
+		y.mat <- matrix(data = NA, nrow = ns, ncol = ndp)
 	
 		for (n in 1:ns) {
 			y.mat[n,] <- lorentzCurve(x = x, area = pl$area[n],

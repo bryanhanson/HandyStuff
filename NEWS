@@ -3,6 +3,17 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5-4
+Date: 2011-12-14
+News:
+>> Modified plotNMRspec and makeSpec so that spectra are drawn consistently regardless of the x.range settings.  Now a consistent number of data points is used and peak height/area/appearance should not change when x.range is changed.
+
+##### Version: 0.5-3
+Date: 2011-10-31
+News:
+>> Modified theme_poster and undo_theme_poster to give finer and more deliberate control over plotting parameters.  Should be much clearer if you have to hack the code.
+>> Created a NAMESPACE and made other changes for compatibility with R 2.14.
+
 ##### Version: 0.5-2
 Date: 2011-08-01
 News:

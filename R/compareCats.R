@@ -9,9 +9,6 @@ function(data = NULL, res = NULL,
 # Function to compare categorical data by
 # plotting means and se's or something similar
 # Bryan Hanson, DePauw Univ, Jan 2010
-
-	require(ggplot2)
-	require(ChemoSpec)
 	
 	if (is.null(fac1cols)) stop("You need to supply fac1cols")
 	

@@ -13,11 +13,6 @@ function(data = NULL, res = NULL,
 # Both fac1 and fac2 must be given: this is G x E!
 # fac2 must be a factor, but fac1 can be either factor or numeric
 # Everything related to a particular level of fac2 should be colored the same
-
-	require(ggplot2)
-	require(ChemoSpec) # on GitHub
-	require(plyr)
-	require(ggExtra)
 	
 	if (is.null(fac2cols)) stop("You need to supply fac2cols")
 	

@@ -10,7 +10,7 @@ This function creates a chromatogram or spectrum from a list of appropriate para
 
 \usage{
 makeSpec(peak.list, x.range, plot = TRUE, curves = FALSE,
-	type = "gauss", noise = 0, npoints = 1000, ...)
+	type = "gauss", noise = 0, dd = 1, ...)
 }
 
 \arguments{
@@ -35,8 +35,8 @@ A character string.  Use "gauss" to generate Gaussian curves (for chromatograms,
 A number giving the amount of noise to be added to the individual curves (the net spectrum has the noise from the individual spectra, it has no additional noise added to it).  Value corresponds to the argument \code{factor} in function \code{jitter}.
 }
 
-  \item{npoints}{
-The number of data points to use in calculating the spectrum or chromatogram.  As long as the peaks are broad, the default value of 1000 is fine.  But for NMR spectra, where the peaks are very narrow, one needs to increase the data density to ensure that enough points define the peaks.  For NMR spectra, a value of 2000 looks pretty good (and is the default in \code{plotNMRspec}). Note that the exact choice will depend upon the \code{x.range} specified, as \code{x.range} is divided into \code{npoints}.
+  \item{dd}{
+The density of data points per unit of \code{x.range}.  The total number of data points used to create the spectrum or chromatogram is \code{dd*abs(diff(x.range))} and thus it also depends on the units of \code{x.range}.  This approach ensures that peaks are not distorted when changing \code{x.range} for the same \code{peak.list}.
 }
 
 \item{\dots}{

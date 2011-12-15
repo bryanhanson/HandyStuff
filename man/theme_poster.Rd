@@ -8,7 +8,7 @@ ggplot2 theme for scientific posters
 This function sets up a theme and geom defaults suitable for figures on scientific posters.
 }
 \usage{
-theme_poster(base_size = 24)
+theme_poster(base_size = 20)
 }
 \arguments{
   \item{base_size}{

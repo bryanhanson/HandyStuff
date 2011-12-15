@@ -1,0 +1,23 @@
+Note: this version is buggy!
+
+How to install HandyStuff
+===================
+
+To install from Github using R:
+------------------------------
+
+install.packages("ggExtra", repos="http://R-Forge.R-project.org") # needed for HandyStuff
+
+install.packages("devtools")
+
+library("devtools")
+
+install_github(repo = "HandyStuff", username = "bryanhanson", branch = "master")
+
+library("HandyStuff")
+
+?HandyStuff # the help files
+
+If you use branch = "devel" you can get the development branch if it is available.  My habit is to keep these operational but not necessarily complete.
+
+Questions?  hanson@depauw.edu

@@ -1,7 +1,7 @@
 
 
 plotNMRspec <-
-function(peaks, x.range = c(12, 0), MHz = 300, npoints = 2000,
+function(peaks, x.range = c(12, 0), MHz = 300, ppHz = 1,
 	labels = TRUE, lab.pos = NULL, ...) {
 	
 	# Function to draw a theoretical 1H NMR spectrum
@@ -36,8 +36,12 @@ function(peaks, x.range = c(12, 0), MHz = 300, npoints = 2000,
 
 	ans <- data.frame(area = area, x0 = ppm, gamma = pw/2)
 
+	# p.ppm = points per ppm This way the data density
+	# is independent of the requested x.range
+	# This is esp. important for 13C since the peaks are narrow
+	
 	spec <- makeSpec(peak.list = ans, plot = FALSE,
-		x.range = x.range*MHz, type = "lorentz", npoints = npoints, ...)
+		x.range = x.range*MHz, type = "lorentz", dd = ppHz, ...)
 
 	if (!labels) y.lim <- range(spec[-c(1,2),])
 
@@ -47,7 +51,7 @@ function(peaks, x.range = c(12, 0), MHz = 300, npoints = 2000,
 		spec2 <- data.frame(group = as.factor(gr), spec[-c(1,2),])
 		spec2 <- aggregate(.~group, data = spec2, FUN = "max")
 		y.pos <- apply(spec2[,-1], MARGIN = 1, FUN = max)
-		cat("y.pos original =", y.pos, "\n")
+#		cat("y.pos original =", y.pos, "\n")
 		
 		# Next part adds an extra offset if labels are close together
 		# A better approach than this would be to calc exactly where
