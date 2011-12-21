@@ -1,11 +1,11 @@
 Package: HandyStuff
 Type: Package
 Title: HandyStuff: Stuff that is, well, Handy
-Version: 0.5-4
-Date: 2011-12-14
+Version: 0.5-5
+Date: 2011-12-20
 Author: Bryan A. Hanson DePauw University, Greencastle Indiana USA
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Mostly unrelated functions for all sorts of things I want to do or I want my students to be able to do easily.  Also a few data sets I like to use in teaching.  And other fun stuff.  An incoherent collection of seemingly random functions.
 License: GPL-3
-Imports: RColorBrewer, MASS, plyr, grid, ChemoSpec, gsubfn, gridExtra,  ggExtra, ggplot2
+Imports: RColorBrewer, MASS, gsubfn, ChemoSpec, plyr, grid, ggplot2,  gridExtra, ggExtra
 ByteCompile: TRUE

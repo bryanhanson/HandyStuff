@@ -10,6 +10,7 @@ function(data = NULL, res = NULL,
 # plotting means and se's or something similar
 # Bryan Hanson, DePauw Univ, Jan 2010
 	
+	require(ChemoSpec)
 	if (is.null(fac1cols)) stop("You need to supply fac1cols")
 	
 	# 1st, reduce the df and clean it of NAs
@@ -36,7 +37,7 @@ function(data = NULL, res = NULL,
 	# now add layers as requested
 	
 	if (freckles) {
-		if (method == "points") stop("It doesn't make sense to combine points with freckles!")
+		if (method == "points") warning("It doesn't make sense to combine points with freckles!")
 		jit <- position_jitter(width = 0.1, height = 0.0)
 		p <- p + layer(geom = "jitter", position = jit, color = "black", size = 1) 
 		}

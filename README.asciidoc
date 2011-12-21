@@ -1,4 +1,6 @@
-Note: this version is buggy!
+Note: this version (0.5-5) does not run it's examples correctly with either ggplot2 0.8.9 or 0.9.0, the latter from Github branch master.  Work in progress!
+
+The files here do build and check OK provided R --vanilla CMD check --no-examples is used, so you can install from here (but you'll run into errors if you use any functions relying on ggplot2).
 
 How to install HandyStuff
 ===================

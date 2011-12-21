@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5-5
+Date: 2011-12-20
+News:
+>> Trying to make this work under 2.14 and with the current ggplot2!
+
 ##### Version: 0.5-4
 Date: 2011-12-14
 News:
