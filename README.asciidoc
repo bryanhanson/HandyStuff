@@ -8,8 +8,6 @@ How to install HandyStuff
 To install from Github using R:
 ------------------------------
 
-install.packages("ggExtra", repos="http://R-Forge.R-project.org") # needed for HandyStuff
-
 install.packages("devtools")
 
 library("devtools")

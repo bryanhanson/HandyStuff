@@ -3,7 +3,7 @@ function(data = NULL, res = NULL,
 	fac1 = NULL, fac2 = NULL, fac2cols = NULL,
 	freckles = FALSE, type = "connect",
 	method = c("sem", "iqr", "mad", "box", "sem95"),
-	table = NULL, xlab = NULL, ylab = NULL, title = NULL, ...) {
+	xlab = NULL, ylab = NULL, title = NULL, ...) {
 
 # Function to compare categorical data by
 # plotting means etc in the same panel
@@ -91,62 +91,7 @@ function(data = NULL, res = NULL,
 #    if (exists("xlim")) p <- p + xlim(xlim)
 #    if (exists("ylim")) p <- p + ylim(ylim)
 
-	# now add summary tables
-	# using a nice table feature from ggExtra
-
-	if (!is.null(table)) {
-		
-		if (type == "connect") {
-			counts <- count(data, vars = c(fac2, fac1))
-			colnames(counts) <- c(fac2, fac1, "count")
-
-			p <- p + annotate("table", table[1], table[2], table = counts,
-				theme = theme.list(show.box = TRUE, separator = "black",
-				gp = gpar(cex = table[3]),
-               	show.csep = TRUE, show.rsep = TRUE, show.colnames = TRUE,
-               	show.rownames = FALSE))
-			}
-
-		if (type == "anova") {
-			if (!is.null(fac2)) form <- as.formula(paste(res, "~", paste(fac1, fac2, sep = "*")))
-			if (is.null(fac2)) form <- as.formula(paste(res, "~", fac1, sep = ""))
-			mod <- aov(formula = form, data = data)
-			mod <- summary(mod)[[1]]
-			mod[,2:4] <- round(mod[,2:4], 2)
-			mod[,5] <- signif(mod[,5], 4)
-			p <- p + annotate("table", table[1], table[2], table = mod,
-				theme = theme.list(show.box = TRUE, separator = "black",
-				gp = gpar(cex = table[3]),
-               	show.csep = TRUE, show.rsep = TRUE, show.colnames = TRUE,
-               	show.rownames = TRUE,
-               	gpar.rowtext = gpar(col = "black", cex = 1.0, fontface = "bold")))
-			}
-
-		if (type == "fitLine") {
-			lvls <- levels(data[,fac2])
-			nl <- length(lvls)
-			m <- c()
-			b <- c()
-			r2 <- c()
-			for (i in 1:nl) {
-				dat <- subset(data, data[,fac2] == lvls[i])
-				mod <- lm(dat[,res] ~ dat[,fac1])
-				m[i] <- round(mod$coef[2], 2)
-				b [i]<- round(mod$coef[1], 2)
-				r2[i] <- round(cor(dat[,fac1], dat[,res])^2, 4)
-				
-				}
-				
-			mod.res <- data.frame(line = lvls, m = m, b = b, r2 = r2)
-				
-			p <- p + annotate("table", table[1], table[2], table = mod.res,
-				theme = theme.list(show.box = TRUE, separator = "black",
-				gp = gpar(cex = table[3]),
-               	show.csep = TRUE, show.rsep = TRUE, show.colnames = TRUE,
-               	show.rownames = FALSE))
-				
-			}
-		}	
+	
 	invisible(p)
 	}
 
