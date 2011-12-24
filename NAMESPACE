@@ -1,2 +1,2 @@
 exportPattern("^[^.]")
-import(RColorBrewer, MASS, gsubfn, ChemoSpec, grid, plyr, ggplot2)
+import(RColorBrewer, MASS, gsubfn, grid, plyr, ggplot2, ChemoSpec)

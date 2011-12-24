@@ -4,9 +4,9 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
 ##### Version: 0.5-5
-Date: 2011-12-22
+Date: 2011-12-24
 News:
->> Trying to make this work under 2.14 and with the current ggplot2!
+>> Numerous changes for 2.14 and with the current ggplot2!
 >> Due to changes in ggplot2, ggExtra has been deprecated.  As a result the  table features in rxnNorm have been disabled until the functionality returns.  Sorry.  As a further result, gridExtra and ggExtra have been removed from NAMESPACE and DESCRIPTION.
 
 ##### Version: 0.5-4

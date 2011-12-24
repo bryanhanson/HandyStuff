@@ -1,6 +1,4 @@
-Note: this version (0.5-5) does not run it's examples correctly with either ggplot2 0.8.9 or 0.9.0, the latter from Github branch master.  Work in progress!
-
-The files here do build and check OK provided R --vanilla CMD check --no-examples is used, so you can install from here (but you'll run into errors if you use any functions relying on ggplot2).
+Note: this version (0.5-5) works with the latest version of ggplot2 and scales from Github.  These are not on CRAN yet.
 
 How to install HandyStuff
 ===================
@@ -12,6 +10,8 @@ install.packages("devtools")
 
 library("devtools")
 
+install_github("ggplot2")
+install_github("scales")
 install_github(repo = "HandyStuff", username = "bryanhanson", branch = "master")
 
 library("HandyStuff")

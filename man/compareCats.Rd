@@ -8,8 +8,9 @@ This function allows one to generate a nice plot comparing a response from sampl
 }
 \usage{
 compareCats(data = NULL, res = NULL, fac1 = NULL, fac2 = NULL,
-	fac1cols = NULL,
-	method = c("box", "points"), ...)
+	fac1cols = NULL, freckles = FALSE,
+	method = c("sem", "iqr", "mad", "box", "points", "sem95"),
+	xlab = NULL, ylab = NULL, title = NULL, ...)
 }
 \arguments{
   \item{data}{
@@ -27,8 +28,20 @@ A column name in the supplied data frame which gives the levels of factor/catego
   \item{fac1cols}{
 A vector of colors to be used for factor 1; must be as along as the levels in factor 1.
 }
+  \item{freckles}{
+Logical; if \code{TRUE}, the actual data points are plotted as small points, hence the name, jittered slightly in the horizontal direction only.
+}
   \item{method}{
-One of \code{c("box", "points")}.
+One of \code{c("sem", "iqr", "mad", "box", "points", "sem95")}.  Various methods for computing measures of spread and central tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
+}
+  \item{xlab}{
+Character; label for the x axis.
+}
+  \item{ylab}{
+Character; label for the y axis.
+}
+  \item{title}{
+Character; a title for the plot.
 }
   \item{\dots}{
 Other parameters to be passed downstream.
@@ -50,19 +63,22 @@ A \code{ggplot2} object.
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 }
 \examples{
+library("ChemoSpec")
 mydf <- data.frame(
 	resp = rnorm(40),
 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
 	cat2 = sample(letters[1:2], 40, replace = TRUE))
 #	
 p <- compareCats(data = mydf, res = "resp", fac1 = "cat1",
-	fac2 = "cat2", method = "box",
+	fac2 = "cat2", method = "iqr", freckles = TRUE,
 	fac1cols = c("red", "green", "blue"))
 print(p)
-
-p <- compareCats(data = mydf, res = "resp", fac1 = "cat1",
-	fac2 = "cat2", method = "points",
-	fac1cols = c("red", "green", "blue"))
+#
+# Interchange the roles of the factors (and hence colors):
+#
+p <- compareCats(data = mydf, res = "resp", fac1 = "cat2",
+	fac2 = "cat1", method = "iqr", freckles = TRUE,
+	fac1cols = c("red", "green"))
 print(p)
 
 }

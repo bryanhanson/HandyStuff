@@ -23,6 +23,7 @@ Bryan A. Hanson (hanson@depauw.edu)
 }
 
 \examples{
+library("ggplot2")
 df <- data.frame(x = rnorm(10), y = rnorm(10))
 p1 <- qplot(x = x, y = y, data = df, geom = c("point", "line"), main = "Test Plot")
 print(p1) # default values

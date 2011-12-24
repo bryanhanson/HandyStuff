@@ -13,7 +13,7 @@ function(data = NULL, res = NULL,
 # Both fac1 and fac2 must be given: this is G x E!
 # fac2 must be a factor, but fac1 can be either factor or numeric
 # Everything related to a particular level of fac2 should be colored the same
-	
+
 	if (is.null(fac2cols)) stop("You need to supply fac2cols")
 	
 	# 1st, reduce the df and clean it of NAs
