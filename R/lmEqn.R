@@ -12,9 +12,9 @@ function(df = NULL, y = NULL, x = NULL,
 	m <- mod$coef[2]
 	b <- mod$coef[1]
 	r2 <- round(cor(x1, y1)^2, 4)
-	lab <- paste("m =", round(m, 3), "b =", round(b, 3), "r^2 =", r2, sep = "  ")
-	if (method == "lm") lab <- paste("linear model: ", lab)
-	if (method == "rlm") lab <- paste("robust linear model: ", lab)
+	Lab <- paste("m =", round(m, 3), "b =", round(b, 3), "r^2 =", r2, sep = "  ")
+	if (method == "lm") Lab <- paste("linear model: ", Lab)
+	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 
 # now plot the data
 
@@ -22,9 +22,15 @@ function(df = NULL, y = NULL, x = NULL,
 	p <- p + geom_point()
 	if (method == "lm") p <- p + geom_smooth(method = "lm")
 	if (method == "rlm") p <- p + geom_smooth(method = "rlm")
-	p <- p + geom_text(aes(x, y, label = lab), size = 5, hjust = 0, vjust = 0,
-	data = data.frame(x = leg.loc[1], y = leg.loc[2]), label = lab)
-	
+	# p <- p + geom_text(aes(x, y, label = Lab), size = 5, hjust = 0, vjust = 0,
+	# data = data.frame(x = leg.loc[1], y = leg.loc[2], label = Lab))
+
+	# p <- p + geom_text(aes(x = leg.loc[1], y = leg.loc[2], label = Lab),
+		# size = 5, hjust = 0, vjust = 0, data = data.frame())
+
+	p <- p + annotate("text", label = Lab, x = leg.loc[1], y = leg.loc[2],
+		size = 5, hjust = 0, vjust = 0)
+		
 	if (!is.null(title)) p <- p + opts(title = title)
     if (!is.null(xlab)) p <- p + xlab(xlab)
     if (!is.null(ylab)) p <- p + ylab(ylab)

@@ -69,6 +69,7 @@ Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 }
 
 \examples{
+library("ChemoSpec")
 # set up demo data
 res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
 rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
