@@ -1,5 +1,3 @@
-Note: this version (0.5-5) works with the latest version of ggplot2 and scales from Github.  These are not on CRAN yet.
-
 How to install HandyStuff
 ===================
 

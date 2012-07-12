@@ -82,4 +82,6 @@ p <- compareCats(data = mydf, res = "resp", fac1 = "cat2",
 print(p)
 
 }
-\keyword{ graphics }
+\keyword{ plot }
+\keyword{ univariate }
+

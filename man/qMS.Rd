@@ -40,4 +40,4 @@ Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 ms <- qMS(f = "C5H8BrCl")
 print(ms)
 }
-\keyword{utility }
+\keyword{utilities }

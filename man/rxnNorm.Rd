@@ -5,12 +5,12 @@
 Create a Reaction Norm or Interaction Plot
 }
 \description{
-Draws a reaction norm or interaction plot as typically used in ecology to demonstrate treatment x genotype interactions.  The x axis can be categorical or numeric.  There are options to plot the raw data points in addition to a choice of several summary methods.  The central values may be connected or the entire data set fitted to a line.
+Draws a reaction norm or interaction plot as typically used in ecology to demonstrate treatment x genotype interactions.  The x axis can be categorical or numeric.  There are options to plot the raw data points in addition to a choice of several summary methods.  The central values may be connected or the entire data set fitted to a line.  A summary table is optional, and gives either counts at each level, an ANOVA table or fit data.
 }
 \usage{
 rxnNorm(data = NULL, res = NULL, fac1 = NULL, fac2 = NULL,
 	fac2cols = NULL, freckles = FALSE, type = "connect",
-	method = c("sem", "iqr", "mad", "box", "sem95"),
+	method = c("sem", "iqr", "mad", "box", "sem95"), table = NULL,
 	xlab = NULL, ylab = NULL, title = NULL, ...)
 }
 
@@ -34,10 +34,13 @@ A vector of color names as long as the levels of \code{fac2}.  The data and line
 Logical; if TRUE, add the raw data points to the plot (as tiny points or \emph{freckles}, thanks Dana!).
 }
   \item{type}{
-Either "connect" or "fitLine".  In the first case, a line is drawn which connects the chosen measure of central tendency (e.g. mean) for each value of \code{fac1}.  This would generally be used when the x value are categorical.  In the second case, a linear fit is performed and the line is drawn; used for continuous x values.
+Either "connect", "fitLine" or "anova".  In the first case, a line is drawn which connects the chosen measure of central tendency (e.g. mean) for each value of \code{fac1}.  This would generally be used when the x value are categorical.  In the second case, a linear fit is performed and the line is drawn; used for continuous x values.  In the third case, a connecting line is drawn along with an ANOVA summary table.
 }
   \item{method}{
 One of c("sem", "iqr", "mad", "box", "sem95").  Each produces a dot at the measure of central tendency and error bars corresponding to the requested method  ("box" currently does not work quite right).  Full details are in \code{\link[ChemoSpec]{seXy}}.
+}
+  \item{table}{
+If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in the units of the measurements \code{res} and \code{fac1}; \code{fac1} is internally handled as a number so if \code{fac1} has three levels then the setting \code{x = 2} would center the table over the middle level.
 }
   \item{xlab}{
 Character; a label for the x axis.
@@ -69,7 +72,9 @@ Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 }
 
 \examples{
-library("ChemoSpec")
+require("ChemoSpec")
+require("ggplot2")
+require("gridExtra")
 # set up demo data
 res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
 rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
@@ -82,18 +87,28 @@ fac2 <- as.factor(fac2)
 num1 <- c(rep(5, 20), rep(10, 20), rep(12, 20))
 td <- data.frame(r = res, f1 = fac1, f2 = fac2, no1 = num1)
 #
-# Numeric x with lm:
+# Numeric x with lm and summary table:
 demo <- rxnNorm(data = td, res = "r", fac1 = "no1", fac2 = "f2",
 fac2cols = c("red", "blue"), freckles = TRUE, method = "sem",
+table = c(7, 15, 0.75),
 title = "rxnNorm Demo: x axis numeric with lm",
 type = "fitLine")
 print(demo)
 #
-# Categorical x, connected:
+# Categorical x, connected and summary table:
 demo <- rxnNorm(data = td, res = "r", fac1 = "f1", fac2 = "f2",
 fac2cols = c("red", "blue"), freckles = TRUE, method = "sem",
-title = "rxnNorm Demo: x axis categorical",
+table = c(1.2, 15, 0.75),
+title = "rxnNorm Demo: x axis categorical with table of counts",
 type = "connect")
+print(demo)
+
+# Categorical x, connected with ANOVA table:
+demo <- rxnNorm(data = td, res = "r", fac1 = "f1", fac2 = "f2",
+fac2cols = c("red", "blue"), freckles = TRUE, method = "sem",
+table = c(2, 22, 0.75),
+title = "rxnNorm Demo: x axis categorical with ANOVA table",
+type = "anova") + ylim(0, 25)
 print(demo)
 
 }

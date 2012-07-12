@@ -59,7 +59,7 @@ Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 # A fun little chromatogram:
 chrom <- data.frame(mu = c(2, 5, 11), sd = c(0.5, 1, 2),
 area = c(1, 0.5, 1), tail =  c(NA, NA, 0.1))
-ex1 <- makeSpec(chrom, x.range = c(0, 20), plot = TRUE, curves = TRUE)
+ex1 <- makeSpec(chrom, x.range = c(0, 20), plot = TRUE, curves = TRUE, dd = 5)
 #
 # Faux ethyl group NMR with J = 0.1 ppm.  Note that a much better
 # NMR spectrum can be generated using plotNMRspec which also uses
@@ -67,8 +67,8 @@ ex1 <- makeSpec(chrom, x.range = c(0, 20), plot = TRUE, curves = TRUE)
 spec <- data.frame(mu = c(3.5, 3.4, 3.3, 3.2, 1.4, 1.3, 1.2),
 sd = rep(0.01, 7), tail =  rep(NA, 7),
 area = c(1, 3, 3, 1, 1, 2, 1) * c(0.5, 0.5, 0.5, 0.5, 0.66, 0.66, 0.66))
-ex2 <- makeSpec(spec, x.range = c(5, 0), plot = TRUE, curves = FALSE)
+ex2 <- makeSpec(spec, x.range = c(5, 0), plot = TRUE, curves = FALSE, dd = 100)
 }
 
-\keyword{ utility }
+\keyword{ utilities }
 

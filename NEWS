@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5-6
+Date: 12 July 2012
+News:
+>> All functions have been restored and modified to work with the new ggplot2.  At least I think all is well! (tested with ggplot2_0.9.1)
+
 ##### Version: 0.5-5
 Date: 2011-12-24
 News:

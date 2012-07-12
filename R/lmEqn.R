@@ -22,11 +22,6 @@ function(df = NULL, y = NULL, x = NULL,
 	p <- p + geom_point()
 	if (method == "lm") p <- p + geom_smooth(method = "lm")
 	if (method == "rlm") p <- p + geom_smooth(method = "rlm")
-	# p <- p + geom_text(aes(x, y, label = Lab), size = 5, hjust = 0, vjust = 0,
-	# data = data.frame(x = leg.loc[1], y = leg.loc[2], label = Lab))
-
-	# p <- p + geom_text(aes(x = leg.loc[1], y = leg.loc[2], label = Lab),
-		# size = 5, hjust = 0, vjust = 0, data = data.frame())
 
 	p <- p + annotate("text", label = Lab, x = leg.loc[1], y = leg.loc[2],
 		size = 5, hjust = 0, vjust = 0)

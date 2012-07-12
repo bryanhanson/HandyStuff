@@ -3,7 +3,7 @@ function(data = NULL, res = NULL,
 	fac1 = NULL, fac2 = NULL, fac2cols = NULL,
 	freckles = FALSE, type = "connect",
 	method = c("sem", "iqr", "mad", "box", "sem95"),
-	xlab = NULL, ylab = NULL, title = NULL, ...) {
+	table = NULL, xlab = NULL, ylab = NULL, title = NULL, ...) {
 
 # Function to compare categorical data by
 # plotting means etc in the same panel
@@ -13,7 +13,7 @@ function(data = NULL, res = NULL,
 # Both fac1 and fac2 must be given: this is G x E!
 # fac2 must be a factor, but fac1 can be either factor or numeric
 # Everything related to a particular level of fac2 should be colored the same
-
+	
 	if (is.null(fac2cols)) stop("You need to supply fac2cols")
 	
 	# 1st, reduce the df and clean it of NAs
@@ -91,7 +91,69 @@ function(data = NULL, res = NULL,
 #    if (exists("xlim")) p <- p + xlim(xlim)
 #    if (exists("ylim")) p <- p + ylim(ylim)
 
-	
+	# now add summary tables
+	# using tableGrob from gridExtra
+
+	if (!is.null(table)) {
+		
+		if (type == "connect") {
+			counts <- count(data, vars = c(fac2, fac1))
+			colnames(counts) <- c(fac2, fac1, "count")
+
+			myt <- tableGrob(counts, show.box = TRUE,
+				show.rownames = FALSE, show.colnames = TRUE,
+				show.csep = TRUE, show.rsep = TRUE,
+				separator = "black", gp = gpar(cex = table[3]))
+
+			p <- p + annotation_custom(myt, xmin = table[1]-0.5, xmax = table[1]+0.5,
+				ymin = table[2]-0.5, ymax = table[2]+0.5)
+			}
+
+		if (type == "anova") {
+			if (!is.null(fac2)) form <- as.formula(paste(res, "~", paste(fac1, fac2, sep = "*")))
+			if (is.null(fac2)) form <- as.formula(paste(res, "~", fac1, sep = ""))
+			mod <- aov(formula = form, data = data)
+			mod <- summary(mod)[[1]]
+			mod[,2:4] <- round(mod[,2:4], 2)
+			mod[,5] <- signif(mod[,5], 4)
+
+			myt <- tableGrob(mod, show.box = TRUE,
+				show.rownames = FALSE, show.colnames = TRUE,
+				show.csep = TRUE, show.rsep = TRUE,
+				separator = "black", gp = gpar(cex = table[3]))
+
+			p <- p + annotation_custom(myt, xmin = table[1]-0.5, xmax = table[1]+0.5,
+				ymin = table[2]-0.5, ymax = table[2]+0.5)
+			
+			}
+
+		if (type == "fitLine") {
+			lvls <- levels(data[,fac2])
+			nl <- length(lvls)
+			m <- c()
+			b <- c()
+			r2 <- c()
+			for (i in 1:nl) {
+				dat <- subset(data, data[,fac2] == lvls[i])
+				mod <- lm(dat[,res] ~ dat[,fac1])
+				m[i] <- round(mod$coef[2], 2)
+				b [i]<- round(mod$coef[1], 2)
+				r2[i] <- round(cor(dat[,fac1], dat[,res])^2, 4)
+				
+				}
+				
+			mod.res <- data.frame(line = lvls, m = m, b = b, r2 = r2)
+				
+			myt <- tableGrob(mod.res, show.box = TRUE,
+				show.rownames = FALSE, show.colnames = TRUE,
+				show.csep = TRUE, show.rsep = TRUE,
+				separator = "black", gp = gpar(cex = table[3]))
+
+			p <- p + annotation_custom(myt, xmin = table[1]-0.5, xmax = table[1]+0.5,
+				ymin = table[2]-0.5, ymax = table[2]+0.5)
+				
+			}
+		}	
 	invisible(p)
 	}
 
