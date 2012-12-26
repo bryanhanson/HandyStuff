@@ -12,7 +12,7 @@ ppHz = 1, labels = TRUE, lab.pos = NULL, ...)
 }
 \arguments{
   \item{peaks}{
-A data frame with the following columns: delta, mult (multiplicity), J, area, pw.  Multiplicity should be given by a number, so use 2 for a doublet.  J is in Hz.  pw is the peak width at half-height in Hz.
+A data frame with the following columns: delta, mult (multiplicity), J, area, pw.  Multiplicity should be given by a number, so use 2 for a doublet.  J is in Hz (use 0 for singlets).  pw is the peak width at half-height in Hz.
 }
   \item{x.range}{
 A numeric vector of length 2 giving the ppm range desired.
@@ -30,7 +30,7 @@ Set to \code{FALSE} to turn off labels, such as with 13C NMR spectra.
 }
 
   \item{lab.pos}{
-A vector of label positions as along as the number of rows in \code{peaks} (the number of peaks in the spectrum).  A numeric vector (for now) where 2 = left and 4 = right.  This adjusts the positions of the labels to be either left or right of the peak as a way to avoid overlaps.
+A vector of label positions as along as the number of rows in \code{peaks} (the number of peaks in the spectrum).  A numeric vector (for now) where 2 = left and 4 = right.  This adjusts the positions of the labels to be either left or right of the peak as a way to avoid overlaps.  The order must correspond to the order in \code{peaks}.
 }
 
   \item{\dots}{

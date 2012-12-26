@@ -26,9 +26,9 @@ function(df = NULL, y = NULL, x = NULL,
 	p <- p + annotate("text", label = Lab, x = leg.loc[1], y = leg.loc[2],
 		size = 5, hjust = 0, vjust = 0)
 		
-	if (!is.null(title)) p <- p + opts(title = title)
-    if (!is.null(xlab)) p <- p + xlab(xlab)
-    if (!is.null(ylab)) p <- p + ylab(ylab)
+	if (!is.null(title)) p <- p + labs(title = title)
+    if (!is.null(xlab)) p <- p + labs(xlab = xlab)
+    if (!is.null(ylab)) p <- p + labs(ylab = ylab)
 
 	p
 	

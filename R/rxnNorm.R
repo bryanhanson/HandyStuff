@@ -79,15 +79,15 @@ function(data = NULL, res = NULL,
 	# now add the common decorations & modifications
 	
 	p <- p  + scale_colour_manual(name = "", values = fac2cols) +
-		opts(axis.text.x = theme_text(colour = "black"),
-		axis.text.y = theme_text(colour = "black"),
-		axis.ticks = theme_blank()) + opts(...)		
+		theme(axis.text.x = element_text(colour = "black"),
+		axis.text.y = element_text(colour = "black"),
+		axis.ticks = element_blank())		
 
 	# now add labels and fix limits (modified from qplot)
 	
-    if (!is.null(title)) p <- p + opts(title = title)
-    if (!is.null(xlab)) p <- p + xlab(xlab)
-    if (!is.null(ylab)) p <- p + ylab(ylab)
+    if (!is.null(title)) p <- p + labs(title = title)
+    if (!is.null(xlab)) p <- p + labs(xlab = xlab)
+    if (!is.null(ylab)) p <- p + labs(ylab = ylab)
 #    if (exists("xlim")) p <- p + xlim(xlim)
 #    if (exists("ylim")) p <- p + ylim(ylim)
 

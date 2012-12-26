@@ -46,7 +46,7 @@ function(data = NULL, res = NULL,
 		p <- p + layer(geom = "jitter", position = jit)		}
 		
 	if (method == "box") {
-		p <- p + geom_boxplot(width = 0.2, outlier.shape = 2)
+		p <- p + geom_boxplot(width = 0.2, outlier.size = 0, fill = "grey90")
 		}
 	
 	if (method == "sem") {
@@ -67,23 +67,29 @@ function(data = NULL, res = NULL,
 	# now add the common decorations & modifications
 	
 	p <- p  + scale_colour_manual(values = fac1cols) +
-		opts(axis.text.x = theme_text(colour = "black"),
-		axis.text.x = theme_text(colour = "black"),
-		axis.ticks = theme_blank(), legend.position = "none", ...)
+		theme(axis.text.x = element_text(colour = "black"),
+		axis.ticks = element_blank(), legend.position = "none", ...)
 		
 	# now add labels and fix limits (modified from qplot)
 	
-    if (!is.null(title)) p <- p + opts(title = title)
-    if (!is.null(xlab)) p <- p + xlab(xlab)
-    if (!is.null(ylab)) p <- p + ylab(ylab)
+    if (!is.null(title)) p <- p + labs(title = title)
+    if (!is.null(xlab)) p <- p + labs(xlab = xlab)
+    if (!is.null(ylab)) p <- p + labs(ylab = ylab)
 #    if (exists("xlim")) p <- p + xlim(xlim)
 #    if (exists("ylim")) p <- p + ylim(ylim)
-		
+
+	if (!identical(fac2, NULL)) {
+		facCounts <- count(data, vars = c(fac2, fac1))
+		} else {
+			facCounts <- count(data, vars = fac1)
+			}
 	
-	p <- p + geom_text(aes_string(x = fac1,
-		y = paste("min(",res,") - 0.1 * diff(range(",res,"))", sep=""),
-		label = 'paste("n = ", ..count.. , sep = "")'),
-		color = "black", size = 4.0, stat = "bin", data = data)
+	facCounts$label <- paste("n = ", facCounts$freq , sep = "")
+	facCounts$x <- seq(1, length(levels(data[,fac1])), by = 1)
+	facCounts$y <- min(data$res) - 0.1*diff(range(data$res))
+
+	p <- p + geom_text(aes(x, y, label = label), 
+		color = "black", size = 4.0, data = facCounts)
 
 	invisible(p)
 	}
