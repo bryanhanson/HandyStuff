@@ -68,6 +68,15 @@ mydf <- data.frame(
 	resp = rnorm(40),
 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
 	cat2 = sample(letters[1:2], 40, replace = TRUE))
+#
+# One factor:
+#
+p <- compareCats(data = mydf, res = "resp", fac1 = "cat1",
+	method = "box", freckles = TRUE,
+	fac1cols = c("red", "green", "blue"))
+print(p)
+#
+# Two factors:
 #	
 p <- compareCats(data = mydf, res = "resp", fac1 = "cat1",
 	fac2 = "cat2", method = "iqr", freckles = TRUE,
