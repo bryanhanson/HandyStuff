@@ -160,11 +160,9 @@ function(formula = NULL, data = NULL, cols = NULL,
 				# show.csep = TRUE, show.rsep = TRUE,
 				# separator = "black", gp = gpar(cex = table[3]))
 			
-			# p <- p + annotation_custom(grob=circleGrob(r=unit(1,"npc")), xmin = table[1]-0.5, xmax = table[1]+0.5,
+			# p <- p + annotation_custom(grob=myt, xmin = table[1]-0.5, xmax = table[1]+0.5,
 				# ymin = table[2]-0.5, ymax = table[2]+0.5)
-			#p <- p + annotation_custom(circleGrob())
-			pp <- qplot(1, 1, geom = "blank") + annotation_custom(circleGrob())
-			p <- p + annotation_custom(ggplotGrob(pp))
+			p <- p + annotation_custom(circleGrob())
 			}
 
 		if (type == "anova") {
@@ -186,7 +184,7 @@ function(formula = NULL, data = NULL, cols = NULL,
 			}
 
 		if (type == "fitLine") {
-			lvls <- levels(data[,fac2])
+			lvls <- levels(data[,fac2])  # fac2 has to be numeric for this to work!
 			nl <- length(lvls)
 			m <- c()
 			b <- c()
@@ -196,7 +194,7 @@ function(formula = NULL, data = NULL, cols = NULL,
 				mod <- lm(dat[,res] ~ dat[,fac1])
 				m[i] <- round(mod$coef[2], 2)
 				b [i]<- round(mod$coef[1], 2)
-				r2[i] <- round(cor(dat[,fac1], dat[,res])^2, 4)
+				r2[i] <- round(cor(dat[,fac2], dat[,res])^2, 4)
 				
 				}
 				

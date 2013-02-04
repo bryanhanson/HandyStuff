@@ -1,7 +1,10 @@
-lmEqn <-
+lmEqnL <-
 function(formula = NULL, data = NULL,
-	method = "lm", leg.loc = c(0, 0),
+	method = "lm", leg.loc = c(0.5, 0.5),
 	xlab = NULL, ylab = NULL, title = NULL, ...) {
+	
+	# This is the version that uses Lattice graphics
+	# compare to lmEqn which uses ggplot2 graphics
 	
 	# Process & check formula
 	
@@ -25,20 +28,15 @@ function(formula = NULL, data = NULL,
 	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 
 	# Make the plot
+
+	mypanel <- function(x, y, ...) {
+		panel.xyplot(x, y, type = "p", ...)
+		panel.text(leg.loc[1], leg.loc[2], labels = Lab, adj = 0, ...)
+		panel.lmline(x, y, a = mod, ...)
+		}
 	
-	p <- ggplot(data = data, aes_string(x = v, y = res))
-	p <- p + geom_point()
-	if (method == "lm") p <- p + geom_smooth(method = "lm")
-	if (method == "rlm") p <- p + geom_smooth(method = "rlm")
-
-	p <- p + annotate("text", label = Lab, x = leg.loc[1], y = leg.loc[2],
-		size = 5, hjust = 0, vjust = 0)
-		
-	if (!is.null(title)) p <- p + labs(title = title)
-    if (!is.null(xlab)) p <- p + labs(xlab = xlab)
-    if (!is.null(ylab)) p <- p + labs(ylab = ylab)
-
-	p
+	xyplot(formula, data, panel = mypanel,
+		main = title, ylab = ylab, xlab = xlab, ...)
 	
 	}
 
