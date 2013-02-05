@@ -1,7 +1,7 @@
-rxnNorm <-
+rxnNormL <-
 function(formula = NULL, data = NULL, cols = NULL,
 	freckles = FALSE, type = "connect",
-	method = c("sem", "iqr", "mad", "box", "sem95"),
+	method = c("sem", "sem95", "iqr", "mad", "box"),
 	table = NULL, xlab = NULL, ylab = NULL, title = NULL, ...) {
 
 # Function to compare categorical data by

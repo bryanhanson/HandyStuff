@@ -1,38 +1,33 @@
 \name{compareCats}
 \alias{compareCats}
+\alisa{compareCatsL}
 \title{
 Compare Data by Category
 }
 \description{
-This function allows one to generate a nice plot comparing a response from samples falling into one or two categories with corresponding levels.  \code{ggplot2} is used to create plots, with options to include the original data and to use various measures of central tendency and spread.  A count of the number of samples in each level is included.  Gives a visual impression of the data to go along with hypothesis tests.
+This function allows one to generate a nice plot comparing a response from samples falling into one or two categories with corresponding levels.  Either \code{lattice} or \code{ggplot2} is used to create plots, with options to include the original data and to use various measures of central tendency and spread.  A count of the number of samples in each level is included.  Gives a visual impression of the data to go along with hypothesis tests.
 }
 \usage{
-compareCats(data = NULL, res = NULL, fac1 = NULL, fac2 = NULL,
-	fac1cols = NULL, freckles = FALSE,
-	method = c("sem", "iqr", "mad", "box", "points", "sem95"),
+compareCats(formula, data = NULL,
+	cols = NULL, freckles = FALSE,
+	method = c("sem", "sem95", "iqr", "mad", "box", "points"),
 	xlab = NULL, ylab = NULL, title = NULL, ...)
 }
 \arguments{
+  \item{formula}{
+A formula with both LHS and RHS.  For \code{compareCats} the formula should comply with the usual \code{R} standards, for instance \code{y ~ factor1 * factor2}. For \code{compareCatsL} the formula should comply with the usual \code{lattice} conventions, for instance \code{y ~ factor1 | factor2}. 
+}
   \item{data}{
 A data frame containing the response and categorical/factor data.  A maximum two categories with any number of levels can be plotted at one time.
 }
-  \item{res}{
-A column name in the supplied data frame which gives the responses.  Should be in quotes.
-}
-  \item{fac1}{
-A column name in the supplied data frame which gives the levels of factor/category 1. Should be in quotes.
-}
-  \item{fac2}{
-A column name in the supplied data frame which gives the levels of factor/category 1. Should be in quotes. Optional.  If supplied, the plot will be faceted by the levels of \code{fac2}.
-}
-  \item{fac1cols}{
+  \item{cols}{
 A vector of colors to be used for factor 1; must be as along as the levels in factor 1.
 }
   \item{freckles}{
 Logical; if \code{TRUE}, the actual data points are plotted as small points, hence the name, jittered slightly in the horizontal direction only.
 }
   \item{method}{
-One of \code{c("sem", "iqr", "mad", "box", "points", "sem95")}.  Various methods for computing measures of spread and central tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
+One of \code{c("sem", "sem95", "iqr", "mad", "box", "points")}.  Various methods for computing measures of spread and central tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
 }
   \item{xlab}{
 Character; label for the x axis.
@@ -51,7 +46,7 @@ Other parameters to be passed downstream.
 The supplied data frame is stripped down to just the response and factor columns, then \code{NAs} are removed; the counts reflect this.
 }
 \value{
-A \code{ggplot2} object.
+A \code{ggplot2} or \code{lattice} object.  These can be modified by the usual methods associated with these packages.
 }
 \references{
 \url{http://academic.depauw.edu/~hanson/ChemoSpec/ChemoSpec.html}\cr

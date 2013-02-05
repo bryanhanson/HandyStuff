@@ -3,6 +3,14 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.5-7
+Date: 
+News:
+>> Function compareCatsL which is the lattice equivalent of compareCats was added.
+>> The following function arguments were changed to use a formula: compareCatsL, lmEqn, lmEqnL.
+>> Added function examplePage, slightly modified from the version by Sasha Epskamp at sachaepskamp.com/blog/HTMLexamples
+>> Updates to documentation and github site.
+
 ##### Version: 0.5-6
 Date: 12 July 2012
 News:
