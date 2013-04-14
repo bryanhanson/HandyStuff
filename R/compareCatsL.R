@@ -1,8 +1,7 @@
 compareCatsL <-
 function(formula = NULL, data = NULL,
-	cols = NULL, freckles = FALSE,
-	method = c("sem", "iqr", "mad", "box", "points", "sem95"),
-	xlab = NULL, ylab = NULL, title = NULL, ...)
+	cols = NULL, freckles = FALSE, poster = FALSE,
+	method = c("sem", "sem95", "iqr", "mad", "box", "points"), ...)
 	{
 
 	# Function to compare categorical data by
@@ -10,6 +9,7 @@ function(formula = NULL, data = NULL,
 	# Bryan Hanson, DePauw Univ, Jan 2010
 	
 	# This is the lattice version
+	# Many features of the plot are designed to loosely emulate ggplot2
 
 	# Check and process the formula
 	
@@ -35,18 +35,36 @@ function(formula = NULL, data = NULL,
 	data <- data[, keep]
 	data <- na.omit(data)
 
-	if (!is.factor(data[,fac1])) stop("factor1 was not actually of type factor")
-	if (TwoFac) if (!is.factor(data[,fac2])) stop("factor2 was not actually of type factor")
+	if (!is.factor(data[,fac1])) stop(paste(fac1, "was not of type factor"))
+	if (TwoFac) if (!is.factor(data[,fac2])) stop(paste(fac2, "was not of type factor"))
 
 	if ((freckles) & (method == "points")) {
 		freckles <- FALSE
 		message("Points & freckles don't make sense together, only plotting points")
 		}
+
+	if ((freckles) & (method == "box")) {
+		freckles <- FALSE
+		message("Box plot & freckles don't look good together, doing only boxplot")
+		}
 		
 	# Need to calc ylim to accommodate counts at bottom of plot
 	yl <- c(min(data$res) - 0.15*diff(range(data$res)), max(data$res)*1.05)
 
-######## Some items useable by both one and two facs follow
+	# Check the color scheme; set up if not given
+	
+	nc <- length(levels(data[,fac1]))
+	if (is.null(cols)) {
+		cols <- brewer.pal(nc, "Set1")
+		if (nc == 2) cols <- cols[1:2]
+		}
+	if (!is.null(cols)) {
+		if (nc != length(cols)) {
+			stop(paste("You gave", length(cols), "colors, but you need", nc, "colors"))
+			}
+		}
+		
+######## This applies to all plots and data sets:
 	
 	# This panel simply plots the data points
 	
@@ -120,49 +138,7 @@ function(formula = NULL, data = NULL,
 				}
 	
 			} # end of panel.summary
-		
-		
-		# # Now the high level plot calls
-		
-		# if (method == "box") {
-			# p <- bwplot(formula, data, ylim = yl, ...,
-				# panel = function(x, y, ...) {
-					# panel.bwplot(x, y, box.width = 0.1, ...)
-					# panel.counts(x, y, ...)
-					# }
-					# )
-			# return(p)
-			# }
-
-		# if (method == "points") {
-			# p <- xyplot(formula, data, ylim = yl, ...,
-				# panel = function(x, y, ...) {
-					# panel.justpoints(x, y, pch = 20, ...)
-					# panel.counts(x, y, ...)
-					# }
-					# )
-			# return(p) # nothing further will be drawn in this case
-			# }
-
-		# if (freckles) {
-			# p <- stripplot(formula, data, ylim = yl, ..., 
-				# panel = function(x, y, ...) {
-					# panel.counts(x, y, ...)
-					# panel.summary(x, y, col = cols, ...)
-					# panel.stripplot(x, y, jitter.data = TRUE, pch = 20, col = "black", ...)
-					# }
-					# )
-			# }
-
-		# if (!freckles) {
-			# p <- stripplot(formula, data, ylim = yl, ...,
-				# panel = function(x, y, ...) {
-					# panel.counts(x, y, ...)
-					# panel.summary(x, y, col = cols, ...)
-					# }
-					# )
-			# }
-					
+							
 		} # End of !TwoFac
 		
 ##########
@@ -212,7 +188,6 @@ function(formula = NULL, data = NULL,
 			sexyiqr <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = seXyIqr)
 			sumDat <- cbind(mean, med[,3], sexy[[3]][,c(2,3)], sexy95[[3]][,c(2,3)],
 				sexymad[[3]][,c(2,3)], sexyiqr[[3]][,c(2,3)])
-#			sumDat <- arrange(sumDat, fac2, fac1)
 	
 			names(sumDat) <- c("factor1", "factor2", "mean", "median",
 				"semL", "semU", "sem95L", "sem95U", "madL", "madU",
@@ -284,80 +259,46 @@ function(formula = NULL, data = NULL,
 	
 			} # end of panel.summary
 		
-		
-		# # Now the high level plot calls
-		
-		# if (method == "box") {
-			# p <- bwplot(formula, data, ...)
-			# }
-
-		# if (method == "points") {
-			# p <- xyplot(formula, data,
-				# panel = panel.justpoints, col = "black", ...)
-				# }
-
-		# if (freckles) {
-			# p <- stripplot(formula, data, ylim = yl, ..., 
-				# panel = function(x, y, subscripts, ...) {
-					# panel.counts(x, y, subscripts, ...)
-					# panel.summary(x, y, col = cols, ...)
-					# panel.stripplot(x, y, jitter.data = TRUE, pch = 20, col = "black", ...)
-					# }
-					# )
-			# }
-
-		# if (!freckles) {
-			# p <- stripplot(formula, data, ylim = yl, ..., 
-				# panel = function(x, y, ...) {
-					# panel.counts(x, y, subscripts, ...)
-					# panel.summary(x, y, col = cols, ...)
-					# }
-					# )
-			# }
-		
 		} # End of TwoFac
 
 ##### Now the high level plot calls (common to all options)
+
+	if (!method == "box") {
+		p <- xyplot(formula, data, ylim = yl, ...,
+			scales = list(alternating = FALSE),
+			between = list(x = 0.25, y = 0.25),
+			axis = axis.grid,
+			par.settings = ccThemeL(),
+			# This key works but seems unnecessary, as the plot is self-documenting
+			# auto.key = list(text = levels(fac2), space = "right",
+				# points = FALSE, title = fac2, cex.title = 1.0),
+			panel = function(x, y, ...) {
+				if (method == "points") panel.justpoints(x, y, ...)
+				if (freckles) panel.xyplot(x, y, jitter.x = TRUE, ...)
+				panel.summary(x, y, col = cols, cex = 1, ...)
+				panel.counts(x, y, ...)
+				}
+				)
+		}
+
+	if (method == "box") { # This doesn't play well with the above, so do separately
+		p <- bwplot(formula, data, ylim = yl, ...,
+			scales = list(alternating = FALSE),
+			between = list(x = 0.25, y = 0.25),
+			axis = axis.grid,
+			par.settings = screenThemeL(),
+			# This key works but seems unnecessary, as the plot is self-documenting
+			# auto.key = list(text = levels(fac2), space = "right",
+				# points = FALSE, title = fac2, cex.title = 1.0),
+			panel = function(x, y, ...) {
+				trellis.par.set(box.umbrella = list(col = cols)) # can't change any other way
+				panel.bwplot(x, y, box.width = 0.1, fill = cols,...)
+				panel.counts(x, y, ...)
+				}
+				)
+		}
+
+		return(p) 
 		
-		if (method == "box") {
-			p <- bwplot(formula, data, ylim = yl, ...,
-				panel = function(x, y, ...) {
-					panel.bwplot(x, y, box.width = 0.1, ...)
-					panel.counts(x, y, ...)
-					}
-					)
-			return(p)
-			}
-
-		if (method == "points") {
-			p <- xyplot(formula, data, ylim = yl, ...,
-				panel = function(x, y, ...) {
-					panel.justpoints(x, y, pch = 20, ...)
-					panel.counts(x, y, ...)
-					}
-					)
-			return(p) # nothing further will be drawn in this case
-			}
-
-		if (freckles) {
-			p <- stripplot(formula, data, ylim = yl, ..., 
-				panel = function(x, y, ...) {
-					panel.counts(x, y, ...)
-					panel.summary(x, y, col = cols, ...)
-					panel.stripplot(x, y, jitter.data = TRUE, pch = 20, col = "black", ...)
-					}
-					)
-			}
-
-		if (!freckles) {
-			p <- stripplot(formula, data, ylim = yl, ...,
-				panel = function(x, y, ...) {
-					panel.counts(x, y, ...)
-					panel.summary(x, y, col = cols, ...)
-					}
-					)
-			}
-	
-	p
  	}
 

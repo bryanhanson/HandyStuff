@@ -6,10 +6,10 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
 # Taken from http://sachaepskamp.com/blog/HTMLexamples
 # A small modification was made to the Exclude block
 
-    if (!require("knitr")) 
-        stop("'knitr must be intalled.")
-    if (!require("markdown")) 
-        stop("'knitr must be intalled.")
+    # if (!require("knitr")) 
+        # stop("'knitr must be intalled.")
+    # if (!require("markdown")) 
+        # stop("'knitr must be intalled.")
 
     # Inner function to find closing brackets:
     findClose <- function(x, openLoc, open = "\\{", close = "\\}") {

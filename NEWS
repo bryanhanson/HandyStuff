@@ -3,11 +3,13 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
-##### Version: 0.5-7
+##### Version: 0.6-1
 Date: 
 News:
 >> Function compareCatsL which is the lattice equivalent of compareCats was added.
->> The following function arguments were changed to use a formula: compareCatsL, lmEqn, lmEqnL.
+>> Function rxnNormL which is the lattice equivalent of rxnNorm was added.
+>> Functions rxnNorm and compareCats which use ggplot2 were put on leave, awaiting repairs  so they work with the new ggplot2.
+>> The following function arguments were changed to use a formula: compareCatsL, rxnNormL, lmEqn, lmEqnL.
 >> Added function examplePage, slightly modified from the version by Sasha Epskamp at sachaepskamp.com/blog/HTMLexamples
 >> Updates to documentation and github site.
 
