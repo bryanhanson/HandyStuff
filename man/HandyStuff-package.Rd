@@ -13,7 +13,7 @@ Mostly unrelated functions for all sorts of things I want to do or I want my stu
 Package: \tab HandyStuff\cr
 Type: \tab Package\cr
 Version: \tab 0.6-1\cr
-Date: \tab 2013-02-04\cr
+Date: \tab 2013-04-13\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 }

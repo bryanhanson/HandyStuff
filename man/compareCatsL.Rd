@@ -10,7 +10,7 @@ This function allows one to generate a nice plot comparing a response from sampl
 compareCatsL(formula = NULL, data = NULL,
 	cols = NULL, freckles = FALSE,
 	method = c("sem", "sem95", "iqr", "mad", "box", "points"),
-	xlab = NULL, ylab = NULL, title = NULL, ...)
+	poster = FALSE, ...)
 }
 \arguments{
   \item{formula}{
@@ -28,15 +28,10 @@ Logical; if \code{TRUE}, the actual data points are plotted as small points, hen
   \item{method}{
 One of \code{c("sem", "sem95", "iqr", "mad", "box", "points")}.  Various methods for computing measures of spread and central tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
 }
-  \item{xlab}{
-Character; label for the x axis.
+  \item{poster}{
+Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.
 }
-  \item{ylab}{
-Character; label for the y axis.
-}
-  \item{title}{
-Character; a title for the plot.
-}
+
   \item{\dots}{
 Other parameters to be passed downstream.
 }
@@ -66,21 +61,21 @@ mydf <- data.frame(
 # One factor:
 #
 p <- compareCatsL(formula = resp~cat1, data = mydf,
-	method = "sem", freckles = TRUE,
+	method = "sem", freckles = TRUE, poster = FALSE, 
 	cols = c("red", "orange", "blue"))
 print(p)
 #
 # Two factors:
 #	
 p <- compareCatsL(formula = resp~cat1 | cat2, data = mydf,
-	method = "sem", freckles = TRUE,
+	method = "sem", freckles = TRUE, poster = FALSE,
 	cols = c("red", "orange", "blue"))
 print(p)
 #
 # Interchange the roles of the factors (and hence colors):
 #
 p <- compareCatsL(formula = resp~cat2 | cat1, data = mydf,
-	method = "sem", freckles = TRUE,
+	method = "sem", freckles = TRUE, poster = FALSE,
 	cols = c("red", "blue"))
 print(p)
 

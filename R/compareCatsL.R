@@ -1,7 +1,8 @@
 compareCatsL <-
 function(formula = NULL, data = NULL,
-	cols = NULL, freckles = FALSE, poster = FALSE,
-	method = c("sem", "sem95", "iqr", "mad", "box", "points"), ...)
+	cols = NULL, freckles = FALSE,
+	method = c("sem", "sem95", "iqr", "mad", "box", "points"),
+	poster = FALSE, ...)
 	{
 
 	# Function to compare categorical data by
@@ -154,6 +155,7 @@ function(formula = NULL, data = NULL,
 			facCounts$y <- min(data$res) - 0.1*diff(range(data$res))
 			facCounts <- facCounts[,-3]
 			names(facCounts) <- c("f1", "f2", "lab", "y")
+			f1 <- f2 <- NULL # Needed to fake out check mechanism on next step
 			facCounts <- arrange(facCounts, f2, f1)
 			
 			# Helper function to select the needed rows of facCounts
@@ -263,12 +265,15 @@ function(formula = NULL, data = NULL,
 
 ##### Now the high level plot calls (common to all options)
 
+	if (poster) ps = posterThemeL()
+	if (!poster) ps = screenThemeL()
+	
 	if (!method == "box") {
 		p <- xyplot(formula, data, ylim = yl, ...,
 			scales = list(alternating = FALSE),
 			between = list(x = 0.25, y = 0.25),
 			axis = axis.grid,
-			par.settings = ccThemeL(),
+			par.settings = ps,
 			# This key works but seems unnecessary, as the plot is self-documenting
 			# auto.key = list(text = levels(fac2), space = "right",
 				# points = FALSE, title = fac2, cex.title = 1.0),
@@ -286,7 +291,7 @@ function(formula = NULL, data = NULL,
 			scales = list(alternating = FALSE),
 			between = list(x = 0.25, y = 0.25),
 			axis = axis.grid,
-			par.settings = screenThemeL(),
+			par.settings = ps,
 			# This key works but seems unnecessary, as the plot is self-documenting
 			# auto.key = list(text = levels(fac2), space = "right",
 				# points = FALSE, title = fac2, cex.title = 1.0),

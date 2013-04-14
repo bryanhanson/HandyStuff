@@ -1,4 +1,4 @@
-\name{rxnNorm}
+\name{rxnNormL}
 \alias{rxnNormL}
 
 \title{
@@ -8,30 +8,29 @@ Create a Reaction Norm or Interaction Plot
 Draws a reaction norm or interaction plot as typically used in ecology to demonstrate treatment x genotype interactions.  The x axis can be categorical or numeric.  There are options to plot the raw data points in addition to a choice of several summary methods.  The central values may be connected or the entire data set fitted to a line.  A summary table is optional, and gives either counts at each level, an ANOVA table or fit data.
 }
 \usage{
-rxnNormL(data = NULL, res = NULL, fac1 = NULL, fac2 = NULL,
-	fac2cols = NULL, freckles = FALSE, type = "connect",
-	method = c("sem", "iqr", "mad", "box", "sem95"), table = NULL,
-	xlab = NULL, ylab = NULL, title = NULL, ...)
+rxnNormL(formula = NULL, data = NULL, groups = NULL,
+	cols = NULL, freckles = FALSE, type = "connect",
+	method = c("sem", "sem95", "iqr", "mad"),
+	table = NULL, poster = FALSE, ...)
 }
 
 \arguments{
+
+  \item{formula}{
+A formula with both LHS and RHS.  The formula should comply with the usual \code{lattice} conventions, for instance \code{y ~ x_factor}. 
+}
   \item{data}{
-A data frame containing columns containing \code{res}, \code{fac1} and \code{fac2}.
+A data frame containing the response and categorical/factor data, and possibly group data.
 }
-  \item{res}{
-A numeric vector giving the response (y values).
+  \item{groups}{
+The (unquoted) name of a variable in \code{data} to serve as the grouping variable.
 }
-  \item{fac1}{
-A factor or numeric vector giving the x values, which may be categorical or numeric.
-}
-  \item{fac2}{
-A factor.  In a typical use would correspond to genotype.  A line in the specified color will be produced for each level of \code{fac2}.
-}
-  \item{fac2cols}{
-A vector of color names as long as the levels of \code{fac2}.  The data and lines will be colored accordingly.
+
+  \item{cols}{
+A vector of colors to be used for factor 1; must be as along as the levels in factor 1.
 }
   \item{freckles}{
-Logical; if TRUE, add the raw data points to the plot (as tiny points or \emph{freckles}, thanks Dana!).
+Logical; if \code{TRUE}, the actual data points are plotted as small points, hence the name, jittered slightly in the horizontal direction only.
 }
   \item{type}{
 Either "connect", "fitLine" or "anova".  In the first case, a line is drawn which connects the chosen measure of central tendency (e.g. mean) for each value of \code{fac1}.  This would generally be used when the x value are categorical.  In the second case, a linear fit is performed and the line is drawn; used for continuous x values.  In the third case, a connecting line is drawn along with an ANOVA summary table.
@@ -42,14 +41,8 @@ One of c("sem", "iqr", "mad", "box", "sem95").  Each produces a dot at the measu
   \item{table}{
 If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in the units of the measurements \code{res} and \code{fac1}; \code{fac1} is internally handled as a number so if \code{fac1} has three levels then the setting \code{x = 2} would center the table over the middle level.
 }
-  \item{xlab}{
-Character; a label for the x axis.
-}
-  \item{ylab}{
-Character; a label for the y axis.
-}
-  \item{title}{
-Character; a title for the plot.
+  \item{poster}{
+Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.
 }
   \item{\dots}{
 Additional arguments to be passed downstream.

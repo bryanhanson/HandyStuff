@@ -1,8 +1,8 @@
 rxnNormL <-
-function(formula = NULL, data = NULL, groups = NULL, cols = NULL,
-	freckles = FALSE, type = "connect",
+function(formula = NULL, data = NULL, groups = NULL,
+	cols = NULL, freckles = FALSE, type = "connect",
 	method = c("sem", "sem95", "iqr", "mad"),
-	table = NULL, ...) {
+	table = NULL, poster = FALSE, ...) {
 
 # Function to compare categorical data by
 # plotting means etc in the same panel
@@ -70,6 +70,7 @@ function(formula = NULL, data = NULL, groups = NULL, cols = NULL,
 		names(sumDat) <- c("xx", "gr", "mean", "median",
 			"semL", "semU", "sem95L", "sem95U", "madL", "madU",
 			"iqrL", "iqrU")
+		gr <- NULL # Needed for next command to fake out check mechanism
 		sumDat <- arrange(sumDat, xx, gr)
 		sumDat$cols <- rep(cols, length(unique(sumDat$xx)))
 
@@ -118,6 +119,7 @@ function(formula = NULL, data = NULL, groups = NULL, cols = NULL,
 		med <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = median)
 		sumDat <- cbind(mean, med[,3])
 		names(sumDat) <- c("xx", "gr", "mean", "median")
+		gr <- NULL # needed to fake out check mechanism for next command
 		sumDat <- arrange(sumDat, gr, xx)
 		sumDat$cols <- rep(cols, each = length(unique(sumDat$xx)))
 	
@@ -222,11 +224,15 @@ function(formula = NULL, data = NULL, groups = NULL, cols = NULL,
 ##### Now the high level plot calls
 
 #	p <- stripplot(as.formula(args$formula),
+
+	if (poster) ps = posterThemeL()
+	if (!poster) ps = screenThemeL()
+
 	p <- xyplot(as.formula(args$formula),
   		data = eval(args$data), 
         groups = eval(args$groups), ...,
 		axis = axis.grid,
-		par.settings = screenThemeL(),
+		par.settings = ps,
 		panel = function(x, y, ...) {
 			panel.summary(x, y, ...)
 			if (freckles) panel.xyplot(x, y, jitter.x = TRUE, pch = ".", col = cols, ...)

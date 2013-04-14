@@ -1,6 +1,6 @@
 lmEqn <-
 function(formula = NULL, data = NULL,
-	method = "lm", leg.loc = c(0, 0),
+	method = "lm", leg.loc = c(0.5, 0.5),
 	xlab = NULL, ylab = NULL, title = NULL, ...) {
 	
 	# Process & check formula

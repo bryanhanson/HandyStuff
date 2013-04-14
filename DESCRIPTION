@@ -2,7 +2,7 @@ Package: HandyStuff
 Type: Package
 Title: HandyStuff: Stuff that is, well, Handy
 Version: 0.6-1
-Date: 2013-02-05
+Date: 2013-04-13
 Author: Bryan A. Hanson DePauw University, Greencastle Indiana USA
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Mostly unrelated functions for all sorts of things I want to do or I want my students to be able to do easily.  Also a few data sets I like to use in teaching.  And other fun stuff.  An incoherent collection of seemingly random functions.

@@ -9,8 +9,10 @@ This function plots the points given, then fits a line and displays the regressi
 }
 \usage{
 lmEqn(formula = NULL, data = NULL, method = "lm",
-	leg.loc = c(0, 0), xlab = NULL, ylab = NULL,
+	leg.loc = c(0.5, 0.5), xlab = NULL, ylab = NULL,
 	title = NULL, ...)
+lmEqnL(formula = NULL, data = NULL, method = "lm",
+	leg.loc = c(0.5, 0.5),poster = FALSE, ...)
 }
 \arguments{
   \item{formula}{
@@ -34,6 +36,9 @@ A character string giving the y axis label.
 }
   \item{title}{
 A character string giving the plot title.
+}
+  \item{poster}{
+Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.  Applies only to \code{lmEqnL} right now.
 }
 
   \item{\dots}{

@@ -1,7 +1,7 @@
 lmEqnL <-
 function(formula = NULL, data = NULL,
 	method = "lm", leg.loc = c(0.5, 0.5),
-	xlab = NULL, ylab = NULL, title = NULL, ...) {
+	poster = FALSE, ...) {
 	
 	# This is the version that uses Lattice graphics
 	# compare to lmEqn which uses ggplot2 graphics
@@ -18,8 +18,8 @@ function(formula = NULL, data = NULL,
 
 	# Compute the linear model
 
-	if (method == "lm") mod <- lm(formula, data, ...)
-	if (method == "rlm") mod <- rlm(formula, data, ...)
+	if (method == "lm") mod <- lm(formula, data)
+	if (method == "rlm") mod <- rlm(formula, data)
 	m <- mod$coef[2]
 	b <- mod$coef[1]
 	r2 <- round(cor(data[,v], data[,res])^2, 4)
@@ -28,15 +28,17 @@ function(formula = NULL, data = NULL,
 	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 
 	# Make the plot
+	if (poster) ps = posterThemeL()
+	if (!poster) ps = screenThemeL()
 
 	mypanel <- function(x, y, ...) {
 		panel.xyplot(x, y, type = "p", ...)
 		panel.text(leg.loc[1], leg.loc[2], labels = Lab, adj = 0, ...)
 		panel.lmline(x, y, a = mod, ...)
+
 		}
 	
-	xyplot(formula, data, panel = mypanel,
-		main = title, ylab = ylab, xlab = xlab, ...)
+	xyplot(formula, data, panel = mypanel, par.settings = ps, axis = axis.grid, ...)
 	
 	}
 
