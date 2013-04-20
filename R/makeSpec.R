@@ -19,7 +19,7 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 	# ndp = no. data points (total)
 	# Note that plotNMRspec actually passes x.range in Hz not ppm
 
-	ndp <- dd*abs(diff(x.range))
+	ndp <- floor(dd*abs(diff(x.range)))
 #	cat("makeSpec says: ndp = ", ndp, "\n")
 
 	if (type == "gauss") {		
@@ -49,7 +49,7 @@ function(peak.list, x.range, plot = TRUE, curves = FALSE,
 		ns <- length(pl$x0) # ns = no. of spec
 		x <- seq(from = x.range[1], to = x.range[2], length.out = ndp)
 		y.mat <- matrix(data = NA, nrow = ns, ncol = ndp)
-	
+				
 		for (n in 1:ns) {
 			y.mat[n,] <- lorentzCurve(x = x, area = pl$area[n],
 				x0 = pl$x0[n], gamma = pl$gamma[n])

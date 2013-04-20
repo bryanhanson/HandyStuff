@@ -40,6 +40,7 @@ function(peaks, x.range = c(12, 0), MHz = 300, ppHz = 1,
 	# is independent of the requested x.range
 	# This is esp. important for 13C since the peaks are narrow
 	
+#	print(ans)
 	spec <- makeSpec(peak.list = ans, plot = FALSE,
 		x.range = x.range*MHz, type = "lorentz", dd = ppHz, ...)
 
