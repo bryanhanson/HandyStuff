@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.6-2
+Date: 1 May 2013
+News:
+>> Fixed a problem with rounding in the plotNMRspec-related functions.
+
 ##### Version: 0.6-1
 Date: 13 April 2013
 News:
