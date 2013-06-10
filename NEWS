@@ -3,6 +3,11 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.6-3
+Date: 10 June 2013
+News:
+>> Fixed a problem with column names in compareCatL.
+
 ##### Version: 0.6-2
 Date: 1 May 2013
 News:
