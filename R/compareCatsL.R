@@ -50,7 +50,7 @@ function(formula = NULL, data = NULL,
 		}
 		
 	# Need to calc ylim to accommodate counts at bottom of plot
-	yl <- c(min(data$res) - 0.15*diff(range(data$res)), max(data$res)*1.05)
+	yl <- c(min(data[,res]) - 0.15*diff(range(data[,res])), max(data[,res])*1.05)
 
 	# Check the color scheme; set up if not given
 	
@@ -83,7 +83,7 @@ function(formula = NULL, data = NULL,
 			
 			facCounts <- count(data, vars = fac1)
 			facCounts$label <- paste("n = ", facCounts$freq , sep = "")
-			facCounts$y <- min(data$res) - 0.1*diff(range(data$res))
+			facCounts$y <- min(data[,res]) - 0.1*diff(range(data[,res]))
 			facCounts <- facCounts[,-2]
 			names(facCounts) <- c("x", "lab", "y")
 			panel.text(x = facCounts[,1], y = facCounts[,3], labels = facCounts[,2], ...)
@@ -152,7 +152,7 @@ function(formula = NULL, data = NULL,
 			
 			facCounts <- count(data, vars = c(fac1, fac2))
 			facCounts$label <- paste("n = ", facCounts$freq , sep = "")
-			facCounts$y <- min(data$res) - 0.1*diff(range(data$res))
+			facCounts$y <- min(data[,res]) - 0.1*diff(range(data[,res]))
 			facCounts <- facCounts[,-3]
 			names(facCounts) <- c("f1", "f2", "lab", "y")
 			f1 <- f2 <- NULL # Needed to fake out check mechanism on next step

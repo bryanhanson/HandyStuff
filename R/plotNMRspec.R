@@ -80,8 +80,9 @@ function(peaks, x.range = c(12, 0), MHz = 300, ppHz = 1,
 	plot(x = spec[1,]/MHz, y = spec[2,],
 		type = "l", xlim = x.range, xlab = "chemical shift, ppm",
 		ylab = "", axes = FALSE, ylim = y.lim, ...)
-	axis(side = 1)
-	
+	axis(side = 1, at = seq(0, 200, by = 10)) # a small suggestion for 13C
+#	axis(side = 1)
+		
 	if (labels) { # Now that the plotting window is open add the labels
 		lp = 2
 		if (!is.null(lab.pos)) lp <- lab.pos # need to add translation of L, R to 2, 4
