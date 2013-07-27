@@ -280,7 +280,8 @@ function(formula = NULL, data = NULL,
 			panel = function(x, y, ...) {
 				if (method == "points") panel.justpoints(x, y, ...)
 				if (freckles) panel.xyplot(x, y, jitter.x = TRUE, ...)
-				panel.summary(x, y, col = cols, cex = 1, ...)
+#				panel.summary(x, y, col = cols, cex = 1, ...)
+				panel.summary(x, y, col = cols, ...)
 				panel.counts(x, y, ...)
 				}
 				)

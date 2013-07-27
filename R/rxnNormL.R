@@ -79,11 +79,11 @@ function(formula = NULL, data = NULL, groups = NULL,
 			# Plot the mean or median
 					
 			if ((method == "sem") | (method == "sem95")) {
-				panel.points(x = sumDat[i,1], y = sumDat[i,3], col = sumDat[i, 13], pch = 19, cex = 0.9,...)
+				panel.points(x = sumDat[i,1], y = sumDat[i,3], col = sumDat[i, 13], pch = 19, ...)
 				}
 				
 			if ((method == "mad") | (method == "iqr")) {
-				panel.points(x = sumDat[i,1], y = sumDat[i,4], col = sumDat[i, 13], pch = 19, cex = 0.9, ...)
+				panel.points(x = sumDat[i,1], y = sumDat[i,4], col = sumDat[i, 13], pch = 19, ...)
 				}
 	
 			# Plot the 'whiskers'
@@ -223,10 +223,14 @@ function(formula = NULL, data = NULL, groups = NULL,
 
 ##### Now the high level plot calls
 
-#	p <- stripplot(as.formula(args$formula),
-
-	if (poster) ps = posterThemeL()
-	if (!poster) ps = screenThemeL()
+	if (poster) {
+		ps <- posterThemeL()
+		kts <- posterThemeL()$fontsize$text*0.08 # personal taste
+		}
+	if (!poster) {
+		ps <- screenThemeL()
+		kts <- screenThemeL()$fontsize$text*0.08 # personal taste
+		}
 
 	p <- xyplot(as.formula(args$formula),
   		data = eval(args$data), 
@@ -235,7 +239,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 		par.settings = ps,
 		panel = function(x, y, ...) {
 			panel.summary(x, y, ...)
-			if (freckles) panel.xyplot(x, y, jitter.x = TRUE, pch = ".", col = cols, ...)
+			if (freckles) panel.xyplot(x, y, jitter.x = TRUE, col = cols, ...)
 			if ((type == "connect") | (type == "anova")) panel.connect(x, y, ...)
 			if (type == "fitLine") panel.xyplot(x, y, type = "r", col = cols, ...)
 			if (!is.null(table)) {
@@ -259,7 +263,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 					}
 				} # end of table options
 			}, # end of panel function
-		auto.key = list(space = "right", col = cols, points = FALSE, title = grn, cex.title = 1.0)
+		auto.key = list(space = "right", col = cols, points = FALSE, title = grn, cex.title = kts)
 			)
 	
 	invisible(p)

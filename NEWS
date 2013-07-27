@@ -3,6 +3,12 @@
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 
+##### Version: 0.6-4
+Date: 27 July 2014
+News:
+>> Significant repairs to screenThemeL and posterThemeL.
+>> Fixed mis-information in rxnNormL.Rd
+
 ##### Version: 0.6-3
 Date: 10 June 2013
 News:

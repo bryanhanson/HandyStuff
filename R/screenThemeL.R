@@ -1,17 +1,34 @@
 screenThemeL <- function() {
 	
-	# lattice settings resembling ggplot2 for use on screen
+	# lattice settings resembling ggplot2 for use on screens
 	# Values & concept derived from latticeExtra::ggplot2like()
+	# Also see trellis.par.get()
 	
 	L <- list(
+	
+	# background, grids etc
 	axis.line = list(col = "transparent"),
-	axis.text = list(cex = 0.8, lineheight = 0.9, col = "grey50"),
+	axis.text = list(lineheight = 0.9, col = "grey50"), # fontsize below
 	panel.background = list(col = "grey90"),
 	reference.line = list(col = "white"),
-	plot.symbol = list(col = "black", pch = 19, cex = 0.3),
 	strip.background = list(col = c("grey70", "grey50", "grey40")),
 	strip.border = list(col = "transparent"),
-	add.text = list(cex = 0.8),
+	
+	# overall font and point size
+	fontsize = list(text = 12, points = 10),
+	
+	# symbols and lines
+#	plot.symbol = list(col = "black", pch = 21, cex = 2), # not sure
+	superpose.symbol = list(cex = 0.3, pch = 20), # controls freckles
+#	superpose.line = list(lwd = 5), # does nothing?
+	add.line = list(lwd = 1), # controls summary lines
+	# par.main.text = list(cex = 1.5), # individual control if desired
+	# par.xlab.text = list(cex = 1.2),
+	# par.ylab.text = list(cex = 1.2),
+	# par.sub.text = list(cex = 1.2),
+	# add.text = list(cex = 1.2), # lengend entries, not legend title
+	
+	# these next ones apply to boxplots (not an option in rxnNormL)
     box.dot = list(col = "black", pch = 18, cex = 1.5),
     box.rectangle = list(col = "transparent"),
     box.umbrella = list(lty = 1, lwd = 1.5)

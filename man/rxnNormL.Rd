@@ -36,10 +36,10 @@ Logical; if \code{TRUE}, the actual data points are plotted as small points, hen
 Either "connect", "fitLine" or "anova".  In the first case, a line is drawn which connects the chosen measure of central tendency (e.g. mean) for each value of \code{fac1}.  This would generally be used when the x value are categorical.  In the second case, a linear fit is performed and the line is drawn; used for continuous x values.  In the third case, a connecting line is drawn along with an ANOVA summary table.
 }
   \item{method}{
-One of c("sem", "iqr", "mad", "box", "sem95").  Each produces a dot at the measure of central tendency and error bars corresponding to the requested method  ("box" currently does not work quite right).  Full details are in \code{\link[ChemoSpec]{seXy}}.
+One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces a dot at the measure of central tendency and error bars corresponding to the requested method  ("box" currently does not work quite right).  Full details are in \code{\link[ChemoSpec]{seXy}}.
 }
   \item{table}{
-If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in the units of the measurements \code{res} and \code{fac1}; \code{fac1} is internally handled as a number so if \code{fac1} has three levels then the setting \code{x = 2} would center the table over the middle level.
+If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in device units so 0.5, 0.5 puts the table dead center in the plotting region.
 }
   \item{poster}{
 Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.
