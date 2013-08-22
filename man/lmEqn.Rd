@@ -5,7 +5,7 @@
 Plot Points, Fit a Line, Display Everything
 }
 \description{
-This function plots the points given, then fits a line and displays the regression statistics using \code{ggplot2} or \code{lattice}.
+These functions plot the points given, then fit a line and display the regression statistics using \code{ggplot2} or \code{lattice}.
 }
 \usage{
 lmEqn(formula = NULL, data = NULL, method = "lm",

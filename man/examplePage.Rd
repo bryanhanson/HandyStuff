@@ -25,7 +25,7 @@ Logical indicating whether to include the 'Dontshow' sections of the Rd file.
 Logical indicating whether to include the 'Dontrun' sections of the Rd file.
 }
   \item{exclude}{
-Character vector listing the Rd files to skip.  For instance, \code{c("func1.Rd", "func2.Rd"}.
+Character vector listing the Rd files to skip.  For instance, \code{c("func1.Rd", "func2.Rd")}.
 }
 }
 \value{
@@ -37,3 +37,9 @@ sachaepskamp.com/blog/HTMLexamples
 \author{
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
 }
+\example{
+# Set the working dir to the pkg dir
+# Note that this will leave some files in the dir
+examplePage(getwd(), exclude = c("jSeq"))
+}
+\keywords{ utilities }

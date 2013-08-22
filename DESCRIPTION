@@ -8,3 +8,4 @@ Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Mostly unrelated functions for all sorts of things I want to do or I want my students to be able to do easily.  Also a few data sets I like to use in teaching.  And other fun stuff.  An incoherent collection of seemingly random functions.
 License: GPL-3
 Imports: knitr, markdown, RColorBrewer, MASS, gsubfn, ChemoSpec, grid, plyr, ggplot2, gridExtra, lattice, latticeExtra
+BugReports: https://github.com/bryanhanson/HandyStuff/issues

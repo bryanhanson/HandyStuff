@@ -42,7 +42,7 @@ One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces a dot at the measu
 If NULL, the default, no action.  If a vector of 3 numbers \code{c(x, y, cex)}, a summary table is placed at the given coordinates with font size cex.  The table contains either a summary of counts (if \code{type = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an ANOVA table (if \code{type = "anova"}.  The coordinates are in device units so 0.5, 0.5 puts the table dead center in the plotting region.
 }
   \item{poster}{
-Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.
+Logical; if \code{TRUE}, use \code{posterThemeL} which has graphics settings suitable for viewing on a poster, otherwise, use \code{screenThemeL}.  Don't forget to adjust the font size in the summary table appropriately.
 }
   \item{\dots}{
 Additional arguments to be passed downstream.
@@ -86,14 +86,14 @@ td <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, num = num)
 # Numeric x with lm and summary table:
 p <- rxnNormL(formula = resp~num, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "fitLine",
-cols = c("red", "blue"), table = c(0.4, 0.3, 0.75),
-main = "rxnNormL - linear model w/summary table")
+cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+main = "rxnNormL - linear model w/fit table")
 print(p)
 #
 # Categorical x, connected and summary table:
 p <- rxnNormL(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "connect",
-cols = c("red", "blue"), table = c(0.6, 0.3, 0.75),
+cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
 main = "rxnNormL - Categorical x w/summary table")
 print(p)
 #
@@ -101,7 +101,7 @@ print(p)
 p <- rxnNormL(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "anova",
 cols = c("red", "blue"), table = c(0.6, 0.3, 0.75),
-main = "rxnNormL - Categorical x w/summary table")
+main = "rxnNormL - Categorical x w/ANOVA table")
 print(p)
 
 }

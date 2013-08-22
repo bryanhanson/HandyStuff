@@ -27,6 +27,8 @@ function(formula = NULL, data = NULL,
 		fac1 <- as.character(formula[[3]][2])
 		TwoFac <- TRUE
 		}
+
+	args <- as.list(match.call(expand.dots = FALSE)[-1]) # used a bit later
 		
 	# Reduce the df and clean it of NAs
 	# otherwise there is trouble with the counts
@@ -66,11 +68,14 @@ function(formula = NULL, data = NULL,
 		}
 		
 ######## This applies to all plots and data sets:
+
+	if (poster) ps = posterThemeL()
+	if (!poster) ps = screenThemeL()
 	
 	# This panel simply plots the data points
 	
 	panel.justpoints <- function(x, y, ...) {
-		panel.xyplot(x, y, ...)
+		panel.xyplot(x, y, ...) # seems to ignore theme
 		}
 		
 ########
@@ -109,11 +114,11 @@ function(formula = NULL, data = NULL,
 			# Plot the mean or median
 			
 			if ((method == "sem") | (method == "sem95")) {
-				panel.points(x = sumDat[,1], y = sumDat[,2], pch = 19, ...)
+				panel.points(x = sumDat[,1], y = sumDat[,2], ...)
 				}
 				
 			if ((method == "mad") | (method == "iqr")) {
-				panel.points(x = sumDat[,1], y = sumDat[,3], pch = 19, ...)
+				panel.points(x = sumDat[,1], y = sumDat[,3], ...)
 				}
 
 			# Plot the 'whiskers'
@@ -214,14 +219,14 @@ function(formula = NULL, data = NULL,
 			if ((method == "sem") | (method == "sem95")) {
 				for (i in seq_along(lf2)) {
 						xxx <- xx(packet.number())
-						panel.points(x = 1:lf1, y = sumDat[xxx, 3], pch = 19, ...)
+						panel.points(x = 1:lf1, y = sumDat[xxx, 3], ...)
 					}
 				}
 				
 			if ((method == "mad") | (method == "iqr")) {
 				for (i in seq_along(lf2)) {
 						xxx <- xx(packet.number())
-						panel.points(x = 1:lf1, y = sumDat[xxx, 4], pch = 19, ...)
+						panel.points(x = 1:lf1, y = sumDat[xxx, 4], ...)
 					}
 				}
 
@@ -264,12 +269,11 @@ function(formula = NULL, data = NULL,
 		} # End of TwoFac
 
 ##### Now the high level plot calls (common to all options)
-
-	if (poster) ps = posterThemeL()
-	if (!poster) ps = screenThemeL()
 	
 	if (!method == "box") {
-		p <- xyplot(formula, data, ylim = yl, ...,
+		p <- xyplot(as.formula(args$formula),
+  		data = eval(args$data), ylim = yl, ...,
+#		p <- xyplot(formula, data, ylim = yl, ..., # these work equally well?
 			scales = list(alternating = FALSE),
 			between = list(x = 0.25, y = 0.25),
 			axis = axis.grid,
@@ -278,8 +282,11 @@ function(formula = NULL, data = NULL,
 			# auto.key = list(text = levels(fac2), space = "right",
 				# points = FALSE, title = fac2, cex.title = 1.0),
 			panel = function(x, y, ...) {
-				if (method == "points") panel.justpoints(x, y, ...)
-				if (freckles) panel.xyplot(x, y, jitter.x = TRUE, ...)
+#				par.settings = ps
+				# both of these do the same thing
+#				if (method == "points") panel.justpoints(x, y, ...) # neither of these listen to the theme!
+				if (method == "points") panel.xyplot(x, y, ...) # neither of these listen to the theme!
+				if (freckles) panel.xyplot(x, y, jitter.x = TRUE, col = cols, ...)
 #				panel.summary(x, y, col = cols, cex = 1, ...)
 				panel.summary(x, y, col = cols, ...)
 				panel.counts(x, y, ...)

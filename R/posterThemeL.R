@@ -18,8 +18,8 @@ posterThemeL <- function() {
 	fontsize = list(text = 14, points = 15),
 	
 	# symbols and lines
-#	plot.symbol = list(col = "black", pch = 21, cex = 2), # not sure
-	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles
+	plot.symbol = list(pch = 20, cex = 10), # seems to be ignored by everything
+	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles in rxnNormL not compareCatsL
 #	superpose.line = list(lwd = 5), # does nothing?
 	add.line = list(lwd = 3), # controls summary lines
 	# par.main.text = list(cex = 1.5), # individual control if desired
