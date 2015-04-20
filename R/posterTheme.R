@@ -1,6 +1,6 @@
-screenThemeL <- function() {
+posterTheme <- function() {
 	
-	# lattice settings resembling ggplot2 for use on screens
+	# lattice settings resembling ggplot2 for use on posters
 	# Values & concept derived from latticeExtra::ggplot2like()
 	# Also see trellis.par.get()
 	
@@ -15,18 +15,18 @@ screenThemeL <- function() {
 	strip.border = list(col = "transparent"),
 	
 	# overall font and point size
-	fontsize = list(text = 12, points = 10),
+	fontsize = list(text = 14, points = 15),
 	
 	# symbols and lines
-#	plot.symbol = list(col = "black", pch = 21, cex = 2), # not sure
-	superpose.symbol = list(cex = 0.3, pch = 20), # controls freckles
+	plot.symbol = list(pch = 20, cex = 10), # seems to be ignored by everything
+	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles in rxnNormL not compareCatsL
 #	superpose.line = list(lwd = 5), # does nothing?
-	add.line = list(lwd = 1), # controls summary lines
+	add.line = list(lwd = 3), # controls summary lines
 	# par.main.text = list(cex = 1.5), # individual control if desired
 	# par.xlab.text = list(cex = 1.2),
 	# par.ylab.text = list(cex = 1.2),
 	# par.sub.text = list(cex = 1.2),
-	# add.text = list(cex = 1.2), # lengend entries, not legend title
+	# add.text = list(cex = 1.2), # legend entries, not legend title
 	
 	# these next ones apply to boxplots (not an option in rxnNormL)
     box.dot = list(col = "black", pch = 18, cex = 1.5),

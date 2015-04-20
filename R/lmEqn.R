@@ -1,12 +1,53 @@
+#' Plot Points, Fit a Line, Display Everything
+#' 
+#' This function plots the points given, then fits a line and displays the
+#' regression statistics using \code{lattice}.
+#' 
+#' @param formula A formula with both LHS and RHS.  The formula should comply
+#' with the usual \code{R} standards, for instance \code{y ~ x}.
+#'
+#' @param data A data frame containing two columns whose names correspond to
+#' the specified formula.
+#'
+#' @param method A character string.  Either "lm" for linear model or "rlm" for
+#' a robust fit.
+#'
+#' @param leg.loc A vector of two numbers (x, y) giving the location of the
+#' legend.  The values correspond to the units of the data. See the examples.
+#'
+#' @param poster Logical; if \code{TRUE}, use \code{posterTheme} which has
+#' graphics settings suitable for viewing on a poster, otherwise, use
+#' \code{screenTheme}.  Applies only to \code{lmEqnL} right now.
+#'
+#' @param \dots Additional arguments to be passed downstream.
+#'
+#' @return A plot is drawn and the \code{ggplot2} or \code{lattice} object is
+#' returned, possibly for further manipulation.
+#'
+#' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
+#' @keywords utilities plot
+#' @examples
+#' 
+#' conc = seq(1, 12, length.out = 8)
+#' abs = jitter(conc, factor = 2)*0.1
+#' cc <- data.frame(conc, abs)
+#' lmEqn(formula = abs ~ conc, data = cc, leg.loc = c(3, 0.1),
+#' 	xlab = "concentration", ylab = "absorbance",
+#' 	main = "Calibration Curve")
+#' 
+#' @export lmEqn
 lmEqn <-
 function(formula = NULL, data = NULL,
 	method = "lm", leg.loc = c(0.5, 0.5),
-	xlab = NULL, ylab = NULL, title = NULL, ...) {
+	poster = FALSE, ...) {
+	
+	# This is the version that uses Lattice graphics
+	# compare to lmEqn which uses ggplot2 graphics
 	
 	# Process & check formula
 	
 	if (is.null(formula)) stop("Formula not given")
-	if (!is.formula(formula)) stop("Invalid formula specification")
+	if (!plyr::is.formula(formula)) stop("Invalid formula specification")
 	if (!length(formula) == 3) stop("Formula must include both LHS and RHS terms, e.g.: response ~ variable")
 	if (length(all.vars(formula[[3]])) > 1) stop("Formula can only take the form response ~ variable")
 
@@ -15,8 +56,8 @@ function(formula = NULL, data = NULL,
 
 	# Compute the linear model
 
-	if (method == "lm") mod <- lm(formula, data, ...)
-	if (method == "rlm") mod <- rlm(formula, data, ...)
+	if (method == "lm") mod <- lm(formula, data)
+	if (method == "rlm") mod <- MASS::rlm(formula, data)
 	m <- mod$coef[2]
 	b <- mod$coef[1]
 	r2 <- round(cor(data[,v], data[,res])^2, 4)
@@ -25,20 +66,17 @@ function(formula = NULL, data = NULL,
 	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 
 	# Make the plot
+	if (poster) ps = posterTheme()
+	if (!poster) ps = screenTheme()
+
+	mypanel <- function(x, y, ...) {
+		lattice::panel.xyplot(x, y, type = "p", ...)
+		lattice::panel.text(leg.loc[1], leg.loc[2], labels = Lab, adj = 0, ...)
+		lattice::panel.lmline(x, y, a = mod, ...)
+
+		}
 	
-	p <- ggplot(data = data, aes_string(x = v, y = res))
-	p <- p + geom_point()
-	if (method == "lm") p <- p + geom_smooth(method = "lm")
-	if (method == "rlm") p <- p + geom_smooth(method = "rlm")
-
-	p <- p + annotate("text", label = Lab, x = leg.loc[1], y = leg.loc[2],
-		size = 5, hjust = 0, vjust = 0)
-		
-	if (!is.null(title)) p <- p + labs(title = title)
-    if (!is.null(xlab)) p <- p + labs(xlab = xlab)
-    if (!is.null(ylab)) p <- p + labs(ylab = ylab)
-
-	p
+	lattice::xyplot(formula, data, panel = mypanel, par.settings = ps, axis = latticeExtra::axis.grid, ...)
 	
 	}
 
