@@ -1,15 +1,45 @@
-
-
+#' Create an html Page Showing All Examples in Rd Files
+#' 
+#' This function runs all the example code in a package's Rd files, using
+#' \code{knitr} to create a \code{markdown} file.  This file is then converted
+#' to html and opened in a browser.  This function was written by Sasha Epskamp
+#' and published on his blog (sachaepskamp.com/blog/HTMLexamples).  I modified
+#' it to accept more than one file for \code{exclude}.
+#' 
+#' 
+#' @param pkg Path to the package directory.
+#'
+#' @param openChunk Character.  The default opening markdown chunk.
+#'
+#' @param includeDontshow Logical indicating whether to include the
+#' \code{Dontshow} sections of the Rd file.
+#'
+#' @param includeDontrun Logical indicating whether to include the
+#' \code{Dontrun} sections of the Rd file.
+#'
+#' @param exclude Character vector listing the Rd files to skip.  For instance,
+#' \code{c("func1.Rd", "func2.Rd")}.
+#'
+#' @return Creates and displays a web page.
+#'
+#' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
+#'
+#' @references sachaepskamp.com/blog/HTMLexamples
+#' @keywords utilities
+#' @examples
+#' 
+#' # Set the working dir to the pkg dir
+#' # Note that this will leave some files in the dir
+#' \dontrun{
+#' examplePage(getwd(), exclude = c("jSeq"))
+#' }
+#' 
+#' @export examplePage
 examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
-    includeDontshow = FALSE, includeDontrun = TRUE, exclude) {
+    includeDontshow = FALSE, includeDontrun = TRUE, exclude = NULL) {
 
 # Taken from http://sachaepskamp.com/blog/HTMLexamples
 # A small modification was made to the Exclude block
-
-    # if (!require("knitr")) 
-        # stop("'knitr must be intalled.")
-    # if (!require("markdown")) 
-        # stop("'knitr must be intalled.")
 
     # Inner function to find closing brackets:
     findClose <- function(x, openLoc, open = "\\{", close = "\\}") {
@@ -35,7 +65,7 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
         full.names = TRUE)
 
     # Exclude:
-    if (!missing(exclude)) 
+    if (!is.null(exclude)) 
     	for (i in seq_along(exclude)) {
         files <- files[!grepl(exclude[i], files)]
 		}
@@ -133,6 +163,8 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
         }
     }
 
+    message("Done parsing Rd files")
+
     subs <- subs[order(nchar(subs), decreasing = TRUE)]
     subs <- c(paste0("# ", basename(pkg), "\n\n```{r,echo=FALSE,message=FALSE}\nlibrary(\"", 
         basename(pkg), "\")\n```"), subs)
@@ -140,14 +172,16 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
     # Write Rmd:
     RmdFile <- paste0(basename(pkg), ".Rmd")
     write(paste(subs, collapse = "\n\n"), RmdFile)
+    message("Rmd file written, ready to knit")
 
     # Knit:
     mdFile <- gsub("Rmd", "md", RmdFile)
-    knit(RmdFile, mdFile)
+    knitr::knit(RmdFile, mdFile)
+    message("Done knitting, ready for markdown")
 
     # Markdown:
     htmlFile <- gsub("Rmd", "html", RmdFile)
-    markdownToHTML(mdFile, htmlFile)
+    markdown::markdownToHTML(mdFile, htmlFile)
 
     browseURL(htmlFile)
 

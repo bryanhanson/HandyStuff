@@ -1,6 +1,25 @@
-posterThemeL <- function() {
+#' Lattice themes resembling ggplot2 themes
+#' 
+#' This is a set of theme details for use with \code{\link{compareCats}} and
+#' \code{\link{rxnNorm}}.  The themes are derived from package
+#' \code{latticeExtra} with a few additional customizations.  The settings for
+#' posterThemeL are generally larger for decent viewing on a poster.
+#' 
+#' @return A list containing the plotting theme details.
+#'
+#' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
+#'
+#' @seealso \code{\link{compareCats}} and \code{\link{rxnNorm}} for examples
+#' of this theme in use.
+#' @references \url{http://github.com/bryanhanson/HandyStuff}
+#' @keywords utilities
+#' @export screenTheme
+#' @export posterTheme
+#' @aliases screenTheme, posterTheme
+#'
+screenTheme <- function() {
 	
-	# lattice settings resembling ggplot2 for use on posters
+	# lattice settings resembling ggplot2 for use on screens
 	# Values & concept derived from latticeExtra::ggplot2like()
 	# Also see trellis.par.get()
 	
@@ -15,13 +34,13 @@ posterThemeL <- function() {
 	strip.border = list(col = "transparent"),
 	
 	# overall font and point size
-	fontsize = list(text = 14, points = 15),
+	fontsize = list(text = 12, points = 10),
 	
 	# symbols and lines
 #	plot.symbol = list(col = "black", pch = 21, cex = 2), # not sure
-	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles
+	superpose.symbol = list(cex = 0.3, pch = 20), # controls freckles
 #	superpose.line = list(lwd = 5), # does nothing?
-	add.line = list(lwd = 3), # controls summary lines
+	add.line = list(lwd = 1), # controls summary lines
 	# par.main.text = list(cex = 1.5), # individual control if desired
 	# par.xlab.text = list(cex = 1.2),
 	# par.ylab.text = list(cex = 1.2),

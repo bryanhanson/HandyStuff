@@ -2,92 +2,79 @@
 
 NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
+URL: github.com/bryanhanson/HandyStuff
 
-##### Version: 0.6-4
-Date: 27 July 2014
-News:
->> Significant repairs to screenThemeL and posterThemeL.
->> Fixed mis-information in rxnNormL.Rd
+Changes in version 0.6.6 2015-04-19
+     + Spectroscopy related functions moved to package SpecHelpers
+     + Package converted to roxygen2 documentation flow.
+     + NEWS file format changed.
+     + Many new functions added.  You'll just have to look for yourself.
+     + compareCats seems to have a bug.  I'll fix it later.
+     + Functions that had an "L" at the end of their name have lost it.
+     + New style CITATION.
 
-##### Version: 0.6-3
-Date: 10 June 2013
-News:
->> Fixed a problem with column names in compareCatL.
+Changes in version 0.6-5 2014-01-14
+     + Small document fixes.
+     + Improvements to plotNMRspec.
+     + Set exclude = NULL in examplePage.
+     + I see a problem with colors of data points in compareCatsL.
 
-##### Version: 0.6-2
-Date: 1 May 2013
-News:
->> Fixed a problem with rounding in the plotNMRspec-related functions.
+Changes in version 0.6-4 2014-07-27
+     + Significant repairs to screenThemeL and posterThemeL.
+     + Fixed mis-information in rxnNormL.Rd
 
-##### Version: 0.6-1
-Date: 13 April 2013
-News:
->> Function compareCatsL which is the lattice equivalent of compareCats was added.
->> Function rxnNormL which is the lattice equivalent of rxnNorm was added.
->> Functions rxnNorm and compareCats which use ggplot2 were put on leave, awaiting repairs  so they work with the new ggplot2.
->> The following function arguments were changed to use a formula interface: compareCatsL, rxnNormL, lmEqn, lmEqnL.
->> Added function examplePage, slightly modified from the version by Sasha Epskamp at sachaepskamp.com/blog/HTMLexamples
->> Added functions posterThemeL and screenThemeL which control the appearance of the graphics output.  Currently these have the SAME settings.
->> Updates to documentation and github site.
+Changes in version 0.6-3 2013-06-10
+     + Fixed a problem with column names in compareCatL.
 
-##### Version: 0.5-6
-Date: 12 July 2012
-News:
->> All functions have been restored and modified to work with the new ggplot2.  At least I think all is well! (tested with ggplot2_0.9.1)
+Changes in version 0.6-2 2013-05-1
+     + Fixed a problem with rounding in the plotNMRspec-related functions.
 
-##### Version: 0.5-5
-Date: 2011-12-24
-News:
->> Numerous changes for 2.14 and with the current ggplot2!
->> Due to changes in ggplot2, ggExtra has been deprecated.  As a result the  table features in rxnNorm have been disabled until the functionality returns.  Sorry.  As a further result, gridExtra and ggExtra have been removed from NAMESPACE and DESCRIPTION.
+Changes in version 0.6-1 2013-04-13
+     + Function compareCatsL which is the lattice equivalent of compareCats was added.
+     + Function rxnNormL which is the lattice equivalent of rxnNorm was added.
+     + Functions rxnNorm and compareCats which use ggplot2 were put on leave, awaiting repairs  so they work with the new ggplot2.
+     + The following function arguments were changed to use a formula interface: compareCatsL, rxnNormL, lmEqn, lmEqnL.
+     + Added function examplePage, slightly modified from the version by Sasha Epskamp at sachaepskamp.com/blog/HTMLexamples
+     + Added functions posterThemeL and screenThemeL which control the appearance of the graphics output.  Currently these have the SAME settings.
+     + Updates to documentation and github site.
 
-##### Version: 0.5-4
-Date: 2011-12-14
-News:
->> Modified plotNMRspec and makeSpec so that spectra are drawn consistently regardless of the x.range settings.  Now a consistent number of data points is used and peak height/area/appearance should not change when x.range is changed.
+Changes in version 0.5-6 2012-07-12
+     + All functions have been restored and modified to work with the new ggplot2.  At least I think all is well! (tested with ggplot2_0.9.1)
 
-##### Version: 0.5-3
-Date: 2011-10-31
-News:
->> Modified theme_poster and undo_theme_poster to give finer and more deliberate control over plotting parameters.  Should be much clearer if you have to hack the code.
->> Created a NAMESPACE and made other changes for compatibility with R 2.14.
+Changes in version 0.5-5 2011-12-24
+     + Numerous changes for 2.14 and with the current ggplot2!
+     + Due to changes in ggplot2, ggExtra has been deprecated.  As a result the  table features in rxnNorm have been disabled until the functionality returns.  Sorry.  As a further result, gridExtra and ggExtra have been removed from NAMESPACE and DESCRIPTION.
 
-##### Version: 0.5-2
-Date: 2011-08-01
-News:
->> OK, this time I really added the ability to draw an ANOVA summary table to rxnNorm!
+Changes in version 0.5-4 2011-12-14
+     + Modified plotNMRspec and makeSpec so that spectra are drawn consistently regardless of the x.range settings.  Now a consistent number of data points is used and peak height/area/appearance should not change when x.range is changed.
 
-##### Version: 0.5-1
-Date: 2011-7-29
-News:
->> Added the ability to draw an ANOVA summary table to rxnNorm.
+Changes in version 0.5-3 2011-10-31
+     + Modified theme_poster and undo_theme_poster to give finer and more deliberate control over plotting parameters.  Should be much clearer if you have to hack the code.
+     + Created a NAMESPACE and made other changes for compatibility with R 2.14.
 
-##### Version: 0.5
-Date: 2011-7-26
-News:
->> Modified gatherSpecFiles and gatherCsv so that a data frame is returned (This was claimed in the help file but not true).  So the data frame is written out as All Specs.csv and saved in the workspace.  Also, the LoggerPro export format .csv is now supported.
->> Added theme_poster for use with ggplot2 objects/figures.  Changes several defaults to be more suited for scientific poster preparation.
+Changes in version 0.5-2 2011-08-01
+     + OK, this time I really added the ability to draw an ANOVA summary table to rxnNorm!
 
-##### Version: 0.4
-Date: 2011-06-05
-News:
->> Added functions to process LoggerPro files into something more usable.  These are gatherSpecFiles, gatherCsv, avgLambda, txt2csv, cmbl2csv.
+Changes in version 0.5-1 2011-7-29
+     + Added the ability to draw an ANOVA summary table to rxnNorm.
 
-##### Version: 0.3
-Date: 2011-05-23
-News:
->> Added compareCats function.
->> Added rxnNorm function
->> Added argument npoints to makeSpec and plotNMRspec.  For simulating NMR spectra, one has to use more data points to compute the Lorentzian curve as NMR peaks are so narrow.  With npoints = 1000, peaks are often distorted because too few points define them.  npoints = 2000 does a better job (and is slower) but still leaves some slight imbalances in triplets for example, which looks realistic.
->> Added argument labels = FALSE to plotNMRspec which should be useful for 13C NMR spectra.
->> Improved integral label positioning in plotNMRspec to try to avoid overlaps.
->> Added a lab.pos argument for plotNMRspec which allows one to put the labels either left or right of each peak.
+Changes in version 0.5 2011-7-26
+     + Modified gatherSpecFiles and gatherCsv so that a data frame is returned (This was claimed in the help file but not true).  So the data frame is written out as All Specs.csv and saved in the workspace.  Also, the LoggerPro export format .csv is now supported.
+     + Added theme_poster for use with ggplot2 objects/figures.  Changes several defaults to be more suited for scientific poster preparation.
 
-##### Version: 0.2
-Date: 2011-4-19
-News:
->> Added the option for noise to makeSpec (suggested by David Harvey).
+Changes in version 0.4 2011-06-05
+     + Added functions to process LoggerPro files into something more usable.  These are gatherSpecFiles, gatherCsv, avgLambda, txt2csv, cmbl2csv.
 
-##### Version: 0.1
-Date: 2011-3-24
-News: First Release!
+Changes in version 0.3 2011-05-23
+     + Added compareCats function.
+     + Added rxnNorm function
+     + Added argument npoints to makeSpec and plotNMRspec.  For simulating NMR spectra, one has to use more data points to compute the Lorentzian curve as NMR peaks are so narrow.  With npoints = 1000, peaks are often distorted because too few points define them.  npoints = 2000 does a better job (and is slower) but still leaves some slight imbalances in triplets for example, which looks realistic.
+     + Added argument labels = FALSE to plotNMRspec which should be useful for 13C NMR spectra.
+     + Improved integral label positioning in plotNMRspec to try to avoid overlaps.
+     + Added a lab.pos argument for plotNMRspec which allows one to put the labels either left or right of each peak.
+
+Changes in version 0.2 2011-4-19
+     + Added the option for noise to makeSpec (suggested by David Harvey).
+
+Changes in version 0.1 2011-3-24
+     + First Release!
