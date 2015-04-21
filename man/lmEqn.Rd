@@ -38,9 +38,10 @@ regression statistics using \code{lattice}.
 conc = seq(1, 12, length.out = 8)
 abs = jitter(conc, factor = 2)*0.1
 cc <- data.frame(conc, abs)
-lmEqn(formula = abs ~ conc, data = cc, leg.loc = c(3, 0.1),
-	xlab = "concentration", ylab = "absorbance",
-	main = "Calibration Curve")
+lmEqn(formula = abs ~ conc, data = cc, method = "rlm",
+leg.loc = c(3, 0.1),
+xlab = "concentration", ylab = "absorbance",
+main = "Calibration Curve")
 }
 \author{
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}

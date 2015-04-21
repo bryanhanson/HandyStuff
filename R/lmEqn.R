@@ -24,6 +24,8 @@
 #' @return A plot is drawn and the \code{ggplot2} or \code{lattice} object is
 #' returned, possibly for further manipulation.
 #'
+#' @export lmEqn
+#'
 #' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
 #' @keywords utilities plot
 #' @examples
@@ -31,11 +33,11 @@
 #' conc = seq(1, 12, length.out = 8)
 #' abs = jitter(conc, factor = 2)*0.1
 #' cc <- data.frame(conc, abs)
-#' lmEqn(formula = abs ~ conc, data = cc, leg.loc = c(3, 0.1),
-#' 	xlab = "concentration", ylab = "absorbance",
-#' 	main = "Calibration Curve")
+#' lmEqn(formula = abs ~ conc, data = cc, method = "rlm",
+#' leg.loc = c(3, 0.1),
+#' xlab = "concentration", ylab = "absorbance",
+#' main = "Calibration Curve")
 #' 
-#' @export lmEqn
 lmEqn <-
 function(formula = NULL, data = NULL,
 	method = "lm", leg.loc = c(0.5, 0.5),

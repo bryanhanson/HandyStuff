@@ -4,6 +4,10 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.7 2015-04-20
+     + Added functions lpi and lpr.
+     + Moved many Imports to Suggests.
+
 Changes in version 0.6.6 2015-04-19
      + Spectroscopy related functions moved to package SpecHelpers
      + Package converted to roxygen2 documentation flow.

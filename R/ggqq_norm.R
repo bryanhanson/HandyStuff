@@ -19,21 +19,28 @@
 ##' @keywords plot
 ##'
 ##' @examples
-##' require('ggplot2')
-##'
-##' set.seed(123) # create some test data sets
-##' td1 <- data.frame(resp = rnorm(100), f1 = sample(c("A", "B"), 100, replace = TRUE),
-##' f2 = sample(c("C", "D"), 100, replace = TRUE))
-##' td2 <- data.frame(resp = rnorm(100), f1 = sample(c("A", "B"), 100, replace = TRUE),
-##' f2 = sample(c("C", "D", "E"), 100, replace = TRUE))
-##'
-##' # sample plots
+##' set.seed(123)
+##' ns <- 200
+##' require("ggplot2")
+##' #
+##' td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
+##' f2 = sample(c("C", "D"), ns, replace = TRUE))
 ##' res <- ggqq_norm(td1, "resp", c("f1", "f2"))
-##' res <- ggqq_norm(td1, "resp", c("f1"))
+##' print(res + labs(title = "Normal Distribution"))
+##' #
+##' td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
+##' f2 = sample(c("C", "D"), ns, replace = TRUE))
+##' bad <- sample(1:ns, 4)
+##' td1$resp[bad[1:2]] <- 5
+##' td1$resp[bad[3:4]] <- -5
+##' res <- ggqq_norm(td1, "resp", c("f1", "f2"))
+##' print(res + labs(title = "Normal Distribution + Outliers"))
+##' #
+##' td2 <- data.frame(resp = runif(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
+##' f2 = sample(c("C", "D"), ns, replace = TRUE))
 ##' res <- ggqq_norm(td2, "resp", c("f1", "f2"))
-##' res <- ggqq_norm(td2, "resp", c("f1"))
-##' res <- ggqq_norm(td2, "resp", c("f2"))
-
+##' print(res + labs(title = "Uniform Distribution"))
+##' 
 ggqq_norm <- function(dataframe = NULL, respvar = NULL, facetvars = NULL) {
 	
 	# preliminaries...
