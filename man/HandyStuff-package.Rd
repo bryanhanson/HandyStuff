@@ -6,7 +6,7 @@
 \alias{HandyStuff-package}
 \title{Handy Functions & Stuff I Use, & You Might Too!}
 \description{
-Mostly unrelated functions for all sorts of things I find Handy.
+Various functions I find handy.
 }
 \author{
 Bryan A. Hanson, DePauw University, Greencastle Indiana USA

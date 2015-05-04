@@ -37,10 +37,10 @@ screenTheme <- function() {
 	fontsize = list(text = 12, points = 10),
 	
 	# symbols and lines
-#	plot.symbol = list(col = "black", pch = 21, cex = 2), # not sure
-	superpose.symbol = list(cex = 0.3, pch = 20), # controls freckles
+	plot.symbol = list(pch = 20, cex = 1.5), # controls mean/median point size
+	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles
 #	superpose.line = list(lwd = 5), # does nothing?
-	add.line = list(lwd = 1), # controls summary lines
+	add.line = list(lwd = 1), # controls summary lines in rxnNorm
 	# par.main.text = list(cex = 1.5), # individual control if desired
 	# par.xlab.text = list(cex = 1.2),
 	# par.ylab.text = list(cex = 1.2),

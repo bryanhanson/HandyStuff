@@ -29,9 +29,10 @@
 #' "points")}.  Various methods for computing measures of spread and central
 #' tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
 #'
-#' @param poster Logical; if \code{TRUE}, use \code{posterTheme} which has
-#' graphics settings suitable for viewing on a poster, otherwise, use
-#' \code{screenTheme}.
+#' @param theme Character; A sutible \code{lattice} theme.  
+#' There are two built-in themes which you can use "as is" or modify to your heart's
+#' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+#' provided is \code{\link{posterTheme}}.
 #'
 #' @param \dots Other parameters to be passed downstream.
 #' @return A \code{lattice} object.  These can be modified by the usual methods
@@ -61,14 +62,14 @@
 #' # Two factors:
 #' #	
 #' p <- compareCats(formula = resp~cat1 | cat2, data = mydf,
-#' 	method = "sem", freckles = TRUE, poster = FALSE,
+#' 	method = "sem", freckles = TRUE,
 #' 	cols = c("red", "orange", "blue"))
 #' print(p)
 #' #
 #' # Interchange the roles of the factors (and hence colors):
 #' #
 #' p <- compareCats(formula = resp~cat2 | cat1, data = mydf,
-#' 	method = "sem", freckles = TRUE, poster = FALSE,
+#' 	method = "sem", freckles = TRUE,
 #' 	cols = c("red", "blue"))
 #' print(p)
 #' 
@@ -79,7 +80,7 @@ compareCats <-
 function(formula = NULL, data = NULL,
 	cols = NULL, freckles = FALSE,
 	method = c("sem", "sem95", "iqr", "mad", "box", "points"),
-	poster = FALSE, ...)
+	theme = screenTheme(), ...)
 	{
 
 	# Function to compare categorical data by
@@ -115,6 +116,8 @@ function(formula = NULL, data = NULL,
 	data <- data[, keep]
 	data <- na.omit(data)
 
+	# Misc checks
+	
 	if (!is.factor(data[,fac1])) stop(paste(fac1, "was not of type factor"))
 	if (TwoFac) if (!is.factor(data[,fac2])) stop(paste(fac2, "was not of type factor"))
 
@@ -125,15 +128,16 @@ function(formula = NULL, data = NULL,
 
 	if ((freckles) & (method == "box")) {
 		freckles <- FALSE
-		message("Box plot & freckles don't look good together, doing only boxplot")
+		message("Box plot & freckles don't look good together, only plotting boxplot")
 		}
 		
 	# Need to calc ylim to accommodate counts at bottom of plot
 	yl <- c(min(data[,res]) - 0.15*diff(range(data[,res])), max(data[,res])*1.05)
 
 	# Check the color scheme; set up if not given
-	
+
 	nc <- length(levels(data[,fac1]))
+	
 	if (is.null(cols)) {
 		cols <- RColorBrewer::brewer.pal(nc, "Set1")
 		if (nc == 2) cols <- cols[1:2]
@@ -143,18 +147,18 @@ function(formula = NULL, data = NULL,
 			stop(paste("You gave", length(cols), "colors, but you need", nc, "colors"))
 			}
 		}
-		
-######## This applies to all plots and data sets:
 
-	if (poster) ps = posterTheme()
-	if (!poster) ps = screenTheme()
-	
-	# This panel simply plots the data points
-	
-	panel.justpoints <- function(x, y, ...) {
-		lattice::panel.xyplot(x, y, ...) # seems to ignore theme
+	# Assign a color to each data point / also use as grouping variable
+
+	ptcols <- rep(NA_character_, nrow(data))
+	for (i in 1:nlevels(data[,fac1])) {
+		tmp <- which(data[,fac1] == levels(data[,fac1])[i])
+		ptcols[tmp] <- cols[i]
 		}
+	data$grps <- factor(ptcols, levels = cols)
 		
+	ps <- theme
+			
 ########
 		
 	if (!TwoFac) { # Handle everything unique to one factor situation here
@@ -191,11 +195,11 @@ function(formula = NULL, data = NULL,
 			# Plot the mean or median
 			
 			if ((method == "sem") | (method == "sem95")) {
-				lattice::panel.points(x = sumDat[,1], y = sumDat[,2], ...)
+				lattice::panel.points(x = sumDat[,1], y = sumDat[,2], pch = 20, ...)
 				}
 				
 			if ((method == "mad") | (method == "iqr")) {
-				lattice::panel.points(x = sumDat[,1], y = sumDat[,3], ...)
+				lattice::panel.points(x = sumDat[,1], y = sumDat[,3], pch = 20, ...)
 				}
 
 			# Plot the 'whiskers'
@@ -296,14 +300,14 @@ function(formula = NULL, data = NULL,
 			if ((method == "sem") | (method == "sem95")) {
 				for (i in seq_along(lf2)) {
 						xxx <- xx(lattice::packet.number())
-						lattice::panel.points(x = 1:lf1, y = sumDat[xxx, 3], ...)
+						lattice::panel.points(x = 1:lf1, y = sumDat[xxx, 3], pch = 20, ...)
 					}
 				}
 				
 			if ((method == "mad") | (method == "iqr")) {
 				for (i in seq_along(lf2)) {
 						xxx <- xx(lattice::packet.number())
-						lattice::panel.points(x = 1:lf1, y = sumDat[xxx, 4], ...)
+						lattice::panel.points(x = 1:lf1, y = sumDat[xxx, 4], pch = 20, ...)
 					}
 				}
 
@@ -348,23 +352,24 @@ function(formula = NULL, data = NULL,
 ##### Now the high level plot calls (common to all options)
 	
 	if (!method == "box") {
-		p <- lattice::xyplot(as.formula(args$formula),
-  		data = eval(args$data), ylim = yl, ...,
-#		p <- xyplot(formula, data, ylim = yl, ..., # these work equally well?
+		p <- lattice::xyplot(
+			as.formula(args$formula),
+  			data = eval(args$data),
+  			ylim = yl,
 			scales = list(alternating = FALSE),
 			between = list(x = 0.25, y = 0.25),
 			axis = latticeExtra::axis.grid,
+			groups = data$grps,
 			par.settings = ps,
+			...,
 			# This key works but seems unnecessary, as the plot is self-documenting
 			# auto.key = list(text = levels(fac2), space = "right",
 				# points = FALSE, title = fac2, cex.title = 1.0),
 			panel = function(x, y, ...) {
-#				par.settings = ps
-				# both of these do the same thing
-#				if (method == "points") panel.justpoints(x, y, ...) # neither of these listen to the theme!
-				if (method == "points") lattice::panel.xyplot(x, y, ...) # neither of these listen to the theme!
+				
+				if (method == "points") lattice::panel.xyplot(x, y, col = cols, ...)
 				if (freckles) lattice::panel.xyplot(x, y, jitter.x = TRUE, col = cols, ...)
-#				panel.summary(x, y, col = cols, cex = 1, ...)
+					
 				panel.summary(x, y, col = cols, ...)
 				panel.counts(x, y, ...)
 				}

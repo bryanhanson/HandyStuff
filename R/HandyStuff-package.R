@@ -2,7 +2,7 @@
 
 #' Handy Functions & Stuff I Use, & You Might Too!
 #' 
-#' Mostly unrelated functions for all sorts of things I find Handy.
+#' Various functions I find handy.
 #' 
 #' 
 #' @name HandyStuff-package

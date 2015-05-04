@@ -23,6 +23,7 @@ using ggplot2 graphics.  The reference line is based on the normal distribution.
 The plot may be faceted.
 }
 \examples{
+set.seed(123)
 ns <- 200
 require("ggplot2")
 #

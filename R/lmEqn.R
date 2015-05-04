@@ -64,6 +64,7 @@ function(formula = NULL, data = NULL,
 	b <- mod$coef[1]
 	r2 <- round(cor(data[,v], data[,res])^2, 4)
 	Lab <- paste("m =", round(m, 3), "b =", round(b, 3), "r^2 =", r2, sep = "  ")
+#	Lab <- paste("m =", round(m, 3), "b =", round(b, 3), bquote(r^2 == .(r2)), sep = "  ")
 	if (method == "lm") Lab <- paste("linear model: ", Lab)
 	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 

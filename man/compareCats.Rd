@@ -5,8 +5,8 @@
 \title{Compare Data by Category}
 \usage{
 compareCats(formula = NULL, data = NULL, cols = NULL, freckles = FALSE,
-  method = c("sem", "sem95", "iqr", "mad", "box", "points"), poster = FALSE,
-  ...)
+  method = c("sem", "sem95", "iqr", "mad", "box", "points"),
+  theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -28,9 +28,10 @@ direction only.}
 "points")}.  Various methods for computing measures of spread and central
 tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.}
 
-\item{poster}{Logical; if \code{TRUE}, use \code{posterTheme} which has
-graphics settings suitable for viewing on a poster, otherwise, use
-\code{screenTheme}.}
+\item{theme}{Character; A sutible \code{lattice} theme.
+There are two built-in themes which you can use "as is" or modify to your heart's
+content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+provided is \code{\link{posterTheme}}.}
 
 \item{\dots}{Other parameters to be passed downstream.}
 }
@@ -67,14 +68,14 @@ print(p)
 # Two factors:
 #
 p <- compareCats(formula = resp~cat1 | cat2, data = mydf,
-	method = "sem", freckles = TRUE, poster = FALSE,
+	method = "sem", freckles = TRUE,
 	cols = c("red", "orange", "blue"))
 print(p)
 #
 # Interchange the roles of the factors (and hence colors):
 #
 p <- compareCats(formula = resp~cat2 | cat1, data = mydf,
-	method = "sem", freckles = TRUE, poster = FALSE,
+	method = "sem", freckles = TRUE,
 	cols = c("red", "blue"))
 print(p)
 }

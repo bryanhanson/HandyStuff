@@ -45,10 +45,10 @@
 #' ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
 #' so 0.5, 0.5 puts the table dead center in the plotting region.
 #'
-#' @param poster Logical; if \code{TRUE}, use \code{posterTheme} which has
-#' graphics settings suitable for viewing on a poster, otherwise, use
-#' \code{screenTheme}.  Don't forget to adjust the font size in the summary
-#' table appropriately.
+#' @param theme Character; A sutible \code{lattice} theme.  
+#' There are two built-in themes which you can use "as is" or modify to your heart's
+#' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+#' provided is \code{\link{posterTheme}}.
 #'
 #' @param \dots Additional arguments to be passed downstream.
 #'
@@ -94,7 +94,7 @@
 #' # Categorical x, connected with ANOVA table:
 #' p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 #' method = "iqr", freckles = TRUE, type = "anova",
-#' cols = c("red", "blue"), table = c(0.6, 0.3, 0.75),
+#' cols = c("red", "blue"), table = c(0.6, 0.2, 0.75),
 #' main = "rxnNorm - Categorical x w/ANOVA table")
 #' print(p)
 #' 
@@ -104,7 +104,7 @@ rxnNorm <-
 function(formula = NULL, data = NULL, groups = NULL,
 	cols = NULL, freckles = FALSE, type = "connect",
 	method = c("sem", "sem95", "iqr", "mad"),
-	table = NULL, poster = FALSE, ...) {
+	table = NULL, theme = screenTheme(), ...) {
 
 # Function to compare categorical data by
 # plotting means etc in the same panel
@@ -112,7 +112,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 # and display some nice summary tables
 # Bryan Hanson, DePauw Univ, July 2010
 
-# This is the lattice version, February 2013
+# Lattice version, February 2013
 # We are using formula, data and groups close to how lattice handles them
 
 	# Check and process the formula & data types
@@ -325,14 +325,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 
 ##### Now the high level plot calls
 
-	if (poster) {
-		ps <- posterTheme()
-		kts <- posterTheme()$fontsize$text*0.08 # personal taste
-		}
-	if (!poster) {
-		ps <- screenTheme()
-		kts <- screenTheme()$fontsize$text*0.08 # personal taste
-		}
+	ps <- theme
 
 	p <- lattice::xyplot(as.formula(args$formula),
   		data = eval(args$data), 
@@ -365,7 +358,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 					}
 				} # end of table options
 			}, # end of panel function
-		auto.key = list(space = "right", col = cols, points = FALSE, title = grn, cex.title = kts)
+		auto.key = list(space = "right", col = cols, points = FALSE, title = grn, cex.title = 0.08)
 			)
 	
 	invisible(p)

@@ -6,7 +6,7 @@
 \usage{
 rxnNorm(formula = NULL, data = NULL, groups = NULL, cols = NULL,
   freckles = FALSE, type = "connect", method = c("sem", "sem95", "iqr",
-  "mad"), table = NULL, poster = FALSE, ...)
+  "mad"), table = NULL, theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -44,10 +44,10 @@ font size cex.  The table contains either a summary of counts (if \code{type
 ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
 so 0.5, 0.5 puts the table dead center in the plotting region.}
 
-\item{poster}{Logical; if \code{TRUE}, use \code{posterTheme} which has
-graphics settings suitable for viewing on a poster, otherwise, use
-\code{screenTheme}.  Don't forget to adjust the font size in the summary
-table appropriately.}
+\item{theme}{Character; A sutible \code{lattice} theme.
+There are two built-in themes which you can use "as is" or modify to your heart's
+content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+provided is \code{\link{posterTheme}}.}
 
 \item{\dots}{Additional arguments to be passed downstream.}
 }
@@ -103,7 +103,7 @@ print(p)
 # Categorical x, connected with ANOVA table:
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "anova",
-cols = c("red", "blue"), table = c(0.6, 0.3, 0.75),
+cols = c("red", "blue"), table = c(0.6, 0.2, 0.75),
 main = "rxnNorm - Categorical x w/ANOVA table")
 print(p)
 }
