@@ -1,6 +1,6 @@
 
 
-#' Handy Functions & Stuff I Use, & You Might Too!
+#' Handy Functions & Stuff
 #' 
 #' Various functions I find handy.
 #' 

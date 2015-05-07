@@ -1,4 +1,4 @@
-#' Plot Points, Fit a Line, Display Everything
+#' Plot Points, Fit a Line, Display Equation
 #' 
 #' This function plots the points given, then fits a line and displays the
 #' regression statistics using \code{lattice}.
@@ -15,9 +15,10 @@
 #' @param leg.loc A vector of two numbers (x, y) giving the location of the
 #' legend.  The values correspond to the units of the data. See the examples.
 #'
-#' @param poster Logical; if \code{TRUE}, use \code{posterTheme} which has
-#' graphics settings suitable for viewing on a poster, otherwise, use
-#' \code{screenTheme}.  Applies only to \code{lmEqnL} right now.
+#' @param theme Character; A suitble \code{lattice} theme.  
+#' There are two built-in themes which you can use "as is" or modify to your heart's
+#' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+#' provided is \code{\link{posterTheme}}.
 #'
 #' @param \dots Additional arguments to be passed downstream.
 #'
@@ -41,10 +42,7 @@
 lmEqn <-
 function(formula = NULL, data = NULL,
 	method = "lm", leg.loc = c(0.5, 0.5),
-	poster = FALSE, ...) {
-	
-	# This is the version that uses Lattice graphics
-	# compare to lmEqn which uses ggplot2 graphics
+	theme = screenTheme(), ...) {
 	
 	# Process & check formula
 	
@@ -69,8 +67,7 @@ function(formula = NULL, data = NULL,
 	if (method == "rlm") Lab <- paste("robust linear model: ", Lab)
 
 	# Make the plot
-	if (poster) ps = posterTheme()
-	if (!poster) ps = screenTheme()
+	ps = theme
 
 	mypanel <- function(x, y, ...) {
 		lattice::panel.xyplot(x, y, type = "p", ...)

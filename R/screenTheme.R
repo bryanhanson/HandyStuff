@@ -1,7 +1,7 @@
 #' Lattice themes resembling ggplot2 themes
 #' 
-#' This is a set of theme details for use with \code{\link{compareCats}} and
-#' \code{\link{rxnNorm}}.  The themes are derived from package
+#' This is a set of theme details for use with \code{\link{compareCats}},
+#' \code{\link{rxnNorm}} and \code{\link{lmEqn}}.  The themes are derived from package
 #' \code{latticeExtra} with a few additional customizations.  The settings for
 #' posterThemeL are generally larger for decent viewing on a poster.
 #' 

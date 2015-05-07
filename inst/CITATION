@@ -8,10 +8,10 @@ vers <- paste("R package version", meta$Version)
 web <- "github.com/bryanhanson/HandyStuff"
 
 citEntry(entry = "Manual",
-	title = "HandyStuff: Stuff that is, Well, Handy.",
+	title = "Handy Functions & Stuff",
 	author = personList(as.person("Bryan A. Hanson")),
 	year = year,
 	note = vers,
-	web = web,
-	textVersion = paste("Bryan A. Hanson (", year, ") HandyStuff: Stuff that is, well, handy. ",
+	url = web,
+	textVersion = paste("Bryan A. Hanson (", year, ") Handy Functions & Stuff ",
 		vers, ", ", web, sep = ""))

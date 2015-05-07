@@ -44,7 +44,7 @@ font size cex.  The table contains either a summary of counts (if \code{type
 ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
 so 0.5, 0.5 puts the table dead center in the plotting region.}
 
-\item{theme}{Character; A sutible \code{lattice} theme.
+\item{theme}{Character; A suitable \code{lattice} theme.
 There are two built-in themes which you can use "as is" or modify to your heart's
 content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
 provided is \code{\link{posterTheme}}.}
@@ -69,38 +69,41 @@ The choices in \code{method} are based upon functions in the
 See \code{\link[ChemoSpec]{seXy}} for the details.
 }
 \examples{
+#
+### set up demo data
+#
 require("ChemoSpec")
 require("lattice")
 require("gridExtra")
-# set up demo data
 set.seed(79)
 res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
 rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
 rnorm(10, 15, 2), rnorm(10, 12,2.5))
 fac1 <- c(rep("L", 20), rep("M", 20), rep("H", 20))
 fac1 <- factor(fac1, levels = c("L", "M", "H"))
-# fac2 <- c(rep("blue", 10), rep("red", 10))
-# fac2 <- rep(fac2, 3)
 fac2 <- sample(c("A", "B"), 60, replace = TRUE)
 fac2 <- as.factor(fac2)
 num <- c(rep(5, 20), rep(10, 20), rep(12, 20))
 td <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, num = num)
 #
-# Numeric x with lm and summary table:
+### Numeric x with lm and summary table:
+#
 p <- rxnNorm(formula = resp~num, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "fitLine",
 cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
 main = "rxnNorm - linear model w/fit table")
 print(p)
 #
-# Categorical x, connected and summary table:
+### Categorical x, connected and summary table:
+#
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "connect",
 cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
 main = "rxnNorm - Categorical x w/summary table")
 print(p)
 #
-# Categorical x, connected with ANOVA table:
+### Categorical x, connected with ANOVA table:
+#
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "anova",
 cols = c("red", "blue"), table = c(0.6, 0.2, 0.75),

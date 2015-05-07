@@ -4,7 +4,7 @@
 \name{HandyStuff-package}
 \alias{HandyStuff}
 \alias{HandyStuff-package}
-\title{Handy Functions & Stuff I Use, & You Might Too!}
+\title{Handy Functions & Stuff}
 \description{
 Various functions I find handy.
 }

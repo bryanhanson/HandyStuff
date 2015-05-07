@@ -29,7 +29,7 @@
 #' "points")}.  Various methods for computing measures of spread and central
 #' tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
 #'
-#' @param theme Character; A sutible \code{lattice} theme.  
+#' @param theme Character; A suitble \code{lattice} theme.  
 #' There are two built-in themes which you can use "as is" or modify to your heart's
 #' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
 #' provided is \code{\link{posterTheme}}.
@@ -45,28 +45,30 @@
 #' \url{http://github.com/bryanhanson/HandyStuff}
 #' @keywords plot univariate
 #' @examples
-#' 
+#' #
+#' ### Set up test data
+#' #
 #' library("ChemoSpec")
 #' mydf <- data.frame(
 #' 	resp = rnorm(40),
 #' 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
 #' 	cat2 = sample(letters[1:2], 40, replace = TRUE))
 #' #
-#' # One factor:
+#' ### One factor:
 #' #
 #' p <- compareCats(formula = resp~cat1, data = mydf,
 #' 	method = "sem", freckles = TRUE, poster = FALSE, 
 #' 	cols = c("red", "orange", "blue"))
 #' print(p)
 #' #
-#' # Two factors:
+#' ### Two factors:
 #' #	
 #' p <- compareCats(formula = resp~cat1 | cat2, data = mydf,
 #' 	method = "sem", freckles = TRUE,
 #' 	cols = c("red", "orange", "blue"))
 #' print(p)
 #' #
-#' # Interchange the roles of the factors (and hence colors):
+#' ### Interchange the roles of the factors
 #' #
 #' p <- compareCats(formula = resp~cat2 | cat1, data = mydf,
 #' 	method = "sem", freckles = TRUE,

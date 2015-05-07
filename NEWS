@@ -4,11 +4,14 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
-Changes in version 0.6.8 2015-05-04
+Changes in version 0.6.8 2015-05-06
      + Clean up a lot of small inconsistencies.
      + Overhauled compareCats, esp. the coloring of points.
      + Some changes to theme details.
      + The poster argument of compareCats and rxnNorm was replaced with a theme argument for greater flexibility.
+     + lmEqn now has a theme argument too.
+     + Updated package title.
+     + Made some repairs to examplePage.  Now seems to work correctly.
 
 Changes in version 0.6.7 2015-04-20
      + Added functions lpi and lpr.

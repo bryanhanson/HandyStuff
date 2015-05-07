@@ -4,7 +4,8 @@
 #' \code{knitr} to create a \code{markdown} file.  This file is then converted
 #' to html and opened in a browser.  This function was written by Sasha Epskamp
 #' and published on his blog (sachaepskamp.com/blog/HTMLexamples).  I modified
-#' it to accept more than one file for \code{exclude}.
+#' it to accept more than one file for \code{exclude}, to present the
+#' examples in alphabetical order, and to use the global environment during kniting.
 #' 
 #' 
 #' @param pkg Path to the package directory.
@@ -22,21 +23,24 @@
 #'
 #' @return Creates and displays a web page.
 #'
+#' @section Note:
+#' Formatting the Rd examples with ### results in a large header.
+#' Using ## results in a small header.  This function will
+#' drop .Rmd, .md and .html files into the current directory.
+#'
 #' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
 #'
 #' @references sachaepskamp.com/blog/HTMLexamples
 #' @keywords utilities
 #' @examples
 #' 
-#' # Set the working dir to the pkg dir
-#' # Note that this will leave some files in the dir
 #' \dontrun{
-#' examplePage(getwd(), exclude = c("jSeq"))
+#' examplePage(getwd())
 #' }
 #' 
 #' @export examplePage
 examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
-    includeDontshow = FALSE, includeDontrun = TRUE, exclude = NULL) {
+    includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL) {
 
 # Taken from http://sachaepskamp.com/blog/HTMLexamples
 # A small modification was made to the Exclude block
@@ -165,7 +169,6 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
 
     message("Done parsing Rd files")
 
-    subs <- subs[order(nchar(subs), decreasing = TRUE)]
     subs <- c(paste0("# ", basename(pkg), "\n\n```{r,echo=FALSE,message=FALSE}\nlibrary(\"", 
         basename(pkg), "\")\n```"), subs)
 
@@ -176,7 +179,7 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
 
     # Knit:
     mdFile <- gsub("Rmd", "md", RmdFile)
-    knitr::knit(RmdFile, mdFile)
+    knitr::knit(RmdFile, mdFile, envir = globalenv()) # needed to make sure variables visible
     message("Done knitting, ready for markdown")
 
     # Markdown:

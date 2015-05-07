@@ -24,17 +24,25 @@
 ##'
 ##' @examples
 ##' require('plyr')
-##' # One response variable returns a data frame:
+##' #
+##' ### One response variable returns a data frame:
+##' #
 ##' tst <- sumStatDeluxe(chickwts, groupVars = "feed", respVars = "weight")
-##' # Two response variables returns a list of data frames:
+##' tst
+##' #
+##' ### Two response variables returns a list of data frames:
+##' #
 ##' tst <- sumStatDeluxe(iris, groupVars = "Species",
 ##' respVars = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"))
-##'
-##' # Two categorical variables, one response:
+##' tst
+##' #
+##' ### Two categorical variables, one response:
+##' #
 ##' tst <- sumStatDeluxe(warpbreaks, groupVars = c("wool", "tension"), respVars = "breaks")
 ##' # One categorical, multiple response variables:
 ##' tst <- sumStatDeluxe(airquality, groupVars = "Month",
 ##' respVars = c("Ozone", "Solar.R", "Wind"))
+##' tst
 ##'
 sumStatDeluxe <- function(data = NULL, groupVars = NULL, respVars = NULL, ci = 0.95, ...) {
 	# read ?var carefully for role of na.rm - it must always be true for numeric vectors

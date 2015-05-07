@@ -1,8 +1,8 @@
 Package: HandyStuff
 Type: Package
-Title: Handy Functions & Stuff I Use, & You Might Too!
+Title: Handy Functions & Stuff
 Version: 0.6.8
-Date: 2015-05-04
+Date: 2015-05-06
 Author: Bryan A. Hanson DePauw University, Greencastle Indiana USA
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Various functions I find handy.

@@ -2,10 +2,10 @@
 % Please edit documentation in R/lmEqn.R
 \name{lmEqn}
 \alias{lmEqn}
-\title{Plot Points, Fit a Line, Display Everything}
+\title{Plot Points, Fit a Line, Display Equation}
 \usage{
 lmEqn(formula = NULL, data = NULL, method = "lm", leg.loc = c(0.5, 0.5),
-  poster = FALSE, ...)
+  theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -20,9 +20,10 @@ a robust fit.}
 \item{leg.loc}{A vector of two numbers (x, y) giving the location of the
 legend.  The values correspond to the units of the data. See the examples.}
 
-\item{poster}{Logical; if \code{TRUE}, use \code{posterTheme} which has
-graphics settings suitable for viewing on a poster, otherwise, use
-\code{screenTheme}.  Applies only to \code{lmEqnL} right now.}
+\item{theme}{Character; A suitble \code{lattice} theme.
+There are two built-in themes which you can use "as is" or modify to your heart's
+content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
+provided is \code{\link{posterTheme}}.}
 
 \item{\dots}{Additional arguments to be passed downstream.}
 }

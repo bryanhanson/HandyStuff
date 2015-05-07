@@ -6,7 +6,7 @@
 \usage{
 examplePage(pkg,
   openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}",
-  includeDontshow = FALSE, includeDontrun = TRUE, exclude = NULL)
+  includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL)
 }
 \arguments{
 \item{pkg}{Path to the package directory.}
@@ -30,13 +30,18 @@ This function runs all the example code in a package's Rd files, using
 \code{knitr} to create a \code{markdown} file.  This file is then converted
 to html and opened in a browser.  This function was written by Sasha Epskamp
 and published on his blog (sachaepskamp.com/blog/HTMLexamples).  I modified
-it to accept more than one file for \code{exclude}.
+it to accept more than one file for \code{exclude}, to present the
+examples in alphabetical order, and to use the global environment during kniting.
+}
+\section{Note}{
+
+Formatting the Rd examples with ### results in a large header.
+Using ## results in a small header.  This function will
+drop .Rmd, .md and .html files into the current directory.
 }
 \examples{
-# Set the working dir to the pkg dir
-# Note that this will leave some files in the dir
 \dontrun{
-examplePage(getwd(), exclude = c("jSeq"))
+examplePage(getwd())
 }
 }
 \author{

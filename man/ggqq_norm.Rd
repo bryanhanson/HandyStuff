@@ -23,14 +23,21 @@ using ggplot2 graphics.  The reference line is based on the normal distribution.
 The plot may be faceted.
 }
 \examples{
+#
+### Set up test data
+#
 set.seed(123)
-ns <- 200
 require("ggplot2")
+ns <- 200
+#
+### Normally distributed data
 #
 td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
 f2 = sample(c("C", "D"), ns, replace = TRUE))
 res <- ggqq_norm(td1, "resp", c("f1", "f2"))
 print(res + labs(title = "Normal Distribution"))
+#
+### Normally distributed data w/an outlier
 #
 td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
 f2 = sample(c("C", "D"), ns, replace = TRUE))
@@ -39,6 +46,8 @@ td1$resp[bad[1:2]] <- 5
 td1$resp[bad[3:4]] <- -5
 res <- ggqq_norm(td1, "resp", c("f1", "f2"))
 print(res + labs(title = "Normal Distribution + Outliers"))
+#
+### Uniformly distributed data
 #
 td2 <- data.frame(resp = runif(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
 f2 = sample(c("C", "D"), ns, replace = TRUE))

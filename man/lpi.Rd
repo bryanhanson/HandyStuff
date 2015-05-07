@@ -28,7 +28,9 @@ numeric (real) values.
 }
 \examples{
 require('lattice')
-# numeric test data
+#
+### Numeric test data
+#
 M1 <- abs(matrix(runif(16, 0.2, 1), nrow = 4))
 rownames(M1) <- as.character(1:4)
 colnames(M1) <- as.character(1:4)
@@ -42,8 +44,9 @@ xlab.top = "column", ylab = "row", xlab = "",
 scale = list(x = list(alternating = 2)),
 col.regions = cm.colors(3),
 at = c(-1.0, -0.01, 0.01, 1.0), panel = lpr)
-
-# integer test data
+#
+### Integer test data
+#
 M3 <- matrix(1:16, ncol = 4, byrow = TRUE)
 rownames(M3) <- as.character(1:4)
 colnames(M3) <- as.character(1:4)
