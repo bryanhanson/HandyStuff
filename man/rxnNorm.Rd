@@ -25,12 +25,14 @@ the levels in factor 1.}
 as small points, hence the name, jittered slightly in the horizontal
 direction only.}
 
-\item{type}{Either "connect", "fitLine" or "anova".  In the first case, a
+\item{type}{Either "connect", "fitLine" , "anova" or "anovaNoLine".
+In the first case, a
 line is drawn which connects the chosen measure of central tendency (e.g.
 mean) for each value of \code{fac1}.  This would generally be used when the
 x value are categorical.  In the second case, a linear fit is performed and
 the line is drawn; used for continuous x values.  In the third case, a
-connecting line is drawn along with an ANOVA summary table.}
+connecting line is drawn along with an ANOVA summary table.  Finally, in
+the fourth case no line is drawn and the ANOVA summary table is provided.}
 
 \item{method}{One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces
 a dot at the measure of central tendency and error bars corresponding to the

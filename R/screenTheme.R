@@ -3,7 +3,7 @@
 #' This is a set of theme details for use with \code{\link{compareCats}},
 #' \code{\link{rxnNorm}} and \code{\link{lmEqn}}.  The themes are derived from package
 #' \code{latticeExtra} with a few additional customizations.  The settings for
-#' posterThemeL are generally larger for decent viewing on a poster.
+#' posterTheme are generally larger for decent viewing on a poster.
 #' 
 #' @return A list containing the plotting theme details.
 #'
@@ -47,7 +47,7 @@ screenTheme <- function() {
 	# par.sub.text = list(cex = 1.2),
 	# add.text = list(cex = 1.2), # lengend entries, not legend title
 	
-	# these next ones apply to boxplots (not an option in rxnNormL)
+	# these next ones apply to boxplots (not an option in rxnNorm)
     box.dot = list(col = "black", pch = 18, cex = 1.5),
     box.rectangle = list(col = "transparent"),
     box.umbrella = list(lty = 1, lwd = 1.5)

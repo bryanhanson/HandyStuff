@@ -4,6 +4,10 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.56 2015-07-20
+     + Brought into compliance with new CRAN namespace policies.
+     + Overhauled rxnNorm as gridExtra had significant changes.
+
 Changes in version 0.6.8 2015-05-06
      + Clean up a lot of small inconsistencies.
      + Overhauled compareCats, esp. the coloring of points.

@@ -1,11 +1,12 @@
 Package: HandyStuff
 Type: Package
 Title: Handy Functions & Stuff
-Version: 0.6.8
-Date: 2015-05-06
+Version: 0.6.56
+Date: 2015-07-19
 Author: Bryan A. Hanson DePauw University, Greencastle Indiana USA
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Description: Various functions I find handy.
 License: GPL-3
-Suggests: MASS, ggplot2, knitr, markdown, ChemoSpec, RColorBrewer, grid, plyr, gridExtra, lattice, latticeExtra
+Suggests: MASS, ggplot2, knitr, markdown, ChemoSpec, RColorBrewer, grid, plyr, gridExtra, lattice, latticeExtra, gtable
+Imports: stats, utils
 BugReports: https://github.com/bryanhanson/HandyStuff/issues

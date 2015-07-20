@@ -29,7 +29,7 @@
 #' "points")}.  Various methods for computing measures of spread and central
 #' tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
 #'
-#' @param theme Character; A suitble \code{lattice} theme.  
+#' @param theme Character; A suitable \code{lattice} theme.  
 #' There are two built-in themes which you can use "as is" or modify to your heart's
 #' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
 #' provided is \code{\link{posterTheme}}.
@@ -77,6 +77,7 @@
 #' 
 #' 
 #' @export compareCats
+#' @importFrom stats as.formula na.omit aggregate median
 #'
 compareCats <-
 function(formula = NULL, data = NULL,
@@ -116,7 +117,7 @@ function(formula = NULL, data = NULL,
 	if (TwoFac) keep <- c(res, fac1, fac2)
 	if (!TwoFac) keep <- c(res, fac1)
 	data <- data[, keep]
-	data <- na.omit(data)
+	data <- stats::na.omit(data)
 
 	# Misc checks
 	
@@ -182,12 +183,12 @@ function(formula = NULL, data = NULL,
 		
 		panel.summary <- function(x, y, ...) {
 			
-			meany <- aggregate(data[,res] ~ data[,fac1], data, FUN = mean)
-			medy <- aggregate(data[,res] ~ data[,fac1], data, FUN = median)
-			sexy <- aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy)
-			sexy95 <- aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy95)
-			sexymad <- aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyMad)
-			sexyiqr <- aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyIqr)
+			meany <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = mean)
+			medy <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = stats::median)
+			sexy <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy)
+			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy95)
+			sexymad <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyMad)
+			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyIqr)
 			sumDat <- cbind(meany, medy[,2], sexy[[2]][,c(2,3)], sexy95[[2]][,c(2,3)],
 				sexymad[[2]][,c(2,3)], sexyiqr[[2]][,c(2,3)])
 			names(sumDat) <- c("factor1", "mean", "median",
@@ -355,7 +356,7 @@ function(formula = NULL, data = NULL,
 	
 	if (!method == "box") {
 		p <- lattice::xyplot(
-			as.formula(args$formula),
+			stats::as.formula(args$formula),
   			data = eval(args$data),
   			ylim = yl,
 			scales = list(alternating = FALSE),

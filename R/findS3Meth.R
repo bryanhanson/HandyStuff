@@ -10,6 +10,7 @@
 ##' @name findS3Meth
 ##' @rdname findS3Meth
 ##' @export
+##' @importFrom utils methods
 ##' @keywords utilities
 ##'
 ##' @examples
@@ -19,7 +20,7 @@
 
 
 findS3Meth <- function(object) {
-    x <- unlist(lapply(class(object),function(x) methods(class=x)))   
+    x <- unlist(lapply(class(object),function(x) utils::methods(class=x)))   
     sort(x[!duplicated(sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x))])
 }
 

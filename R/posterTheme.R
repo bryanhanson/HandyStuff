@@ -19,7 +19,7 @@ posterTheme <- function() {
 	
 	# symbols and lines
 	plot.symbol = list(pch = 20, cex = 10), # seems to be ignored by everything
-	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles in rxnNormL not compareCatsL
+	superpose.symbol = list(cex = 0.5, pch = 20), # controls freckles in rxnNormnot compareCats
 #	superpose.line = list(lwd = 5), # does nothing?
 	add.line = list(lwd = 3), # controls summary lines
 	# par.main.text = list(cex = 1.5), # individual control if desired
@@ -28,7 +28,7 @@ posterTheme <- function() {
 	# par.sub.text = list(cex = 1.2),
 	# add.text = list(cex = 1.2), # legend entries, not legend title
 	
-	# these next ones apply to boxplots (not an option in rxnNormL)
+	# these next ones apply to boxplots (not an option in rxnNorm)
     box.dot = list(col = "black", pch = 18, cex = 1.5),
     box.rectangle = list(col = "transparent"),
     box.umbrella = list(lty = 1, lwd = 1.5)

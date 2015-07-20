@@ -15,7 +15,7 @@ A list containing the plotting theme details.
 This is a set of theme details for use with \code{\link{compareCats}},
 \code{\link{rxnNorm}} and \code{\link{lmEqn}}.  The themes are derived from package
 \code{latticeExtra} with a few additional customizations.  The settings for
-posterThemeL are generally larger for decent viewing on a poster.
+posterTheme are generally larger for decent viewing on a poster.
 }
 \author{
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}

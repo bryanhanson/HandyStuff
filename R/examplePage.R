@@ -37,8 +37,11 @@
 #' \dontrun{
 #' examplePage(getwd())
 #' }
-#' 
+#'
+#'
 #' @export examplePage
+#' @importFrom utils browseURL
+#'
 examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
     includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL) {
 

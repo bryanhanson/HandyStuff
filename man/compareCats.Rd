@@ -28,7 +28,7 @@ direction only.}
 "points")}.  Various methods for computing measures of spread and central
 tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.}
 
-\item{theme}{Character; A suitble \code{lattice} theme.
+\item{theme}{Character; A suitable \code{lattice} theme.
 There are two built-in themes which you can use "as is" or modify to your heart's
 content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
 provided is \code{\link{posterTheme}}.}

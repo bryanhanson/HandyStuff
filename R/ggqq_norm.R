@@ -16,6 +16,7 @@
 ##' @name ggqq_norm
 ##' @rdname ggqq_norm
 ##' @export
+##' @importFrom stats qqnorm
 ##' @keywords plot
 ##'
 ##' @examples
@@ -67,7 +68,7 @@ ggqq_norm <- function(dataframe = NULL, respvar = NULL, facetvars = NULL) {
 	# compute the theoretical quantiles
 	df2 <- aggregate(x = df1[respvar], by = as.list(df1[facetvars]), FUN =
 		function(x){
-			q <- qqnorm(x, plot = FALSE)$x
+			q <- stats::qqnorm(x, plot = FALSE)$x
 			q
 			})
 	

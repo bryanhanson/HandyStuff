@@ -26,12 +26,14 @@
 #' as small points, hence the name, jittered slightly in the horizontal
 #' direction only.
 #'
-#' @param type Either "connect", "fitLine" or "anova".  In the first case, a
+#' @param type Either "connect", "fitLine" , "anova" or "anovaNoLine".
+#' In the first case, a
 #' line is drawn which connects the chosen measure of central tendency (e.g.
 #' mean) for each value of \code{fac1}.  This would generally be used when the
 #' x value are categorical.  In the second case, a linear fit is performed and
 #' the line is drawn; used for continuous x values.  In the third case, a
-#' connecting line is drawn along with an ANOVA summary table.
+#' connecting line is drawn along with an ANOVA summary table.  Finally, in
+#' the fourth case no line is drawn and the ANOVA summary table is provided.
 #'
 #' @param method One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces
 #' a dot at the measure of central tendency and error bars corresponding to the
@@ -102,6 +104,9 @@
 #' 
 #' 
 #' @export rxnNorm
+#' @importFrom stats update.formula lm aov cor as.formula aggregate median
+#' @importFrom grid rectGrob gpar
+#' 
 rxnNorm <-
 function(formula = NULL, data = NULL, groups = NULL,
 	cols = NULL, freckles = FALSE, type = "connect",
@@ -163,12 +168,12 @@ function(formula = NULL, data = NULL, groups = NULL,
 	
 	panel.summary <- function(x, y, ...) {
 		
-		mean <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = mean)
-		med <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = median)
-		sexy <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy)
-		sexy95 <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy95)
-		sexymad <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyMad)
-		sexyiqr <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyIqr)
+		mean <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = mean)
+		med <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = stats::median)
+		sexy <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy)
+		sexy95 <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy95)
+		sexymad <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyMad)
+		sexyiqr <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyIqr)
 		sumDat <- cbind(mean, med[,3], sexy[[3]][,c(2,3)],
 			sexy95[[3]][,c(2,3)], sexymad[[3]][,c(2,3)], sexyiqr[[3]][,c(2,3)])
 		names(sumDat) <- c("xx", "gr", "mean", "median",
@@ -265,7 +270,11 @@ function(formula = NULL, data = NULL, groups = NULL,
 ### Now prepare summary tables using tableGrob from gridExtra
 
 	if (!is.null(table)) {
-		
+		TT <- gridExtra::ttheme_default(
+			core = list(fg_params=list(cex = table[3])),
+			colhead = list(fg_params=list(cex = table[3])),
+			rowhead = list(fg_params=list(cex = table[3])))
+
 		if (type == "connect") {
 			if (!is.factor(data[,xx])) {
 				msg <- paste(xx, "must be a factor for a table of counts")
@@ -274,10 +283,14 @@ function(formula = NULL, data = NULL, groups = NULL,
 			counts <- plyr::count(data, vars = c(grn, xx))
 			colnames(counts) <- c(grn, xx, "count")
 
-			myt <- gridExtra::tableGrob(counts, show.box = TRUE,
-				show.rownames = FALSE, show.colnames = TRUE,
-				show.csep = TRUE, show.rsep = TRUE,
-				separator = "black", gp = grid::gpar(cex = table[3]))
+			# myt <- gridExtra::tableGrob(counts, show.box = TRUE,
+				# show.rownames = FALSE, show.colnames = TRUE,
+				# show.csep = TRUE, show.rsep = TRUE,
+				# separator = "black", gp = grid::gpar(cex = table[3]))
+			myt <- gridExtra::tableGrob(counts, rows = NULL, theme = TT)
+			myt <- gtable::gtable_add_grob(myt, 
+				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
+				t = 2, b = nrow(myt), l = 1, r = ncol(myt))
 			}
 
 		if (type == "anova") {
@@ -286,18 +299,22 @@ function(formula = NULL, data = NULL, groups = NULL,
 				stop(msg)
 				}
 			f <- paste(".~.*", deparse(substitute(groups)))
-			nf <- update.formula(formula, f)
-			mod <- aov(formula = nf, data = data)
+			nf <- stats::update.formula(formula, f)
+			mod <- stats::aov(formula = nf, data = data)
 			mod <- summary(mod)[[1]]
 			mod[,2:4] <- round(mod[,2:4], 2)
 			mod[,5] <- format(mod[,5], scientific = TRUE, digits = 4)
 
-			myt <- gridExtra::tableGrob(mod, show.box = TRUE,
-				show.rownames = TRUE, show.colnames = TRUE,
-				show.csep = FALSE, show.rsep = FALSE, core.just = "right", row.just = "right", 
-				separator = "black", gp = grid::gpar(cex = table[3]),
-				gpar.rowtext = grid::gpar(col = "black", cex = 1, fontface = "bold"))
+			# myt <- gridExtra::tableGrob(mod, show.box = TRUE,
+				# show.rownames = TRUE, show.colnames = TRUE,
+				# show.csep = FALSE, show.rsep = FALSE, core.just = "right", row.just = "right", 
+				# separator = "black", gp = grid::gpar(cex = table[3]),
+				# gpar.rowtext = grid::gpar(col = "black", cex = 1, fontface = "bold"))
 
+			myt <- gridExtra::tableGrob(mod, theme = TT)
+			myt <- gtable::gtable_add_grob(myt, 
+				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
+				t = 2, b = nrow(myt), l = 1, r = ncol(myt))
 			}
 
 		if (type == "fitLine") {
@@ -309,19 +326,23 @@ function(formula = NULL, data = NULL, groups = NULL,
 			for (i in 1:nl) {
 				wh <- grepl(lvls[i], data[,grn])
 				dat <- data[wh,]
-				mod <- lm(dat[,yy] ~ dat[,xx])
+				mod <- stats::lm(dat[,yy] ~ dat[,xx])
 				m[i] <- round(mod$coef[2], 2)
 				b [i]<- round(mod$coef[1], 2)
-				r2[i] <- round(cor(dat[,xx], dat[,yy])^2, 4)		
+				r2[i] <- round(stats::cor(dat[,xx], dat[,yy])^2, 4)		
 				}
 				
 			mod.yy <- data.frame(line = lvls, m = m, b = b, r2 = r2)
 				
-			myt <- gridExtra::tableGrob(mod.yy, show.box = TRUE,
-				show.rownames = FALSE, show.colnames = TRUE,
-				show.csep = TRUE, show.rsep = TRUE,
-				separator = "black", gp = grid::gpar(cex = table[3]))
-				
+			# myt <- gridExtra::tableGrob(mod.yy, show.box = TRUE,
+				# show.rownames = FALSE, show.colnames = TRUE,
+				# show.csep = TRUE, show.rsep = TRUE,
+				# separator = "black", gp = grid::gpar(cex = table[3]))
+
+			myt <- gridExtra::tableGrob(mod.yy, rows = NULL, theme = TT)
+			myt <- gtable::gtable_add_grob(myt, 
+				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
+				t = 2, b = nrow(myt), l = 1, r = ncol(myt))				
 			}
 		} # End of table preparations
 
@@ -329,7 +350,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 
 	ps <- theme
 
-	p <- lattice::xyplot(as.formula(args$formula),
+	p <- lattice::xyplot(stats::as.formula(args$formula),
   		data = eval(args$data), 
         groups = eval(args$groups), ...,
 		axis = latticeExtra::axis.grid,

@@ -20,6 +20,7 @@
 ##' @name sumStatDeluxe
 ##' @rdname sumStatDeluxe
 ##' @export
+##' @importFrom stats qt sd
 ##' @keywords summary
 ##'
 ##' @examples
@@ -48,13 +49,13 @@ sumStatDeluxe <- function(data = NULL, groupVars = NULL, respVars = NULL, ci = 0
 	# read ?var carefully for role of na.rm - it must always be true for numeric vectors
 	
 	# local function to compute std error
-	se <- function(x) { sd(x, na.rm = TRUE)/sqrt(length(na.omit(x))) }
+	se <- function(x) { stats::sd(x, na.rm = TRUE)/sqrt(length(na.omit(x))) }
 	
 	# local function to compute lower ci of mean
 	Lci <- function(x) {
 		m <- mean(na.omit(x))
 		s <- se(x)
-		f <- qt(ci/2 + .5, length(na.omit(x)))
+		f <- stats::qt(ci/2 + .5, length(na.omit(x)))
 		l <- m - f*s
 		}
 
@@ -62,14 +63,14 @@ sumStatDeluxe <- function(data = NULL, groupVars = NULL, respVars = NULL, ci = 0
 	Uci <- function(x) {
 		m <- mean(na.omit(x))
 		s <- se(x)
-		f <- qt(ci/2 + .5, length(na.omit(x)))
+		f <- stats::qt(ci/2 + .5, length(na.omit(x)))
 		l <- m + f*s
 		}
 	
 	# local function - acts on a vector, returns a vector
 	processVec <- function(df, i) {
 		M <- mean(df[,i], na.rm = TRUE)
-		S <- sd(df[,i], na.rm = TRUE)
+		S <- stats::sd(df[,i], na.rm = TRUE)
 		SE <- se(df[,i])
 		N <- length(na.omit(df[,i]))
 		L <- Lci(df[,i])
