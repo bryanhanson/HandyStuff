@@ -48,7 +48,11 @@
 #' #
 #' ### Set up test data
 #' #
-#' library("ChemoSpec")
+#' require("ChemoSpec")
+#' require("lattice")
+#' require("latticeExtra")
+#' require("plyr")
+#'
 #' mydf <- data.frame(
 #' 	resp = rnorm(40),
 #' 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
@@ -76,8 +80,7 @@
 #' print(p)
 #' 
 #' 
-#' @export compareCats
-#' @importFrom stats as.formula na.omit aggregate median
+#' @export
 #'
 compareCats <-
 function(formula = NULL, data = NULL,
@@ -85,6 +88,22 @@ function(formula = NULL, data = NULL,
 	method = c("sem", "sem95", "iqr", "mad", "box", "points"),
 	theme = screenTheme(), ...)
 	{
+
+	if (!requireNamespace("lattice", quietly = TRUE)) {
+		stop("You need to install package lattice to use this function")
+		}
+	if (!requireNamespace("latticeExtra", quietly = TRUE)) {
+		stop("You need to install package latticeExtra to use this function")
+		}
+	if (!requireNamespace("plyr", quietly = TRUE)) {
+		stop("You need to install package plyr to use this function")
+		}
+	if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+		stop("You need to install package RColorBrewer to use this function")
+		}
+	if (!requireNamespace("ChemoSpec", quietly = TRUE)) {
+		stop("You need to install package ChemoSpec to use this function")
+		}
 
 	# Function to compare categorical data by
 	# plotting means and se's or something similar
@@ -271,12 +290,12 @@ function(formula = NULL, data = NULL,
 				
 		panel.summary <- function(x, y, ...) {
 			
-			mean <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = mean)
-			med <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = median)
-			sexy <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy)
-			sexy95 <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy95)
-			sexymad <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyMad)
-			sexyiqr <- aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyIqr)
+			mean <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = mean)
+			med <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = stats::median)
+			sexy <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy)
+			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy95)
+			sexymad <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyMad)
+			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyIqr)
 			sumDat <- cbind(mean, med[,3], sexy[[3]][,c(2,3)], sexy95[[3]][,c(2,3)],
 				sexymad[[3]][,c(2,3)], sexyiqr[[3]][,c(2,3)])
 	

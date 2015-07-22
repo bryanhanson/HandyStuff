@@ -25,12 +25,17 @@
 #' @return A plot is drawn and the \code{ggplot2} or \code{lattice} object is
 #' returned, possibly for further manipulation.
 #'
-#' @export lmEqn
+#' @export
 #'
 #' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
 #' @keywords utilities plot
 #' @examples
 #' 
+#' require("lattice")
+#' require("latticeExtra")
+#' require("plyr")
+#' require("MASS")
+#'
 #' conc = seq(1, 12, length.out = 8)
 #' abs = jitter(conc, factor = 2)*0.1
 #' cc <- data.frame(conc, abs)
@@ -44,6 +49,19 @@ function(formula = NULL, data = NULL,
 	method = "lm", leg.loc = c(0.5, 0.5),
 	theme = screenTheme(), ...) {
 	
+	if (!requireNamespace("lattice", quietly = TRUE)) {
+	stop("You need to install package lattice to use this function")
+	}
+	if (!requireNamespace("latticeExtra", quietly = TRUE)) {
+	stop("You need to install package latticeExtra to use this function")
+	}
+	if (!requireNamespace("plyr", quietly = TRUE)) {
+	stop("You need to install package plyr to use this function")
+	}
+	if (!requireNamespace("MASS", quietly = TRUE)) {
+	stop("You need to install package MASS to use this function")
+	}
+	
 	# Process & check formula
 	
 	if (is.null(formula)) stop("Formula not given")
@@ -56,11 +74,11 @@ function(formula = NULL, data = NULL,
 
 	# Compute the linear model
 
-	if (method == "lm") mod <- lm(formula, data)
+	if (method == "lm") mod <- stats::lm(formula, data)
 	if (method == "rlm") mod <- MASS::rlm(formula, data)
 	m <- mod$coef[2]
 	b <- mod$coef[1]
-	r2 <- round(cor(data[,v], data[,res])^2, 4)
+	r2 <- round(stats::cor(data[,v], data[,res])^2, 4)
 	Lab <- paste("m =", round(m, 3), "b =", round(b, 3), "r^2 =", r2, sep = "  ")
 #	Lab <- paste("m =", round(m, 3), "b =", round(b, 3), bquote(r^2 == .(r2)), sep = "  ")
 	if (method == "lm") Lab <- paste("linear model: ", Lab)

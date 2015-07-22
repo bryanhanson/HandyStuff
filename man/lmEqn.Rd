@@ -36,6 +36,11 @@ This function plots the points given, then fits a line and displays the
 regression statistics using \code{lattice}.
 }
 \examples{
+require("lattice")
+require("latticeExtra")
+require("plyr")
+require("MASS")
+
 conc = seq(1, 12, length.out = 8)
 abs = jitter(conc, factor = 2)*0.1
 cc <- data.frame(conc, abs)

@@ -10,7 +10,6 @@
 ##' @name findS3Meth
 ##' @rdname findS3Meth
 ##' @export
-##' @importFrom utils methods
 ##' @keywords utilities
 ##'
 ##' @examples

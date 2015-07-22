@@ -77,6 +77,7 @@ See \code{\link[ChemoSpec]{seXy}} for the details.
 require("ChemoSpec")
 require("lattice")
 require("gridExtra")
+
 set.seed(79)
 res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
 rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
@@ -108,7 +109,7 @@ print(p)
 #
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "anova",
-cols = c("red", "blue"), table = c(0.6, 0.2, 0.75),
+cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
 main = "rxnNorm - Categorical x w/ANOVA table")
 print(p)
 }

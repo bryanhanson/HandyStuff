@@ -39,14 +39,20 @@
 #' }
 #'
 #'
-#' @export examplePage
-#' @importFrom utils browseURL
+#' @export
 #'
 examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
     includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL) {
 
 # Taken from http://sachaepskamp.com/blog/HTMLexamples
 # A small modification was made to the Exclude block
+
+	if (!requireNamespace("knitr", quietly = TRUE)) {
+		stop("You need to install package knitr to use this function")
+		}
+	if (!requireNamespace("markdown", quietly = TRUE)) {
+		stop("You need to install package markdown to use this function")
+		}
 
     # Inner function to find closing brackets:
     findClose <- function(x, openLoc, open = "\\{", close = "\\}") {
@@ -189,7 +195,7 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
     htmlFile <- gsub("Rmd", "html", RmdFile)
     markdown::markdownToHTML(mdFile, htmlFile)
 
-    browseURL(htmlFile)
+    utils::browseURL(htmlFile)
 
     return(htmlFile)
 }

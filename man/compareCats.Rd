@@ -55,7 +55,11 @@ columns, then \code{NAs} are removed; the counts reflect this.
 #
 ### Set up test data
 #
-library("ChemoSpec")
+require("ChemoSpec")
+require("lattice")
+require("latticeExtra")
+require("plyr")
+
 mydf <- data.frame(
 	resp = rnorm(40),
 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),

@@ -67,6 +67,7 @@
 #' require("ChemoSpec")
 #' require("lattice")
 #' require("gridExtra")
+#'
 #' set.seed(79)
 #' res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
 #' rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
@@ -98,14 +99,12 @@
 #' #
 #' p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 #' method = "iqr", freckles = TRUE, type = "anova",
-#' cols = c("red", "blue"), table = c(0.6, 0.2, 0.75),
+#' cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
 #' main = "rxnNorm - Categorical x w/ANOVA table")
 #' print(p)
 #' 
 #' 
-#' @export rxnNorm
-#' @importFrom stats update.formula lm aov cor as.formula aggregate median
-#' @importFrom grid rectGrob gpar
+#' @export
 #' 
 rxnNorm <-
 function(formula = NULL, data = NULL, groups = NULL,
@@ -121,6 +120,31 @@ function(formula = NULL, data = NULL, groups = NULL,
 
 # Lattice version, February 2013
 # We are using formula, data and groups close to how lattice handles them
+
+	if (!requireNamespace("lattice", quietly = TRUE)) {
+		stop("You need to install package lattice to use this function")
+		}
+	if (!requireNamespace("latticeExtra", quietly = TRUE)) {
+		stop("You need to install package latticeExtra to use this function")
+		}
+	if (!requireNamespace("plyr", quietly = TRUE)) {
+		stop("You need to install package plyr to use this function")
+		}
+	if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+		stop("You need to install package RColorBrewer to use this function")
+		}
+	if (!requireNamespace("ChemoSpec", quietly = TRUE)) {
+		stop("You need to install package ChemoSpec to use this function")
+		}
+	if (!requireNamespace("gridExtra", quietly = TRUE)) {
+		stop("You need to install package gridExtra to use this function")
+		}
+	if (!requireNamespace("gtable", quietly = TRUE)) {
+		stop("You need to install package gtable to use this function")
+		}
+	if (!requireNamespace("grid", quietly = TRUE)) {
+		stop("You need to install package grid to use this function")
+		}
 
 	# Check and process the formula & data types
 	
@@ -149,7 +173,7 @@ function(formula = NULL, data = NULL, groups = NULL,
 	
 	keep <- c(yy, xx, grn)
 	data <- data[, keep]
-	data <- na.omit(data)
+	data <- stats::na.omit(data)
 
 	args <- as.list(match.call(expand.dots = FALSE)[-1]) # used a bit later
 	
@@ -224,8 +248,8 @@ function(formula = NULL, data = NULL, groups = NULL,
 	
 	panel.connect <- function(x, y, ...) {
 		
-		mean <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = mean)
-		med <- aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = median)
+		mean <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = mean)
+		med <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = stats::median)
 		sumDat <- cbind(mean, med[,3])
 		names(sumDat) <- c("xx", "gr", "mean", "median")
 		gr <- NULL # needed to fake out check mechanism for next command
@@ -283,14 +307,13 @@ function(formula = NULL, data = NULL, groups = NULL,
 			counts <- plyr::count(data, vars = c(grn, xx))
 			colnames(counts) <- c(grn, xx, "count")
 
-			# myt <- gridExtra::tableGrob(counts, show.box = TRUE,
-				# show.rownames = FALSE, show.colnames = TRUE,
-				# show.csep = TRUE, show.rsep = TRUE,
-				# separator = "black", gp = grid::gpar(cex = table[3]))
 			myt <- gridExtra::tableGrob(counts, rows = NULL, theme = TT)
 			myt <- gtable::gtable_add_grob(myt, 
-				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
+				grobs = grid::rectGrob(gp = grid::gpar(fill = NA, lwd = 2)), 
 				t = 2, b = nrow(myt), l = 1, r = ncol(myt))
+			myt <- gtable::gtable_add_grob(myt, 
+				grobs = grid::rectGrob(gp = grid::gpar(fill = NA, lwd = 2)), 
+				t = 1, l = 1, r = ncol(myt))				
 			}
 
 		if (type == "anova") {
@@ -301,21 +324,9 @@ function(formula = NULL, data = NULL, groups = NULL,
 			f <- paste(".~.*", deparse(substitute(groups)))
 			nf <- stats::update.formula(formula, f)
 			mod <- stats::aov(formula = nf, data = data)
-			mod <- summary(mod)[[1]]
-			mod[,2:4] <- round(mod[,2:4], 2)
-			mod[,5] <- format(mod[,5], scientific = TRUE, digits = 4)
-
-			# myt <- gridExtra::tableGrob(mod, show.box = TRUE,
-				# show.rownames = TRUE, show.colnames = TRUE,
-				# show.csep = FALSE, show.rsep = FALSE, core.just = "right", row.just = "right", 
-				# separator = "black", gp = grid::gpar(cex = table[3]),
-				# gpar.rowtext = grid::gpar(col = "black", cex = 1, fontface = "bold"))
-
-			myt <- gridExtra::tableGrob(mod, theme = TT)
-			myt <- gtable::gtable_add_grob(myt, 
-				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
-				t = 2, b = nrow(myt), l = 1, r = ncol(myt))
-			}
+			
+			myt <- prettyAOVtable(aov.object = mod, cex = table[3])
+						}
 
 		if (type == "fitLine") {
 			lvls <- levels(data[,grn])
@@ -334,15 +345,13 @@ function(formula = NULL, data = NULL, groups = NULL,
 				
 			mod.yy <- data.frame(line = lvls, m = m, b = b, r2 = r2)
 				
-			# myt <- gridExtra::tableGrob(mod.yy, show.box = TRUE,
-				# show.rownames = FALSE, show.colnames = TRUE,
-				# show.csep = TRUE, show.rsep = TRUE,
-				# separator = "black", gp = grid::gpar(cex = table[3]))
-
 			myt <- gridExtra::tableGrob(mod.yy, rows = NULL, theme = TT)
 			myt <- gtable::gtable_add_grob(myt, 
-				grobs = rectGrob(gp = gpar(fill = NA, lwd = 2)), 
+				grobs = grid::rectGrob(gp = grid::gpar(fill = NA, lwd = 2)), 
 				t = 2, b = nrow(myt), l = 1, r = ncol(myt))				
+			myt <- gtable::gtable_add_grob(myt, 
+				grobs = grid::rectGrob(gp = grid::gpar(fill = NA, lwd = 2)), 
+				t = 1, l = 1, r = ncol(myt))				
 			}
 		} # End of table preparations
 

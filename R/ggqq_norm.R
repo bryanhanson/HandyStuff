@@ -16,7 +16,7 @@
 ##' @name ggqq_norm
 ##' @rdname ggqq_norm
 ##' @export
-##' @importFrom stats qqnorm
+##'
 ##' @keywords plot
 ##'
 ##' @examples
@@ -52,7 +52,11 @@
 ##' print(res + labs(title = "Uniform Distribution"))
 ##' 
 ggqq_norm <- function(dataframe = NULL, respvar = NULL, facetvars = NULL) {
-	
+
+	if (!requireNamespace("ggplot2", quietly = TRUE)) {
+		stop("You need to install package ggplot2 to use this function")
+		}
+
 	# preliminaries...
 	if (is.null(dataframe)) stop("You must provide a data frame")
 	if (is.null(respvar)) stop("You must provide a response variable (respvar)")
@@ -60,13 +64,13 @@ ggqq_norm <- function(dataframe = NULL, respvar = NULL, facetvars = NULL) {
 	no.fac <- length(facetvars)
 	if (no.fac > 2) stop("Maximum 2 facetvars allowed")
 	df1 <- dataframe[c(respvar, facetvars)]
-	df1 <- na.omit(df1)
+	df1 <- stats::na.omit(df1)
 
 	if (no.fac == 1) fstring <- paste(".~", facetvars[1], sep = "")
 	if (no.fac == 2) fstring <- paste(facetvars[1], facetvars[2], sep = "~")
 	
 	# compute the theoretical quantiles
-	df2 <- aggregate(x = df1[respvar], by = as.list(df1[facetvars]), FUN =
+	df2 <- stats::aggregate(x = df1[respvar], by = as.list(df1[facetvars]), FUN =
 		function(x){
 			q <- stats::qqnorm(x, plot = FALSE)$x
 			q

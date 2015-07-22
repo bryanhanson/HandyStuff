@@ -54,11 +54,21 @@
 ##' col.regions = heat.colors(26), panel = lpi)
 
 lpi <- function(x, y, z, ...) {
+	
+	if (!requireNamespace("lattice", quietly = TRUE)) {
+	stop("You need to install package lattice to use this function")
+	}
+
 	lattice::panel.levelplot(x, y, z, ...)
 	lattice::panel.text(x, y, labels = sprintf("%i", z), cex = 1.75)
 	}
 
 lpr <- function(x, y, z, ...) {
+
+	if (!requireNamespace("lattice", quietly = TRUE)) {
+	stop("You need to install package lattice to use this function")
+	}
+
 	lattice::panel.levelplot(x, y, z, ...)
 	lattice::panel.text(x, y, labels = sprintf("%.2f", z), cex = 1.75)
 	}
