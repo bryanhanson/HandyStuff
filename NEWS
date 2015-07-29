@@ -4,6 +4,9 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.123 2015-07-28
+     + rxnNorm gains a legend argument to control the position of the legend.  This allows the data to be more prominent, since no space is wasted with a separate legend.
+
 Changes in version 0.6.96 2015-07-21
      + Improved formatting of the aov table in rxnNorm using a new function, prettyAOVtable, and other tables were made to appear similarly.
      + All functions updated with if(!requireNamespace)... statements to coordinate with Suggests field.

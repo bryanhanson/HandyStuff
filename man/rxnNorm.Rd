@@ -6,7 +6,8 @@
 \usage{
 rxnNorm(formula = NULL, data = NULL, groups = NULL, cols = NULL,
   freckles = FALSE, type = "connect", method = c("sem", "sem95", "iqr",
-  "mad"), table = NULL, theme = screenTheme(), ...)
+  "mad"), table = NULL, legend = c(0.5, 0.5, 1), theme = screenTheme(),
+  ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -45,6 +46,11 @@ font size cex.  The table contains either a summary of counts (if \code{type
 = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an
 ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
 so 0.5, 0.5 puts the table dead center in the plotting region.}
+
+\item{legend}{If NULL, no action.  If a vector of 3 numbers
+\code{c(x, y, cex)}, a legend is placed at the given coordinates with
+font size cex.  The coordinates are in device units
+so 0.5, 0.5 puts the legend dead center in the plotting region.}
 
 \item{theme}{Character; A suitable \code{lattice} theme.
 There are two built-in themes which you can use "as is" or modify to your heart's
@@ -94,6 +100,7 @@ td <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, num = num)
 p <- rxnNorm(formula = resp~num, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "fitLine",
 cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+legend = c(0.175, 0.84, 1.0),
 main = "rxnNorm - linear model w/fit table")
 print(p)
 #
@@ -102,6 +109,7 @@ print(p)
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "connect",
 cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+legend = c(0.175, 0.84, 1.0),
 main = "rxnNorm - Categorical x w/summary table")
 print(p)
 #
@@ -110,6 +118,7 @@ print(p)
 p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 method = "iqr", freckles = TRUE, type = "anova",
 cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
+legend = c(0.175, 0.84, 1.0),
 main = "rxnNorm - Categorical x w/ANOVA table")
 print(p)
 }

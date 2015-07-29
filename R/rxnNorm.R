@@ -47,6 +47,11 @@
 #' ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
 #' so 0.5, 0.5 puts the table dead center in the plotting region.
 #'
+#' @param legend If NULL, no action.  If a vector of 3 numbers
+#' \code{c(x, y, cex)}, a legend is placed at the given coordinates with
+#' font size cex.  The coordinates are in device units
+#' so 0.5, 0.5 puts the legend dead center in the plotting region.
+#'
 #' @param theme Character; A suitable \code{lattice} theme.  
 #' There are two built-in themes which you can use "as is" or modify to your heart's
 #' content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
@@ -84,6 +89,7 @@
 #' p <- rxnNorm(formula = resp~num, groups = fac2, data = td,
 #' method = "iqr", freckles = TRUE, type = "fitLine",
 #' cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+#' legend = c(0.175, 0.84, 1.0),
 #' main = "rxnNorm - linear model w/fit table")
 #' print(p)
 #' #
@@ -92,6 +98,7 @@
 #' p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 #' method = "iqr", freckles = TRUE, type = "connect",
 #' cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+#' legend = c(0.175, 0.84, 1.0),
 #' main = "rxnNorm - Categorical x w/summary table")
 #' print(p)
 #' #
@@ -100,6 +107,7 @@
 #' p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
 #' method = "iqr", freckles = TRUE, type = "anova",
 #' cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
+#' legend = c(0.175, 0.84, 1.0),
 #' main = "rxnNorm - Categorical x w/ANOVA table")
 #' print(p)
 #' 
@@ -110,7 +118,8 @@ rxnNorm <-
 function(formula = NULL, data = NULL, groups = NULL,
 	cols = NULL, freckles = FALSE, type = "connect",
 	method = c("sem", "sem95", "iqr", "mad"),
-	table = NULL, theme = screenTheme(), ...) {
+	table = NULL, legend = c(0.5, 0.5, 1.0),
+	theme = screenTheme(), ...) {
 
 # Function to compare categorical data by
 # plotting means etc in the same panel
@@ -389,9 +398,24 @@ function(formula = NULL, data = NULL, groups = NULL,
 					grid::grid.draw(myt)
 					}
 				} # end of table options
-			}, # end of panel function
-		auto.key = list(space = "right", col = cols, points = FALSE, title = grn, cex.title = 0.08)
-			)
+
+			if (!is.null(legend)) {
+				TTT <- gridExtra::ttheme_minimal(core = list(fg_params = list(cex = legend[3], col = cols)))
+
+				legtxt <- data.frame(lvs = levels(data[,grn]))
+				myleg <- gridExtra::tableGrob(legtxt,
+					cols = NULL, rows = NULL, theme = TTT)
+				myleg <- gtable::gtable_add_grob(myleg, 
+					grobs = grid::rectGrob(gp = grid::gpar(fill = NA, lwd = 2)), 
+					t = 1, b = nrow(myleg), l = 1, r = ncol(myleg))				
+				grid::upViewport(0)
+				lv <- grid::viewport(x = legend[1], y = legend[2])
+				grid::pushViewport(lv)
+				grid::grid.draw(myleg)
+
+				} # end of legend processing
+			} # end of panel function
+			) # end of xyplot
 	
 	invisible(p)
 	}
