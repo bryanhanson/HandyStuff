@@ -15,7 +15,11 @@
 ##'
 ##' @param ci Numeric.  The confidence interval desired.
 ##'
-##' @return Either a data frame or a list of data frames.
+##' @return Either a data frame (one response variable) or a list of data frames
+##' (more than one response variable).  Each data frame row has summary statistics
+##' for a given \code{groupVars}.  The summary includes the number of observations,
+##' the standard deviation and standard error, the mean, and upper and lower
+##' confidence intervals.
 ##' 
 ##' @name sumStatDeluxe
 ##' @rdname sumStatDeluxe
@@ -24,22 +28,24 @@
 ##'
 ##' @examples
 ##' require('plyr')
-##' #
+##'
 ##' ### One response variable returns a data frame:
-##' #
+##'
 ##' tst <- sumStatDeluxe(chickwts, groupVars = "feed", respVars = "weight")
 ##' tst
-##' #
+##'
 ##' ### Two response variables returns a list of data frames:
-##' #
+##'
 ##' tst <- sumStatDeluxe(iris, groupVars = "Species",
 ##' respVars = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"))
 ##' tst
-##' #
+##' 
 ##' ### Two categorical variables, one response:
-##' #
+##'
 ##' tst <- sumStatDeluxe(warpbreaks, groupVars = c("wool", "tension"), respVars = "breaks")
+##'
 ##' # One categorical, multiple response variables:
+##'
 ##' tst <- sumStatDeluxe(airquality, groupVars = "Month",
 ##' respVars = c("Ozone", "Solar.R", "Wind"))
 ##' tst

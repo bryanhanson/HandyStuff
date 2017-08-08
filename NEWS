@@ -4,6 +4,10 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.127 2017-08-08
+     + Improved documentation for sumStatDeluxe.
+     + Built and checked against R 3.5 RC.
+
 Changes in version 0.6.123 2015-07-28
      + rxnNorm gains a legend argument to control the position of the legend.  This allows the data to be more prominent, since no space is wasted with a separate legend.
 
