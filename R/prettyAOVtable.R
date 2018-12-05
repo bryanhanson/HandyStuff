@@ -50,7 +50,7 @@ prettyAOVtable <- function(aov.object = NULL, cex = 1.0) {
 	
 	# Clean up & format the table
 	
-	DF <- broom::tidy(aov.object)
+	DF <- as.data.frame(broom::tidy(aov.object))
 	DF[,3:5] <- round(DF[,3:5], 2)
 	DF[,6] <- format(DF[,6], scientific = TRUE, digits = 4)
 	DF[nrow(DF), c(5,6)] <- "" # remove NA, leave cell blank

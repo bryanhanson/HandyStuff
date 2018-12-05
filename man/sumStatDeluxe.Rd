@@ -4,8 +4,8 @@
 \alias{sumStatDeluxe}
 \title{Calculate Custom Summary Statistics}
 \usage{
-sumStatDeluxe(data = NULL, groupVars = NULL, respVars = NULL, ci = 0.95,
-  ...)
+sumStatDeluxe(data = NULL, groupVars = NULL, respVars = NULL,
+  ci = 0.95, ...)
 }
 \arguments{
 \item{data}{A data frame containing the variables.}

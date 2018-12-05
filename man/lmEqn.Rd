@@ -4,8 +4,8 @@
 \alias{lmEqn}
 \title{Plot Points, Fit a Line, Display Equation}
 \usage{
-lmEqn(formula = NULL, data = NULL, method = "lm", leg.loc = c(0.5, 0.5),
-  theme = screenTheme(), ...)
+lmEqn(formula = NULL, data = NULL, method = "lm", leg.loc = c(0.5,
+  0.5), theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply

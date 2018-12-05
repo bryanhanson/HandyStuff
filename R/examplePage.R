@@ -11,6 +11,7 @@
 #' @param pkg Path to the package directory.
 #'
 #' @param openChunk Character.  The default opening markdown chunk.
+#' Defaults to the current working directory.
 #'
 #' @param includeDontshow Logical indicating whether to include the
 #' \code{Dontshow} sections of the Rd file.
@@ -25,8 +26,9 @@
 #'
 #' @section Note:
 #' Formatting the Rd examples with ### results in a large header.
-#' Using ## results in a small header.  This function will
-#' drop .Rmd, .md and .html files into the current directory.
+#' Using ## results in a small header.  This function creates a temporary
+#' directory for the .Rmd, .md and .html files, which is then deleted at the
+#' end of the R session.
 #'
 #' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
 #'
@@ -41,7 +43,7 @@
 #'
 #' @export
 #'
-examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
+examplePage <- function(pkg = getwd(), openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}", 
     includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL) {
 
 # Taken from http://sachaepskamp.com/blog/HTMLexamples
@@ -182,10 +184,13 @@ examplePage <- function(pkg, openChunk = "```{r, message=FALSE, warning = FALSE,
         basename(pkg), "\")\n```"), subs)
 
     # Write Rmd:
+    td <- tempdir()
     RmdFile <- paste0(basename(pkg), ".Rmd")
+    RmdFile <- paste(td, RmdFile, sep = "/")
     write(paste(subs, collapse = "\n\n"), RmdFile)
     message("Rmd file written, ready to knit")
-
+	setwd(td)
+	
     # Knit:
     mdFile <- gsub("Rmd", "md", RmdFile)
     knitr::knit(RmdFile, mdFile, envir = globalenv()) # needed to make sure variables visible

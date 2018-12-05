@@ -27,7 +27,7 @@
 #'
 #' @param method One of \code{c("sem", "sem95", "iqr", "mad", "box",
 #' "points")}.  Various methods for computing measures of spread and central
-#' tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.
+#' tendency.  See the documentation for \code{ChemoSpec::.seXy}.
 #'
 #' @param theme Character; A suitable \code{lattice} theme.  
 #' There are two built-in themes which you can use "as is" or modify to your heart's
@@ -204,10 +204,10 @@ function(formula = NULL, data = NULL,
 			
 			meany <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = mean)
 			medy <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = stats::median)
-			sexy <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy)
-			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXy95)
-			sexymad <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyMad)
-			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::seXyIqr)
+			sexy <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::.seXy)
+			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::.seXy95)
+			sexymad <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::.seXyMad)
+			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1], data, FUN = ChemoSpec::.seXyIqr)
 			sumDat <- cbind(meany, medy[,2], sexy[[2]][,c(2,3)], sexy95[[2]][,c(2,3)],
 				sexymad[[2]][,c(2,3)], sexyiqr[[2]][,c(2,3)])
 			names(sumDat) <- c("factor1", "mean", "median",
@@ -292,10 +292,10 @@ function(formula = NULL, data = NULL,
 			
 			mean <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = mean)
 			med <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = stats::median)
-			sexy <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy)
-			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXy95)
-			sexymad <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyMad)
-			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::seXyIqr)
+			sexy <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::.seXy)
+			sexy95 <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::.seXy95)
+			sexymad <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::.seXyMad)
+			sexyiqr <- stats::aggregate(data[,res] ~ data[,fac1]*data[, fac2], data, FUN = ChemoSpec::.seXyIqr)
 			sumDat <- cbind(mean, med[,3], sexy[[3]][,c(2,3)], sexy95[[3]][,c(2,3)],
 				sexymad[[3]][,c(2,3)], sexyiqr[[3]][,c(2,3)])
 	

@@ -4,14 +4,15 @@
 \alias{examplePage}
 \title{Create an html Page Showing All Examples in Rd Files}
 \usage{
-examplePage(pkg,
+examplePage(pkg = getwd(),
   openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}",
   includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL)
 }
 \arguments{
 \item{pkg}{Path to the package directory.}
 
-\item{openChunk}{Character.  The default opening markdown chunk.}
+\item{openChunk}{Character.  The default opening markdown chunk.
+Defaults to the current working directory.}
 
 \item{includeDontshow}{Logical indicating whether to include the
 \code{Dontshow} sections of the Rd file.}
@@ -36,8 +37,9 @@ examples in alphabetical order, and to use the global environment during kniting
 \section{Note}{
 
 Formatting the Rd examples with ### results in a large header.
-Using ## results in a small header.  This function will
-drop .Rmd, .md and .html files into the current directory.
+Using ## results in a small header.  This function creates a temporary
+directory for the .Rmd, .md and .html files, which is then deleted at the
+end of the R session.
 }
 
 \examples{

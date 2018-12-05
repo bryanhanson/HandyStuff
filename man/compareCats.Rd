@@ -4,9 +4,9 @@
 \alias{compareCats}
 \title{Compare Data by Category}
 \usage{
-compareCats(formula = NULL, data = NULL, cols = NULL, freckles = FALSE,
-  method = c("sem", "sem95", "iqr", "mad", "box", "points"),
-  theme = screenTheme(), ...)
+compareCats(formula = NULL, data = NULL, cols = NULL,
+  freckles = FALSE, method = c("sem", "sem95", "iqr", "mad", "box",
+  "points"), theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -26,7 +26,7 @@ direction only.}
 
 \item{method}{One of \code{c("sem", "sem95", "iqr", "mad", "box",
 "points")}.  Various methods for computing measures of spread and central
-tendency.  See the documentation for \code{\link[ChemoSpec]{seXy}}.}
+tendency.  See the documentation for \code{ChemoSpec::.seXy}.}
 
 \item{theme}{Character; A suitable \code{lattice} theme.
 There are two built-in themes which you can use "as is" or modify to your heart's

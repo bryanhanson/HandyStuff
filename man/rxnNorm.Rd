@@ -5,9 +5,9 @@
 \title{Create a Reaction Norm or Interaction Plot}
 \usage{
 rxnNorm(formula = NULL, data = NULL, groups = NULL, cols = NULL,
-  freckles = FALSE, type = "connect", method = c("sem", "sem95", "iqr",
-  "mad"), table = NULL, legend = c(0.5, 0.5, 1), theme = screenTheme(),
-  ...)
+  freckles = FALSE, type = "connect", method = c("sem", "sem95",
+  "iqr", "mad"), table = NULL, legend = c(0.5, 0.5, 1),
+  theme = screenTheme(), ...)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
@@ -38,7 +38,7 @@ the fourth case no line is drawn and the ANOVA summary table is provided.}
 \item{method}{One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces
 a dot at the measure of central tendency and error bars corresponding to the
 requested method ("box" currently does not work quite right).  Full details
-are in \code{\link[ChemoSpec]{seXy}}.}
+are in \code{ChemoSpec::.seXy}.}
 
 \item{table}{If NULL, the default, no action.  If a vector of 3 numbers
 \code{c(x, y, cex)}, a summary table is placed at the given coordinates with
@@ -74,7 +74,7 @@ optional, and gives either counts at each level, an ANOVA table or fit data.
 \details{
 The choices in \code{method} are based upon functions in the
 \code{\link[ChemoSpec]{ChemoSpec}} package which will need to be installed.
-See \code{\link[ChemoSpec]{seXy}} for the details.
+See \code{ChemoSpec::.seXy} for the details.
 }
 \examples{
 #

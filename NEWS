@@ -4,6 +4,10 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.130 2018-12-04
+     + Built and checked against R 3.6 devel.
+     + examplePage now writes to a tempdir, and the path defaults to getwd().
+
 Changes in version 0.6.127 2017-08-08
      + Improved documentation for sumStatDeluxe.
      + Built and checked against R 3.5 RC.

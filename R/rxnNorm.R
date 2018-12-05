@@ -9,7 +9,7 @@
 #' 
 #' The choices in \code{method} are based upon functions in the
 #' \code{\link[ChemoSpec]{ChemoSpec}} package which will need to be installed.
-#' See \code{\link[ChemoSpec]{seXy}} for the details.
+#' See \code{ChemoSpec::.seXy} for the details.
 #' 
 #' @param formula A formula with both LHS and RHS.  The formula should comply
 #' with the usual \code{lattice} conventions, for instance \code{y ~ x_factor}.
@@ -38,7 +38,7 @@
 #' @param method One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces
 #' a dot at the measure of central tendency and error bars corresponding to the
 #' requested method ("box" currently does not work quite right).  Full details
-#' are in \code{\link[ChemoSpec]{seXy}}.
+#' are in \code{ChemoSpec::.seXy}.
 #'
 #' @param table If NULL, the default, no action.  If a vector of 3 numbers
 #' \code{c(x, y, cex)}, a summary table is placed at the given coordinates with
@@ -203,10 +203,10 @@ function(formula = NULL, data = NULL, groups = NULL,
 		
 		mean <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = mean)
 		med <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = stats::median)
-		sexy <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy)
-		sexy95 <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXy95)
-		sexymad <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyMad)
-		sexyiqr <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::seXyIqr)
+		sexy <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::.seXy)
+		sexy95 <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::.seXy95)
+		sexymad <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::.seXyMad)
+		sexyiqr <- stats::aggregate(data[,yy] ~ data[,xx]*data[, grn], data, FUN = ChemoSpec::.seXyIqr)
 		sumDat <- cbind(mean, med[,3], sexy[[3]][,c(2,3)],
 			sexy95[[3]][,c(2,3)], sexymad[[3]][,c(2,3)], sexyiqr[[3]][,c(2,3)])
 		names(sumDat) <- c("xx", "gr", "mean", "median",
