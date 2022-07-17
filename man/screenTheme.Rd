@@ -18,7 +18,7 @@ This is a set of theme details for use with \code{\link{compareCats}},
 posterTheme are generally larger for decent viewing on a poster.
 }
 \references{
-\url{http://github.com/bryanhanson/HandyStuff}
+\url{https://github.com/bryanhanson/HandyStuff}
 }
 \seealso{
 \code{\link{compareCats}} and \code{\link{rxnNorm}} for examples

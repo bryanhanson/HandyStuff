@@ -63,7 +63,7 @@
 #' created.
 #'
 #' @author Bryan A. Hanson, DePauw University. \email{hanson@@depauw.edu}
-#' @references \url{http://github.com/bryanhanson/HandyStuff}
+#' @references \url{https://github.com/bryanhanson/HandyStuff}
 #' @keywords univariate plot
 #' @examples
 #' #

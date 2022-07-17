@@ -11,7 +11,7 @@
 #'
 #' @seealso \code{\link{compareCats}} and \code{\link{rxnNorm}} for examples
 #' of this theme in use.
-#' @references \url{http://github.com/bryanhanson/HandyStuff}
+#' @references \url{https://github.com/bryanhanson/HandyStuff}
 #' @keywords utilities
 #' @export screenTheme
 #' @export posterTheme

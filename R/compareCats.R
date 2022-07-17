@@ -42,7 +42,7 @@
 #'
 #' @references
 #'
-#' \url{http://github.com/bryanhanson/HandyStuff}
+#' \url{https://github.com/bryanhanson/HandyStuff}
 #' @keywords plot univariate
 #' @examples
 #' #

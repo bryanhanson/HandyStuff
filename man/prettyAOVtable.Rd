@@ -34,7 +34,7 @@ grid.draw(prettyAOVtable(npk2.aov))
 
 }
 \references{
-\url{http://github.com/bryanhanson/HandyStuff}
+\url{https://github.com/bryanhanson/HandyStuff}
 }
 \author{
 Bryan A. Hanson, DePauw University. \email{hanson@depauw.edu}
