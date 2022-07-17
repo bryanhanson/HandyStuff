@@ -4,9 +4,13 @@
 \alias{examplePage}
 \title{Create an html Page Showing All Examples in Rd Files}
 \usage{
-examplePage(pkg = getwd(),
+examplePage(
+  pkg = getwd(),
   openChunk = "```{r, message=FALSE, warning = FALSE, error = FALSE}",
-  includeDontshow = FALSE, includeDontrun = FALSE, exclude = NULL)
+  includeDontshow = FALSE,
+  includeDontrun = FALSE,
+  exclude = NULL
+)
 }
 \arguments{
 \item{pkg}{Path to the package directory.}

@@ -4,10 +4,19 @@
 \alias{rxnNorm}
 \title{Create a Reaction Norm or Interaction Plot}
 \usage{
-rxnNorm(formula = NULL, data = NULL, groups = NULL, cols = NULL,
-  freckles = FALSE, type = "connect", method = c("sem", "sem95",
-  "iqr", "mad"), table = NULL, legend = c(0.5, 0.5, 1),
-  theme = screenTheme(), ...)
+rxnNorm(
+  formula = NULL,
+  data = NULL,
+  groups = NULL,
+  cols = NULL,
+  freckles = FALSE,
+  type = "connect",
+  method = c("sem", "sem95", "iqr", "mad"),
+  table = NULL,
+  legend = c(0.5, 0.5, 1),
+  theme = screenTheme(),
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply

@@ -4,9 +4,15 @@
 \alias{compareCats}
 \title{Compare Data by Category}
 \usage{
-compareCats(formula = NULL, data = NULL, cols = NULL,
-  freckles = FALSE, method = c("sem", "sem95", "iqr", "mad", "box",
-  "points"), theme = screenTheme(), ...)
+compareCats(
+  formula = NULL,
+  data = NULL,
+  cols = NULL,
+  freckles = FALSE,
+  method = c("sem", "sem95", "iqr", "mad", "box", "points"),
+  theme = screenTheme(),
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
