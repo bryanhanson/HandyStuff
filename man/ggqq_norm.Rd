@@ -32,26 +32,29 @@ ns <- 200
 #
 ### Normally distributed data
 #
-td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
-f2 = sample(c("C", "D"), ns, replace = TRUE))
+td1 <- data.frame(resp = rnorm(ns),
+  f1 = sample(c("A", "B"), ns, replace = TRUE),
+  f2 = sample(c("C", "D"), ns, replace = TRUE),
+  stringsAsFactors = TRUE)
 res <- ggqq_norm(td1, "resp", c("f1", "f2"))
 print(res + labs(title = "Normal Distribution"))
 #
-### Normally distributed data w/an outlier
+### Normally distributed data w/ outliers
 #
-td1 <- data.frame(resp = rnorm(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
-f2 = sample(c("C", "D"), ns, replace = TRUE))
+td2 <- td1
 bad <- sample(1:ns, 4)
-td1$resp[bad[1:2]] <- 5
-td1$resp[bad[3:4]] <- -5
-res <- ggqq_norm(td1, "resp", c("f1", "f2"))
+td2$resp[bad[1:2]] <- 5
+td2$resp[bad[3:4]] <- -5
+res <- ggqq_norm(td2, "resp", c("f1", "f2"))
 print(res + labs(title = "Normal Distribution + Outliers"))
 #
 ### Uniformly distributed data
 #
-td2 <- data.frame(resp = runif(ns), f1 = sample(c("A", "B"), ns, replace = TRUE),
-f2 = sample(c("C", "D"), ns, replace = TRUE))
-res <- ggqq_norm(td2, "resp", c("f1", "f2"))
+td3 <- data.frame(resp = runif(ns),
+  f1 = sample(c("A", "B"), ns, replace = TRUE),
+  f2 = sample(c("C", "D"), ns, replace = TRUE),
+  stringsAsFactors = TRUE)
+res <- ggqq_norm(td3, "resp", c("f1", "f2"))
 print(res + labs(title = "Uniform Distribution"))
 
 }

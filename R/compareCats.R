@@ -56,7 +56,8 @@
 #' mydf <- data.frame(
 #' 	resp = rnorm(40),
 #' 	cat1 = sample(LETTERS[1:3], 40, replace = TRUE),
-#' 	cat2 = sample(letters[1:2], 40, replace = TRUE))
+#' 	cat2 = sample(letters[1:2], 40, replace = TRUE),
+#'  stringsAsFactors = TRUE)
 #' #
 #' ### One factor:
 #' #
