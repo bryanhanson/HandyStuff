@@ -20,57 +20,73 @@ rxnNorm(
 }
 \arguments{
 \item{formula}{A formula with both LHS and RHS.  The formula should comply
-with the usual \code{lattice} conventions, for instance \code{y ~ x_factor}.}
+with the usual \code{lattice} conventions, for instance \code{y ~ x}.
+The formula entries refer to named columns in \code{data}.}
 
-\item{data}{A data frame containing the response and categorical/factor
-data, and possibly group data.}
+\item{data}{A data frame containing the response (y) values, categorical/factor
+values (x; numeric or factor), and group values (factor).}
 
-\item{groups}{The (unquoted) name of a variable in \code{data} to serve as
-the grouping variable.}
+\item{groups}{The (unquoted) name of a column in \code{data} to serve as
+the grouping variable.  The grouping variable typically represents genotype,
+and the summary statistics are based on aggregating individuals of a given
+genotype.  However, if \code{type = "raw"} the grouping variable identifies
+unique individuals for which there are multiple values of the x variable.
+\code{groups} is required.}
 
-\item{cols}{A vector of colors to be used for factor 1; must be as along as
-the levels in factor 1.}
+\item{cols}{A vector of colors to be used for the x variable given in the
+in the formula.  Must be as long as the levels in the variable.}
 
 \item{freckles}{Logical; if \code{TRUE}, the actual data points are plotted
 as small points, hence the name, jittered slightly in the horizontal
-direction only.}
+direction only.  Ignored when \code{type = "raw"}.}
 
-\item{type}{Either "connect", "fitLine" , "anova" or "anovaNoLine".
-In the first case, a
-line is drawn which connects the chosen measure of central tendency (e.g.
-mean) for each value of \code{fac1}.  This would generally be used when the
-x value are categorical.  In the second case, a linear fit is performed and
-the line is drawn; used for continuous x values.  In the third case, a
-connecting line is drawn along with an ANOVA summary table.  Finally, in
-the fourth case no line is drawn and the ANOVA summary table is provided.}
+\item{type}{Either "connect", "fitLine" , "anova", "anovaNoLine" or "raw".
+\itemize{
+   \item {For "connect", a line is drawn which connects the chosen measure
+         of central tendency (e.g. mean) for each value of x.
+         \emph{Used when the x valuea are categorical.}}
+   \item {For "anova", a connecting line is drawn along with an ANOVA summary table.
+         \emph{Used when the x values are categorical.}}
+   \item {For "anovaNoLine", no line is drawn and the ANOVA summary table is provided.,
+         \emph{Used when the x values are categorical.}}
+   \item {For "raw", each observation/sample is shown as a single point
+         (no summary statistics) and connected to its value at each level of
+         the categorial variable. \emph{Used when the x values are categorical.}}
+   \item {For "fitLine", a linear fit is performed and
+         the line is drawn.  \emph{used for continuous x values.}}
+}}
 
 \item{method}{One of \code{c("sem", "sem95", "iqr", "mad")}.  Each produces
 a dot at the measure of central tendency and error bars corresponding to the
 requested method ("box" currently does not work quite right).  Full details
-are in \code{ChemoSpec::.seXy}.}
+are in \code{ChemoSpec::.seXy}.   Ignored when \code{type = "raw"} as no
+summary stats are done and each individual sample gets its own line between
+levels of the x variable.}
 
 \item{table}{If NULL, the default, no action.  If a vector of 3 numbers
 \code{c(x, y, cex)}, a summary table is placed at the given coordinates with
-font size cex.  The table contains either a summary of counts (if \code{type
+font size \code{cex}.  The table contains either a summary of counts (if \code{type
 = "connect"}), a report of the linear fit (if \code{type = "fitLine"}) or an
-ANOVA table (if \code{type = "anova"}.  The coordinates are in device units
-so 0.5, 0.5 puts the table dead center in the plotting region.}
+ANOVA table (if \code{type = "anova"}).  The coordinates are in device units
+so 0.5, 0.5 puts the table dead center in the plotting region.
+Ignored when \code{type = "raw"}.}
 
 \item{legend}{If NULL, no action.  If a vector of 3 numbers
 \code{c(x, y, cex)}, a legend is placed at the given coordinates with
-font size cex.  The coordinates are in device units
-so 0.5, 0.5 puts the legend dead center in the plotting region.}
+font size \code{cex}.  The coordinates are in device units
+so 0.5, 0.5 puts the legend dead center in the plotting region.
+Ignored when \code{type = "raw"}.}
 
 \item{theme}{Character; A suitable \code{lattice} theme.
-There are two built-in themes which you can use "as is" or modify to your heart's
+There are two built-in themes which you can use as is or modify to your heart's
 content.  If  none is given, \code{\link{screenTheme}} will be used.  The other option
 provided is \code{\link{posterTheme}}.}
 
-\item{\dots}{Additional arguments to be passed downstream.}
+\item{\dots}{Additional arguments to be passed downstream to lattice functions.}
 }
 \value{
-A \code{lattice} plot object is returned invisibly, and a plot is
-created.
+A \code{lattice} plot object is returned invisibly, which must be 
+       "printed" to create a plot.
 }
 \description{
 Draws a reaction norm or interaction plot as typically used in ecology to
@@ -86,51 +102,76 @@ The choices in \code{method} are based upon functions in the
 See \code{ChemoSpec::.seXy} for the details.
 }
 \examples{
-#
-### set up demo data
-#
+
 require("ChemoSpec")
 require("lattice")
 require("gridExtra")
 
+### set up demo data
+
 set.seed(79)
-res = c(rnorm(10, 5, 1.5), rnorm(10, 8, 2),
-rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
-rnorm(10, 15, 2), rnorm(10, 12,2.5))
-fac1 <- c(rep("L", 20), rep("M", 20), rep("H", 20))
+res <- c( # response values
+  rnorm(10, 5, 1.5), rnorm(10, 8, 2),
+  rnorm(10, 14, 2.0), rnorm(10, 10, 1.5),
+  rnorm(10, 15, 2), rnorm(10, 12, 2.5)
+)
+fac1 <- c(rep("L", 20), rep("M", 20), rep("H", 20)) # treatment: categorical x values
 fac1 <- factor(fac1, levels = c("L", "M", "H"))
-fac2 <- sample(c("A", "B"), 60, replace = TRUE)
+fac2 <- sample(c("A", "B"), 60, replace = TRUE) # genotype, used for grouping summaries
 fac2 <- as.factor(fac2)
-num <- c(rep(5, 20), rep(10, 20), rep(12, 20))
-td <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, num = num)
-#
+num <- c(rep(5, 20), rep(10, 20), rep(12, 20)) # treatment: continuous x values
+td1 <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, num = num)
+
 ### Numeric x with lm and summary table:
-#
-p <- rxnNorm(formula = resp~num, groups = fac2, data = td,
-method = "iqr", freckles = TRUE, type = "fitLine",
-cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
-legend = c(0.175, 0.84, 1.0),
-main = "rxnNorm - linear model w/fit table")
-print(p)
-#
-### Categorical x, connected and summary table:
-#
-p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
-method = "iqr", freckles = TRUE, type = "connect",
-cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
-legend = c(0.175, 0.84, 1.0),
-main = "rxnNorm - Categorical x w/summary table")
-print(p)
-#
-### Categorical x, connected with ANOVA table:
-#
-p <- rxnNorm(formula = resp~fac1, groups = fac2, data = td,
-method = "iqr", freckles = TRUE, type = "anova",
-cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
-legend = c(0.175, 0.84, 1.0),
-main = "rxnNorm - Categorical x w/ANOVA table")
+
+p <- rxnNorm(
+  formula = resp ~ num, groups = fac2, data = td1,
+  method = "iqr", freckles = TRUE, type = "fitLine",
+  cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+  legend = c(0.175, 0.84, 1.0),
+  main = "rxnNorm - linear model w/fit table"
+)
 print(p)
 
+### Categorical x, connected and summary table:
+
+p <- rxnNorm(
+  formula = resp ~ fac1, groups = fac2, data = td1,
+  method = "iqr", freckles = TRUE, type = "connect",
+  cols = c("red", "blue"), table = c(0.5, 0.3, 0.75),
+  legend = c(0.175, 0.84, 1.0),
+  main = "rxnNorm - Categorical x w/summary table"
+)
+print(p)
+
+### Categorical x, connected with ANOVA table:
+#
+p <- rxnNorm(
+  formula = resp ~ fac1, groups = fac2, data = td1,
+  method = "iqr", freckles = TRUE, type = "anova",
+  cols = c("red", "blue"), table = c(0.57, 0.2, 0.75),
+  legend = c(0.175, 0.84, 1.0),
+  main = "rxnNorm - Categorical x w/ANOVA table"
+)
+print(p)
+
+### Categorical x, plot each samples' raw values, no summaries or tables:
+
+### set up demo data
+
+res <- abs(rnorm(15)) # response values
+fac1 <- rep(c("L", "M", "H"), times = 5) # treatment: categorical x values
+fac1 <- factor(fac1, levels = c("L", "M", "H"))
+fac2 <- c(rep("A", 3), rep("B", 3), rep("C", 3), rep("D", 3), rep("E", 3))
+fac2 <- as.factor(fac2) # grouping variable, each sample/individual is a group
+cols <- c(rep("black", 3), rep("red", 3), rep("blue", 3), rep("green", 3), rep("orange", 3))
+td2 <- data.frame(resp = res, fac1 = fac1, fac2 = fac2, col = cols)
+
+p <- rxnNorm(
+  formula = resp ~ fac1, groups = fac2, data = td2, cols = cols,
+  type = "raw", main = "rxnNorm - Categorical x w/Raw Sample Values"
+)
+print(p)
 
 }
 \references{

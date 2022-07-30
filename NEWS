@@ -4,6 +4,9 @@ NEWS file for package HandyStuff
 Bryan A. Hanson DePauw University, Greencastle Indiana USA
 URL: github.com/bryanhanson/HandyStuff
 
+Changes in version 0.6.157 2022-07-29
+     + rxnNorm gains a new option for type = "raw"
+
 Changes in version 0.6.130 2018-12-04
      + Built and checked against R 3.6 devel.
      + examplePage now writes to a tempdir, and the path defaults to getwd().
